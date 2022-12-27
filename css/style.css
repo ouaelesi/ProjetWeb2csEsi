@@ -1,0 +1,29 @@
+/* La liste des variables  */
+:root{
+    --darkColor : #232323 ; 
+    --redColor : #E55C54 ; 
+    --greenColor : #90A375 ; 
+    --graycolor : #C8C2D0 ; 
+    --brownColor : #85553F ; 
+}
+
+
+body{
+    background-color: var(--darkColor);
+    color: white ;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+}
+
+.galsMorf{
+    background-color: rgb(4, 4, 4);
+}
+.NavContainer{
+    padding-inline: 50px;
+} 
+
+.footer{
+    background-image: url(../public/images/footerBg.png);
+    background-size: cover;
+    background-position: center;
+    height: 400px;
+}
