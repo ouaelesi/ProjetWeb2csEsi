@@ -8,7 +8,12 @@ class categoryModel{
         $db  = $database->connect();
         $query = "SELECT * from `category`";
         $res = $database->request($db, $query);
-        return $res ; 
+        $response = array();
+        foreach ($res as $recipe) {
+            array_push($response, $recipe);
+        }
+        $database->disconnect($db);
+        return $response;
     }
 
     // ajouter une category

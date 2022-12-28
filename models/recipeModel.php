@@ -31,15 +31,16 @@ class recipeModel
         // add the recipe 
         $postID = $db->lastInsertId();
         $query = $db->prepare("INSERT INTO `recette`(`preparationTime`, `cookTime`, `restTime` ,`categoryID` ,  `postID`) VALUES (?,?,?,?,?)");
-        $query->execute(array($data["preparationTime"], $data["cookTime"], $data["restTime"], $data["category"] ,  $postID));
+        $query->execute(array($data["preparationTime"], $data["cookTime"], $data["restTime"], $data["category"],  $postID));
 
         unset($_POST);
         $database->disconnect($db);
         return;
     }
-    
-   // valider l'ajout d'une recette 
-    public function validateRecipe($id){
+
+    // valider l'ajout d'une recette 
+    public function validateRecipe($id)
+    {
 
         $database = new dataBaseController();
         $db  = $database->connect();
@@ -51,7 +52,8 @@ class recipeModel
     }
 
     // Modifier la recette 
-    public function updateRecipe($id){
+    public function updateRecipe($id)
+    {
         $database = new dataBaseController();
         $db  = $database->connect();
 
@@ -62,7 +64,8 @@ class recipeModel
     }
 
     // recuperer une recette specifique 
-    public function getRecipe($id){
+    public function getRecipe($id)
+    {
         $database = new dataBaseController();
         $db  = $database->connect();
         $query = "SELECT * from recette join post on recette.postID=post.id where recette.id=$id";
@@ -76,7 +79,8 @@ class recipeModel
     }
 
     // filtrer les recettes selon la category
-    public function getrecipesByCateg($idCateg){
+    public function getrecipesByCateg($idCateg)
+    {
         $database = new dataBaseController();
         $db  = $database->connect();
 
@@ -86,11 +90,9 @@ class recipeModel
         foreach ($res as $recipe) {
             array_push($response, $recipe);
         }
-
+        // echo var_dump($response);
         $database->disconnect($db);
 
         return $response;
     }
-
-    
 }
