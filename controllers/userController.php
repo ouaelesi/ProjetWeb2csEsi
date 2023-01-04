@@ -34,4 +34,10 @@ class userController
         $userModel->saveNews($_POST["userID"], $_POST["recetteID"]);
         return;
     }
+
+    public function getUserById($userId){
+        $userModel = new userModel();
+        $response = $userModel->getUserById($userId);
+        return $response[0];
+    }
 }

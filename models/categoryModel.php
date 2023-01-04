@@ -28,4 +28,18 @@ class categoryModel{
         $database->disconnect($db);
         return;
     }
+
+    // get categoryBy ID 
+    public function getCategoryById($id){
+        $database = new dataBaseController();
+        $db  = $database->connect();
+        $query = "SELECT * from `category` where `id`=$id";
+        $res = $database->request($db, $query);
+        $response = array();
+        foreach ($res as $recipe) {
+            array_push($response, $recipe);
+        }
+        $database->disconnect($db);
+        return $response;
+    }
 }

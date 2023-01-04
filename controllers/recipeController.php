@@ -1,9 +1,9 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/models/recipeModel.php');
 class recipeController{
-    public function getRecipes(){
+    public function getRecipes($params){
         $recipeModel = new recipeModel() ; 
-        $response = $recipeModel->getrecipes() ; 
+        $response = $recipeModel->getrecipes($params) ; 
         return $response ; 
     }
     public function addRecipe(){

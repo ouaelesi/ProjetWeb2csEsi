@@ -9,7 +9,7 @@ class AdminRecipeViews
     {
 ?>
         <h2> form des recettes</h2>
-        <form method="POST" action="/ProjetWeb/api/apiRoute.php">
+        <form method="POST" action="/ProjetWeb/api/apiRoute.php" enctype="multipart/form-data">
             <label>Titre</label>
             <input name="title" placeholder="titre du recette" type="text" required />
 

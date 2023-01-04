@@ -13,7 +13,7 @@ class HomePage
 
 ?>
         <!-- Carousel -->
-        <div id="carouselExampleSlidesOnly" class="carousel slide swiperHeader" data-bs-ride="carousel" data-interval="10000">
+        <div id="carouselExampleSlidesOnly" class="carousel slide swiperHeader" data-bs-ride="carousel" data-interval="5000">
             <div class="carousel-inner">
                 <?php
                 foreach ($data as $slide) {
@@ -54,7 +54,7 @@ class HomePage
     ?>
         <div class="ctgSwiperTitle text-center"><?php echo $category['name'] ?></div>
 
-        <section class="image-slider-container">
+        <section class="image-slider-container mb-5">
             <div class="image-slider-heading">
                 <h2 class="image-slider-title">
                     recette populaires 🤩
@@ -65,33 +65,46 @@ class HomePage
                 <div class="swiper-wrapper">
                     <?php
                     foreach ($recipes as $recipe) {
-                        
-                        $this->recipeCard($recipe);
+
+                        $this->recipeCard($recipe, $category['name']);
                     }
                     ?>
                 </div>
 
             </div>
+            <a href="/ProjetWeb/reccettes/<?php echo $category['name'] ?>"  class="text-center py-2 text-decoration-none text-light mx-auto d-block mt-4">Afficher Plus..</a>
         </section>
     <?php
     }
     // display cards Swiper 
-    public function recipeCard($recipe)
+    public function recipeCard($recipe, $category)
     {
     ?>
 
-        <div class="swiper-slide">
-            <div class="slide-con">
-                <div class="cardImage"> 
-                <img src="public/images/recipeImages/<?php echo $recipe['cardImage'] ?>" />
+        <div class="swiper-slide" onclick="gotoUrl('/ProjetWeb/recette?id=<?php echo $recipe['id'] ?>')">
+            <div class="blurEffect"></div>
+            <div class="slide-con p-1">
+                <div class="cardImage">
+                    <img src="public/images/recipeImages/<?php echo $recipe['cardImage'] ?>"  />
+                    <div class="position-relative d-flex justify-content-between p-1">
+
+                        <div class="categoryCard"><?php echo $category ?></div>
+                        <div class="likeCard "> <img src="public/icons/heart.png" width="65%" class="mx-auto d-block mt-2" /></div>
+                    </div>
                 </div>
                 <div class="cardContent">
-                <p class="h4"><?php echo $recipe["title"] ?></p>
-                <p class="h6 cardDescription"><?php echo $recipe["description"] ?></p>
-                <button class="btn btn-red card-btn ">See more</button>
+                    <p class="h4"><?php echo $recipe["title"] ?></p>
+                    <p class="h6 cardDescription"><?php echo $recipe["description"] ?></p>
+                    <div class="d-flex justify-content-between">
+                        <div class="recipeCardStats">
+                        <div class=""><?php if($recipe["note"]!=null) echo number_format($recipe["note"], 2, '.', ','); else echo "-" ?> <img src="public/icons/Yellow_Star.png" width="18px" class="mx-1" /></div>
+                        <span><?php echo $recipe["preparationTime"] ?> min</span>
+                        </div>
+               
+                        <button class="btn btn-red card-btn ">See more</button>
+                    </div>
+
                 </div>
-         
-    
             </div>
         </div>
 <?php
@@ -100,21 +113,14 @@ class HomePage
     public function displayHome()
     {
         $sharedComponents = new sharedViews();
+        // NavBar 
         $sharedComponents->NavBar(null);
-        // nav Bar
-
         // carousel
         $this->swiper();
         // navLinks 
         $sharedComponents->navLinks();
-        // swiper des Entrées 
+        // swipers 
         $this->categorySwipers();
-        // swiper des plats
-
-        // swiper des dessert 
-
-        // swiper des boissons 
-
         // Footer 
         $sharedComponents->Footer();
     }

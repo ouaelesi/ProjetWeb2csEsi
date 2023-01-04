@@ -8,7 +8,11 @@ class categoryController{
       $response = $categoryModel->getCategories() ; 
       return $response ; 
     }
-
+    public function getCategoryById($id){
+      $categoryModel =new categoryModel() ; 
+      $response = $categoryModel->getCategoryById($id) ; 
+      return $response[0] ; 
+    }
     // 
     public function addCategory(){
       $recipeModel = new categoryModel() ;

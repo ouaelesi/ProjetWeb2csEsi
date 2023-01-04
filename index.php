@@ -14,18 +14,16 @@
 <body>
 
 
-
     <?php
-    require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/views/userViews/HomePage.php");
-    $view = new HomePage();
-    $view->displayHome();
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/router/router.php");
     ?>
-   
+
+    <script src="./js/scripts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
     <script>
         new Swiper(".swiper", {
-            loop: true,
-            effect: 'coverflow',
+            // loop: true,
+            // effect: 'coverflow',
             centeredSlides: true,
             slidesPerView: 'auto',
             speed: 500,

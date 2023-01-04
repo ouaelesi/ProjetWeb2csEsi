@@ -18,7 +18,10 @@ class ingredientController{
     }
 
     public function getRecipeIngredients($recipeID){
-
+        $ingredientModel = new ingredientModel() ; 
+        $response = $ingredientModel->getRecipeIngredients($recipeID) ; 
+        // echo var_dump($response) ; 
+        return $response ; 
     }
 
 }

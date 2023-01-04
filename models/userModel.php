@@ -55,4 +55,18 @@ class userModel{
         $database->disconnect($db);
         return;
     }
+
+
+    public function getUserById($userId){
+        $database = new dataBaseController();
+        $db  = $database->connect();
+        $query = "SELECT id,firstName,lastName from user j where id=$userId";
+        $res = $database->request($db, $query);
+        $response = array();
+        foreach ($res as $recipe) {
+            array_push($response, $recipe);
+        }
+        $database->disconnect($db);
+        return $response;
+    }
 }
