@@ -8,15 +8,15 @@ header('Content-type: application/json');
 
 
 if (isset($_POST['recipeRating'])) {
-    error_log(print_r($_POST["note"], TRUE)); 
+    error_log(print_r($_POST["note"], TRUE));
     $userController = new userController();
     $userController->rateRecipe($_POST["userID"], $_POST["recetteID"], $_POST["note"]);
 }
 
-if (isset($_POST['recipeRating'])) {
-    error_log(print_r($_POST["note"], TRUE)); 
+if (isset($_POST['signUp'])) {
     $userController = new userController();
-    $userController->rateRecipe($_POST["userID"], $_POST["recetteID"], $_POST["note"]);
+    $userController->createUser();
+    header("location: /ProjetWeb/");
 }
 
 

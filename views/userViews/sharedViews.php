@@ -33,13 +33,20 @@ class SharedViews
                         <ul class="d-flex ">
                             <?php
                             foreach ($data['links'] as $link) {
+                                $cookie_name = "logedIn_user" ; 
+                             
                                 if ($link["type"] == "button") {
+                                    if(!isset($_COOKIE[$cookie_name])) {
+    
                             ?>
                                     <a href="/ProjetWeb<?php echo $link["href"] ?>" class="text-decoration-none text-light">
                                         <button class="btn btn-yellow my-auto"><?php echo $link['name'] ?></button>
                                     </a>
 
                             <?php
+                                    } else{
+                                        echo "logedin as ".$_COOKIE[$cookie_name] ; 
+                                    }
                                 }
                             }
                             ?>
@@ -198,24 +205,23 @@ class SharedViews
                     <div class="my-2">
                         <label class="mb-1">Role</label>
                         <select class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" name='role'>
-                            <option value="user">utilisateur simple</option>
+                            <option value="utilisateur">utilisateur simple</option>
                             <option value="admin">Administrateur</option>
                         </select>
                     </div>
                     <div class="my-2">
                         <label class="mb-1">Nom</label>
-                        <input class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="text" required placeholder="Nom" />
+                        <input class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="text" required placeholder="Nom" name="lastName" />
                     </div>
                     <div class="my-2">
                         <label class="mb-1">Mot de passe</label>
-                        <input class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="password" required placeholder="Mot de passe" />
+                        <input class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="password" required placeholder="Mot de passe" name="password" />
                     </div>
                     <div class="my-2">
                         <label class="mb-1">Sex</label>
-                        <select class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light">
+                        <select class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" name="sex">
                             <option value="male">Male</option>
                             <option value="female">Female</option>
-                            <option value="notSpecified">Ne pas specifier</option>
                         </select>
                     </div>
 
@@ -224,27 +230,27 @@ class SharedViews
                 <div class="col-6">
                     <div class="my-2">
                         <label class="mb-1">Email</label>
-                        <input class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="email" required placeholder="Email" />
+                        <input class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="email" required placeholder="Email" name="email" />
                     </div>
                     <div class="my-2">
                         <label class="mb-1">Prénom</label>
-                        <input class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="text" required placeholder="Prénom" />
+                        <input class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="text" required placeholder="Prénom" name="firstName" />
                     </div>
                     <div class="my-2">
                         <label class="mb-1">modifier le mot de passe</label>
-                        <input class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="password" required placeholder="Mot de passe" />
+                        <input class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="password" required placeholder="Mot de passe" name="confirmPsw" />
                     </div>
                     <div class="my-2">
                         <label class="mb-1">Date de néssance</label>
-                        <input class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="date" required />
+                        <input class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="date" required name="dateOfBirth" />
                     </div>
                 </div>
-
+                <div class="row my-2  px-0 mx-0">
+                    <div class="col-6 py-1">Vous avez déja un compte ? <a class="text-warning">Se connecter</a></div>
+                    <div class="col-6"><button class="btn btn-red d-block ms-auto px-3" type="submit" name="signUp">S'inscrire</button></div>
+                </div>
             </form>
-            <div class="row my-2">
-                <div class="col-6 py-1">Vous avez déja un compte ? <a class="text-warning">Se connecter</a></div>
-                <div class="col-6"><button class="btn btn-red d-block ms-auto px-3" type="submit" name="signUp">S'inscrire</button></div>
-            </div>
+
         </div>
 
     </div>

@@ -8,7 +8,7 @@ class userController
     {
         $userModel = new userModel();
         $userModel->rateRecipe($userId, $recipeId, $note);
-        echo "done" ; 
+        echo "done";
     }
 
     public function getUserRecipeRating($userId, $recipeId)
@@ -47,5 +47,12 @@ class userController
         $userModel = new userModel();
         $response = $userModel->getUserById($userId);
         return $response[0];
+    }
+
+    public function createUser()
+    {
+        $userModel = new userModel();
+        $userModel->createUser();
+        return;
     }
 }

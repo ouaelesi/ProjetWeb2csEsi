@@ -20,7 +20,7 @@ class userModel
             $query->execute(array($_POST['note'], $_POST["userID"], $_POST['recetteID']));
         }
 
-        echo json_decode("de") ; 
+        echo json_decode("de");
     }
 
     public function getUserRecipeRating($userId, $recipeId)
@@ -92,5 +92,27 @@ class userModel
         }
         $database->disconnect($db);
         return $response;
+    }
+
+    public function createUser()
+    {
+        $database = new dataBaseController();
+        $db  = $database->connect();
+        try {
+            $query = $db->prepare("INSERT INTO `user`(`role` , `firstName` , `lastName` , `dateOfBirth` , `sex` , `status` , `password` , `email` ) VALUES (? , ? , ?,? , ? , ?,? , ? )");
+            $query->execute(array($_POST['role'], $_POST['firstName'], $_POST['lastName'], $_POST['dateOfBirth'], $_POST['sex'], "pending", $_POST['password'], $_POST['email']));
+
+            $cookie_name = "logedIn_user";
+            // $cookie_value = ["firstName" => $_POST['firstName'], "lastName" => $_POST['lasteName'], "role" => $_POST['role'], "id" => $db->lastInsertId(), "email" => $_POST['email']];
+           $cookie_value = "Ouael" ; 
+            setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
+            
+        } catch (Exception $err) {
+            echo var_dump($err);
+        }
+
+        unset($_POST);
+        $database->disconnect($db);
+        return;
     }
 }
