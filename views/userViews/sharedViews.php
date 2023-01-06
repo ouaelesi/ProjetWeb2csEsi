@@ -7,7 +7,7 @@ class SharedViews
     // display navBar
     public function NavBar($linksData)
     {
-        ?>
+?>
         <div class="NavContainer">
 
             <?php
@@ -15,16 +15,15 @@ class SharedViews
             $homeMenu = $menu->getMenu("Home");
             foreach ($homeMenu as $data) {
                 // Logo 
-                ?>
+            ?>
                 <div>
                     <div class="py-2">
                         <ul class="d-flex gap-4 justify-content-around footer-socialMedia mx-auto pt-1">
                             <?php
                             foreach ($data['socialmedia'] as $link) {
-                                ?>
-                                <li><img class="d-block " src="public/images/socialMedia/<?php echo $link["icon"] ?>" width="20px"
-                                        alt="" /></li>
-                                <?php
+                            ?>
+                                <li><img class="d-block " src="public/images/socialMedia/<?php echo $link["icon"] ?>" width="20px" alt="" /></li>
+                            <?php
                             }
                             ?>
                         </ul>
@@ -35,154 +34,220 @@ class SharedViews
                             <?php
                             foreach ($data['links'] as $link) {
                                 if ($link["type"] == "button") {
-                                    ?>
-                                    <button class="btn btn-yellow my-auto"><?php echo $link['name'] ?></button>
-                                    <?php
+                            ?>
+                                    <a href="/ProjetWeb<?php echo $link["href"] ?>" class="text-decoration-none text-light">
+                                        <button class="btn btn-yellow my-auto"><?php echo $link['name'] ?></button>
+                                    </a>
+
+                            <?php
                                 }
                             }
                             ?>
                         </ul>
                     </div>
-
-
-
                 </div>
-
-            </div>
-            <?php
-            }
-    }
-
-    public function navLinks()
-    {
-        $menu = new menuModel();
-        $homeMenu = $menu->getMenu("Home");
-        foreach ($homeMenu as $data) {
-            ?>
-            <ul class="d-flex gap-4 justify-content-around nav-links mx-auto  mb-5">
-                <?php
-                foreach ($data['links'] as $link) {
-                    ?>
-                    <li><a href="/ProjetWeb<?php echo $link["href"] ?>" class="text-decoration-none text-light">
-                            <?php echo $link['name'] ?>
-                        </a></li>
-                    <?php
-                }
-                ?>
-            </ul>
-            <?php
-        }
-    }
-    // display Footer 
-    public function Footer()
-    {
-
-        $menu = new menuModel();
-        $homeMenu = $menu->getMenu("Home");
-        foreach ($homeMenu as $data) {
-            ?>
-            <div class="footer">
-                <div class="footerBg"></div>
-                <div class="position-relative pt-4 pb-2"> <img class="d-block mx-auto"
-                        src="public/logos/<?php echo $data["logo"] ?>" width="150px" alt="" />
-                    <ul class="d-flex gap-4 justify-content-around footer-nav-links mx-auto mt-5 mb-5">
-                        <?php
-                        foreach ($data['links'] as $link) {
-                            ?>
-                            <li><?php echo $link['name'] ?></li>
-                            <?php
-                        }
-                        ?>
-                    </ul>
-                    <ul class="d-flex gap-4 justify-content-around footer-socialMedia mx-auto mb-5 ">
-                        <?php
-                        foreach ($data['socialmedia'] as $link) {
-                            ?>
-                            <li><img class="d-block mx-3" src="public/images/socialMedia/<?php echo $link["icon"] ?>" width="40px"
-                                    alt="" /></li>
-                            <?php
-                        }
-                        ?>
-                    </ul>
-
-                    <div class="text-center py-1">ALL rights are reserverd to Ouael Sahbi 2022</div>
-                </div>
-            </div>
-            <?php
-        }
-    }
-    // display card 
-    public function postCard($post)
-    {
-    }
-    // display filter Box
-    public function filterBox($filter)
-    {
-    }
-
-
-    public function notFoundPage($message, $errorCode)
-    {
-        ?>
-        <div>Error <?php echo $errorCode ?> </div>
-        <div>
-            <?php echo $message ?>
         </div>
-        <?php
-    }
+    <?php
+            }
+        }
 
-    public function pageHeader($title)
-    {
-        ?>
+        public function navLinks()
+        {
+            $menu = new menuModel();
+            $homeMenu = $menu->getMenu("Home");
+            foreach ($homeMenu as $data) {
+    ?>
+        <ul class="d-flex gap-4 justify-content-around nav-links mx-auto  mb-5">
+            <?php
+                foreach ($data['links'] as $link) {
+            ?>
+                <li><a href="/ProjetWeb<?php echo $link["href"] ?>" class="text-decoration-none text-light">
+                        <?php echo $link['name'] ?>
+                    </a></li>
+            <?php
+                }
+            ?>
+        </ul>
+    <?php
+            }
+        }
+        // display Footer 
+        public function Footer()
+        {
+
+            $menu = new menuModel();
+            $homeMenu = $menu->getMenu("Home");
+            foreach ($homeMenu as $data) {
+    ?>
         <div class="footer">
             <div class="footerBg"></div>
-            <div class="position-relative  pageHeader text-center">
-                <?php echo $title ?>
+            <div class="position-relative pt-4 pb-2"> <img class="d-block mx-auto" src="public/logos/<?php echo $data["logo"] ?>" width="150px" alt="" />
+                <ul class="d-flex gap-4 justify-content-around footer-nav-links mx-auto mt-5 mb-5">
+                    <?php
+                    foreach ($data['links'] as $link) {
+                    ?>
+                        <li><?php echo $link['name'] ?></li>
+                    <?php
+                    }
+                    ?>
+                </ul>
+                <ul class="d-flex gap-4 justify-content-around footer-socialMedia mx-auto mb-5 ">
+                    <?php
+                    foreach ($data['socialmedia'] as $link) {
+                    ?>
+                        <li><img class="d-block mx-3" src="public/images/socialMedia/<?php echo $link["icon"] ?>" width="40px" alt="" /></li>
+                    <?php
+                    }
+                    ?>
+                </ul>
+
+                <div class="text-center py-1">ALL rights are reserverd to Ouael Sahbi 2022</div>
             </div>
         </div>
-        <?php
-    }
+    <?php
+            }
+        }
+        // display card 
+        public function postCard($post)
+        {
+        }
+        // display filter Box
+        public function filterBox($filter)
+        {
+        }
 
-    public function filterInputs($options)
-    {
-        ?>
-        <div class="container mx-auto">
-            <div class="d-flex justify-content-between px-4">
-                <div class="h1 pb-2 artFont">Filtrer les recettes</div>
-                <div class="text-warning py-3" onclick="clearfilter()">Clear filter</div>
-            </div>
 
-            <div class="d-flex justify-content-between px-4 mb-3">
-                <?php
-                foreach ($options as $filterOption) {
-                    ?>
+        public function notFoundPage($message, $errorCode)
+        {
+    ?>
+    <div>Error <?php echo $errorCode ?> </div>
+    <div>
+        <?php echo $message ?>
+    </div>
+<?php
+        }
 
-                    <div class="flex gap-2 position-relative filterBox ">
-                        <p class="h6"><?php echo $filterOption['name'] ?></p>
-                        <select name=<?php echo $filterOption['index'] ?> class="selectInput postion-relative"
-                            onchange="filter(this.name ,this.value)">
-                            <option value="all">Tous</option>
-                            <?php foreach ($filterOption["options"] as $option) {
-                                ?>
-                                <option value="<?php echo $option['id'] ?>" <?php if (sizeof($_GET) > 0 and $_GET[$filterOption['index']] == $option['id']) {
-                                       echo "selected";
-                                   } ?>>
-                                    <?php echo $option['name'] ?>
-                                </option>
-                                <?php
-                            } ?>
+        public function pageHeader($title)
+        {
+?>
+    <div class="footer">
+        <div class="footerBg"></div>
+        <div class="position-relative  pageHeader text-center">
+            <?php echo $title ?>
+        </div>
+    </div>
+<?php
+        }
 
-                        </select>
-                        <div class="p-1 bg-light position-absolute  filterBlur"></div>
-                    </div>
-                <?php } ?>
-                <!-- <div class="flex gap-2 position-relative filterBox  pt-4">
+        public function filterInputs($options)
+        {
+?>
+    <div class="container mx-auto">
+        <div class="d-flex justify-content-between px-4">
+            <div class="h1 pb-2 artFont">Filtrer les recettes</div>
+            <div class="text-warning py-3" onclick="clearfilter()">Clear filter</div>
+        </div>
+
+        <div class="d-flex justify-content-between px-4 mb-3">
+            <?php
+            foreach ($options as $filterOption) {
+            ?>
+
+                <div class="flex gap-2 position-relative filterBox ">
+                    <p class="h6"><?php echo $filterOption['name'] ?></p>
+                    <select name=<?php echo $filterOption['index'] ?> class="selectInput postion-relative" onchange="filter(this.name ,this.value)">
+                        <option value="all">Tous</option>
+                        <?php foreach ($filterOption["options"] as $option) {
+                        ?>
+                            <option value="<?php echo $option['id'] ?>" <?php if (sizeof($_GET) > 0 and $_GET[$filterOption['index']] == $option['id']) {
+                                                                            echo "selected";
+                                                                        } ?>>
+                                <?php echo $option['name'] ?>
+                            </option>
+                        <?php
+                        } ?>
+
+                    </select>
+                    <div class="p-1 bg-light position-absolute  filterBlur"></div>
+                </div>
+            <?php } ?>
+            <!-- <div class="flex gap-2 position-relative filterBox  pt-4">
                         <button class="btn btn-yellow " onclick="upplyFilter()">Filtrer</button>
                     </div> -->
+        </div>
+    </div>
+
+<?php
+
+        }
+
+
+        public function signUpForm()
+        {
+?>
+    <div class=" py-5">
+        <img src="public/images/footerBg.png" width="100%" height="100%" class="position-absolute top-0 opacity-50" />
+        <?php $this->NavBar(""); ?>
+        <div class="bluredBox px-3 pt-4 pb-2  registerForm mx-auto rounded-3 position-relative">
+            <div class="artFont text-center h1">
+                S'inscrire
+            </div>
+            <p class="text-center px-5">This is some text this some text this some text this some text this some text this some text this some text this is some text this is some text</p>
+            <form class="row" method="POST" action="/ProjetWeb/api/apiRoute.php">
+                <div class="col-6">
+                    <div class="my-2">
+                        <label class="mb-1">Role</label>
+                        <select class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" name='role'>
+                            <option value="user">utilisateur simple</option>
+                            <option value="admin">Administrateur</option>
+                        </select>
+                    </div>
+                    <div class="my-2">
+                        <label class="mb-1">Nom</label>
+                        <input class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="text" required placeholder="Nom" />
+                    </div>
+                    <div class="my-2">
+                        <label class="mb-1">Mot de passe</label>
+                        <input class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="password" required placeholder="Mot de passe" />
+                    </div>
+                    <div class="my-2">
+                        <label class="mb-1">Sex</label>
+                        <select class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light">
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="notSpecified">Ne pas specifier</option>
+                        </select>
+                    </div>
+
+
+                </div>
+                <div class="col-6">
+                    <div class="my-2">
+                        <label class="mb-1">Email</label>
+                        <input class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="email" required placeholder="Email" />
+                    </div>
+                    <div class="my-2">
+                        <label class="mb-1">Prénom</label>
+                        <input class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="text" required placeholder="Prénom" />
+                    </div>
+                    <div class="my-2">
+                        <label class="mb-1">modifier le mot de passe</label>
+                        <input class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="password" required placeholder="Mot de passe" />
+                    </div>
+                    <div class="my-2">
+                        <label class="mb-1">Date de néssance</label>
+                        <input class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="date" required />
+                    </div>
+                </div>
+
+            </form>
+            <div class="row my-2">
+                <div class="col-6 py-1">Vous avez déja un compte ? <a class="text-warning">Se connecter</a></div>
+                <div class="col-6"><button class="btn btn-red d-block ms-auto px-3" type="submit" name="signUp">S'inscrire</button></div>
             </div>
         </div>
 
-        <?php
-
+    </div>
+<?php
+        }
     }
-}

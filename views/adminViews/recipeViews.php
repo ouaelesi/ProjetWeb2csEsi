@@ -83,7 +83,7 @@ class AdminRecipeViews
     {
 
         $recipeController = new recipecontroller();
-        $recipeController->getRecipes();
+        $recipeController->getRecipes(1);
     }
 
     public function updateRecipeForm()

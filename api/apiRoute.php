@@ -1,11 +1,27 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/controllers/recipeController.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/controllers/userController.php');
 // Check if the admin is loged in 
-echo "ouael" ; 
+
+
+header('Content-type: application/json');
+
+
+if (isset($_POST['recipeRating'])) {
+    error_log(print_r($_POST["note"], TRUE)); 
+    $userController = new userController();
+    $userController->rateRecipe($_POST["userID"], $_POST["recetteID"], $_POST["note"]);
+}
+
+if (isset($_POST['recipeRating'])) {
+    error_log(print_r($_POST["note"], TRUE)); 
+    $userController = new userController();
+    $userController->rateRecipe($_POST["userID"], $_POST["recetteID"], $_POST["note"]);
+}
+
+
 if (isset($_POST['addRecipe'])) {
-    echo "helllow" ; 
-    $animalcontroller = new recipeController();
-    $animalcontroller->addRecipe();
+    echo "helllow";
 }
 if (isset($_GET['validateRecipe'])  == 'valid') {
     $animalcontroller = new recipeController();

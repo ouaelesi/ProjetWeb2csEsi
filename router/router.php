@@ -4,7 +4,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/views/userViews/HomePage.ph
 require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/views/userViews/recipePage.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/views/userViews/sharedViews.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/views/userViews/singleRecipePage.php");
-
 // Get the Current URL
 $request = $_SERVER['REQUEST_URI'];
 
@@ -19,29 +18,30 @@ if (strpos($request, "?")) {
 }
 
 // Display Pages 
+$sharedView = new SharedViews();
+$homeview = new HomePage();
+$recipeview = new recipePage();
+$singleRecipePage = new singleRecipePage();
 switch ($request) {
     case '/ProjetWeb/':
-        $view = new HomePage();
-        $view->displayHome();
+        $homeview->displayHome();
         break;
     case '/ProjetWeb/index.php':
-        $view = new HomePage();
-        $view->displayHome();
+        $homeview->displayHome();
         break;
     case '/ProjetWeb/ideas':
-        $view = new recipePage();
-        $view->displayRecipePage();
+        $recipeview->displayRecipePage();
         break;
     case '/ProjetWeb/recette':
-        $view = new singleRecipePage();
-        $view->displaySignleRecipe();
+        $singleRecipePage->displaySignleRecipe();
         break;
-
+    case '/ProjetWeb/signUp':
+        $sharedView->signUpForm() ; 
+        break;
     case '/about':
         require __DIR__ . '/views/about.php';
         break;
     default:
-        $sharedView = new SharedViews();
         $sharedView->notFoundPage("Soory, We didn't find your Page", "404");
         break;
 }

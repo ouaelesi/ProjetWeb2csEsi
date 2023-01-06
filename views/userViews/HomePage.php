@@ -81,7 +81,7 @@ class HomePage
     {
     ?>
 
-        <div class="swiper-slide" onclick="gotoUrl('/ProjetWeb/recette?id=<?php echo $recipe['id'] ?>')">
+        <div class="swiper-slide" onclick="gotoUrl('/ProjetWeb/recette?id=<?php echo $recipe[0] ?>')">
             <div class="blurEffect"></div>
             <div class="slide-con p-1">
                 <div class="cardImage">
@@ -100,7 +100,6 @@ class HomePage
                         <div class=""><?php if($recipe["note"]!=null) echo number_format($recipe["note"], 2, '.', ','); else echo "-" ?> <img src="public/icons/Yellow_Star.png" width="18px" class="mx-1" /></div>
                         <span><?php echo $recipe["preparationTime"] ?> min</span>
                         </div>
-               
                         <button class="btn btn-red card-btn ">See more</button>
                     </div>
 

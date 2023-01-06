@@ -6,11 +6,11 @@ class recipeController{
         $response = $recipeModel->getrecipes($params) ; 
         return $response ; 
     }
-    public function addRecipe(){
-        $recipeModel = new recipeModel() ;
-        $response = $recipeModel->addRecipe($_POST) ; 
-        return $response ; 
-    }
+    // public function addRecipe(){
+    //     $recipeModel = new recipeModel() ;
+    //     $response = $recipeModel->addRecipe($_POST) ; 
+    //     return $response ; 
+    // }
     public function validateRecipe(){
         $recipeID = $_GET["recipe_id"] ; 
         $recipeModel = new recipeModel() ; 

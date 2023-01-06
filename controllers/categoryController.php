@@ -14,9 +14,9 @@ class categoryController{
       return $response[0] ; 
     }
     // 
-    public function addCategory(){
-      $recipeModel = new categoryModel() ;
-      $response = $recipeModel->addCategory($_POST) ; 
-      return $response ; 
-    }
+    // public function addCategory(){
+    //   $recipeModel = new categoryModel() ;
+    //   $response = $recipeModel->addCategory($_POST) ; 
+    //   return $response ; 
+    // }
 }

@@ -4,11 +4,18 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/models/userModel.php');
 class userController
 {
     // ajouter une note a une recette 
-    public function rateRecipe()
+    public function rateRecipe($userId, $recipeId, $note)
     {
         $userModel = new userModel();
-        $userModel->rateRecipe($_POST["userID"], $_POST["recetteID"], $_POST["note"]);
-        return;
+        $userModel->rateRecipe($userId, $recipeId, $note);
+        echo "done" ; 
+    }
+
+    public function getUserRecipeRating($userId, $recipeId)
+    {
+        $userModel = new userModel();
+        $response = $userModel->getUserRecipeRating($userId, $recipeId);
+        return $response[0];
     }
 
     // ajouter un commentaire 
@@ -35,7 +42,8 @@ class userController
         return;
     }
 
-    public function getUserById($userId){
+    public function getUserById($userId)
+    {
         $userModel = new userModel();
         $response = $userModel->getUserById($userId);
         return $response[0];

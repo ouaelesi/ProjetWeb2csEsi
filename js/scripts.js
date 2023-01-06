@@ -56,3 +56,29 @@ const gotoUrl = (url) => {
   window.location.href = url;
 };
 setCurrenctfilter();
+
+// Rate recipe
+function rateRecipe(userID, recipeID, note) {
+  $.post("/ProjetWeb/api/apiRoute.php", {
+    recetteID: recipeID,
+    userID: userID,
+    note: note,
+    recipeRating: "1",
+  })
+    .then((data) => {})
+    .catch((err) => {
+      for (let i = 1; i <= 5; i++) {
+        i <= note
+          ? $(`#starsBox img:nth-child(${i})`).attr(
+              "src",
+              "public/icons/Yellow_Star.png"
+            )
+          : $(`#starsBox img:nth-child(${i})`).attr(
+              "src",
+              "public/icons/emptyStar.png"
+            );
+      }
+
+      console.log(err);
+    });
+}

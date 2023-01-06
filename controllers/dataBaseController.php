@@ -5,7 +5,7 @@ class dataBaseController{
         $dataBaseModel = new dataBaseModel() ; 
         return $dataBaseModel->connect(); 
     }
-    public function disConnect(){
+    public function disConnect($db){
 
     }
 

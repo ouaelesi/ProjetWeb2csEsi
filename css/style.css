@@ -422,7 +422,39 @@ option{
 
 .bluredBox{
   border: solid 1px rgba(255, 255, 255, 0.3);
-  border-radius: 10px;
+  border-radius: 20px;
   background-color: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(10deg, rgba(255,255,255,.2) 0% , rgba(255, 255, 255, 0.1) 20%, rgba(255,255,255,.1) 80% , rgba(255,255,255,.2) 100%);
   backdrop-filter: blur(15px);
+}
+.notesSection{
+  width: 100%;
+  height: 90%;
+  padding: 8px 15px ;
+  color: white;
+  outline: none;
+  border-radius: 10px;
+}
+.ratingBox:hover{
+  margin-top: -5px;
+  padding-bottom: 5px;
+}
+.ratingBox:hover .starRating{
+ transform: scale(1.1);
+ cursor: pointer;
+}
+.starRating:hover ~ .starRating{
+margin-top: 5px;
+transform: scale(0.8);
+}
+.ratingSection{
+  height: 90px;
+}
+.registerForm{
+  width: 60%;
+  margin-top: 110px;
+}
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: rgba(255, 255, 255, 0.8);
+  opacity: 1; /* Firefox */
 }
