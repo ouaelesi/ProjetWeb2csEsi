@@ -36,11 +36,11 @@ class recipeModel
 
         // Les conditions de la note 
         if (sizeof($params) > 0 and $params["note"] != "null" and $params["note"] != "all") {
-            $havingConditions = $havingConditions . ' AND note>' . $params["note"];
+            $havingConditions = $havingConditions . ' AND note>=' . $params["note"];
             // echo $havingConditions;
         }
 
-        $query = "SELECT recette.* , post.* , AVG(rating.note) note,cookTime+preparationTime+restTime totalTime from (recette join post on recette.postID=post.id) left JOIN rating on recette.id=rating.recetteID $whereConditions GROUP BY recette.id $havingConditions";
+        $query = "SELECT recette.* , post.* , AVG(rating.note) note,cookTime+preparationTime+restTime totalTime from (recette join post on recette.postID=post.id) left JOIN rating on recette.id=rating.recetteID $whereConditions GROUP BY recette.id $havingConditions ORDER BY note DESC";
         $res = $database->request($db, $query);
         $response = array();
         foreach ($res as $recipe) {
@@ -159,7 +159,7 @@ class recipeModel
     {
         $database = new dataBaseController();
         $db  = $database->connect();
-        $query ="SELECT recette.* , post.* , AVG(rating.note) note from (recette join post on recette.postID=post.id) left JOIN rating on recette.id=rating.recetteID WHERE recette.id=$id GROUP BY recette.id";
+        $query = "SELECT recette.* , post.* , AVG(rating.note) note from (recette join post on recette.postID=post.id) left JOIN rating on recette.id=rating.recetteID WHERE recette.id=$id GROUP BY recette.id";
 
         $res = $database->request($db, $query);
         $response = array();
@@ -178,6 +178,24 @@ class recipeModel
 
         $query = "SELECT recette.* , post.* , AVG(rating.note) note from (recette join post on recette.postID=post.id) left JOIN rating on recette.id=rating.recetteID  where categoryID=$idCateg GROUP BY recette.id ";
 
+        $res = $database->request($db, $query);
+        $response = array();
+        foreach ($res as $recipe) {
+            array_push($response, $recipe);
+        }
+        // echo var_dump($response);
+        $database->disconnect($db);
+
+        return $response;
+    }
+
+
+    public function getHealthyRecipes($avg)
+    {
+        $database = new dataBaseController();
+        $db  = $database->connect();
+
+        $query = "SELECT recette.* , post.* , AVG(rating.note) note from (recette join post on recette.postID=post.id) left JOIN rating on recette.id=rating.recetteID  where recette.id in (SELECT contient.recetteID FROM `ingredient` JOIN contient on ingredient.id=contient.ingredientID WHERE healthy=1 GROUP BY contient.recetteID HAVING count(contient.recetteID)>=$avg) GROUP BY recette.id";
         $res = $database->request($db, $query);
         $response = array();
         foreach ($res as $recipe) {

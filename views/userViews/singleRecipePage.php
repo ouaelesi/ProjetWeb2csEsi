@@ -134,6 +134,7 @@ class singleRecipePage
                 <div class="col-4">
                     <p>Write your notes here:</p>
                     <textarea class="bluredBox notesSection"></textarea>
+                    <button class="btn btn-red d-block ms-auto">save note</button>
                 </div>
             </div>
         </div>
@@ -144,7 +145,10 @@ class singleRecipePage
     public function ratingSection($recipeId)
     {
         $userController = new userController();
-        $rating = $userController->getUserRecipeRating(3, $recipeId);
+        $rating = $userController->getUserRecipeRating($recipeId);
+        if (!$rating) {
+            $rating['note'] = 0;
+        }
         $topNote = 5;
     ?>
         <div class="container">
@@ -153,12 +157,12 @@ class singleRecipePage
                 <div class="ratingBox" id="starsBox">
                     <?php for ($i = 0; $i < $rating['note']; $i++) {
                     ?>
-                        <img id="starRating" src="public/icons/Yellow_Star.png" width="40px" class="starRating " onclick="rateRecipe(3 , <?php echo $recipeId ?> ,  <?php echo $i+1 ?>)" />
+                        <img id="starRating" src="public/icons/Yellow_Star.png" width="40px" class="starRating " onclick="rateRecipe(3 , <?php echo $recipeId ?> ,  <?php echo $i + 1 ?>)" />
                     <?php
                     } ?>
                     <?php for ($i = $rating['note']; $i < $topNote; $i++) {
                     ?>
-                        <img id="starRating" src="public/icons/emptyStar.png" width="40px" class="starRating " onclick="rateRecipe(3 , <?php echo $recipeId ?> ,  <?php echo $i+1 ?>)" />
+                        <img id="starRating" src="public/icons/emptyStar.png" width="40px" class="starRating " onclick="rateRecipe(<?php echo $recipeId ?> ,  <?php echo $i + 1 ?>)" />
                     <?php
                     } ?>
                 </div>

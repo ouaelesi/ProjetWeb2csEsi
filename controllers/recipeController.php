@@ -28,4 +28,12 @@ class recipeController{
 
       return $response ; 
     }
+
+    public function getHealthyRecipes($avg)
+    {
+        $recipeModel = new recipeModel() ; 
+        $response = $recipeModel->getHealthyRecipes($avg); 
+  
+        return $response ; 
+    }
 }

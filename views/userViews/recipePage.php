@@ -6,10 +6,8 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/controllers/categoryControl
 class recipePage
 {
 
-    public function recipesList()
+    public function recipesList($recipes)
     {
-        $recipeController = new recipeController();
-        $recipes  = $recipeController->getRecipes($_GET);
         $homeViews = new HomePage();
         $categoryController = new categoryController();
 ?>
@@ -28,7 +26,7 @@ class recipePage
             }
             ?>
         </div>
-<?php
+    <?php
     }
 
     public function filterSection()
@@ -52,7 +50,7 @@ class recipePage
                     ["id" => "15-60", "name" => "entre 15min et 1h"],
                     ["id" => "60-10000", "name" => "plus que 1h"],
                 ]
-            ] , 
+            ],
             [
                 "name" => "Temps de cuisson",
                 "index" => "cookTime",
@@ -61,7 +59,7 @@ class recipePage
                     ["id" => "15-60", "name" => "entre 15min et 1h"],
                     ["id" => "60-10000", "name" => "plus que 1h"],
                 ]
-            ] , 
+            ],
             [
                 "name" => "Temps total",
                 "index" => "totalTime",
@@ -70,7 +68,7 @@ class recipePage
                     ["id" => "15-60", "name" => "entre 15min et 1h"],
                     ["id" => "60-10000", "name" => "plus que 1h"],
                 ]
-            ] , 
+            ],
             [
                 "name" => "Nombre de calories",
                 "index" => "nbCalories",
@@ -79,7 +77,7 @@ class recipePage
                     ["id" => "between 15 and 60", "name" => "entre 15min et 1h"],
                     ["id" => "between 60 and 10000", "name" => "plus que 1h"],
                 ]
-            ] , 
+            ],
             [
                 "name" => "Note",
                 "index" => "note",
@@ -90,22 +88,56 @@ class recipePage
                     ["id" => "4", "name" => "3-4 stars"],
                     ["id" => "5", "name" => "4-5 starts"],
                 ]
-            ] 
+            ]
         ]);
     }
 
+    // search input 
+    public function searchInput()
+    {
+    ?>
+        <div class="container inputSection position-relative ">
+            <div class="bluredBox w-50 mx-auto row my-5 rounded-4 py-1 pe-3 position-relative z-50">
+                <input class="px-4 py-3 bg-transparent searchInput col-11 " placeholder="Trouver votre recette.." oninput="autoComplete()" id="ideasSearch" />
+                <div class="col-1 pt-1">
+                    <img src="public/icons/search.png" width="30px" height="30px" class="d-block mx-auto mt-2" />
+                </div>
+                <div class="d-flex gap-2" id="addedIngredients"></div>
+            </div>
+            <div class="w-50 mx-auto position-absolute ingredientsSuggestions" id="ingredientsSuggestions">
+
+            </div>
+        </div>
+    <?php
+    }
+
+    public function addRecipeSection()
+    {
+    ?>
+        <div class="d-flex justify-content-between container">
+            <div class="artFont h1">Vous pouvez proposer des recettes</div>
+            <div><button onclick="gotoUrl('/ProjetWeb/addrecipe')" class="btn btn-red">Ajouter une recette</button></div>
+        </div>
+<?php
+    }
     public function displayRecipePage()
     {
         $sharedComponents = new sharedViews();
+        $recipeController = new recipeController();
+        $recipes  = $recipeController->getRecipes($_GET);
         // NavBar 
         $sharedComponents->NavBar(null);
         // header 
         $sharedComponents->pageHeader("Tous les recettes");
         // navLinks 
         $sharedComponents->navLinks();
+        // add recipe section 
+        $this->addRecipeSection();
+        // search input 
+        $this->searchInput();
         // filters 
         $this->filterSection();
         // recipes list 
-        $this->recipesList();
+        $this->recipesList($recipes);
     }
 }

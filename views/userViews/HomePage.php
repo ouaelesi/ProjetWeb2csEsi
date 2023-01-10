@@ -65,31 +65,36 @@ class HomePage
                 <div class="swiper-wrapper">
                     <?php
                     foreach ($recipes as $recipe) {
-
                         $this->recipeCard($recipe, $category['name']);
                     }
                     ?>
                 </div>
 
             </div>
-            <a href="/ProjetWeb/reccettes/<?php echo $category['name'] ?>"  class="text-center py-2 text-decoration-none text-light mx-auto d-block mt-4">Afficher Plus..</a>
+            <a href="/ProjetWeb/categories?id=<?php echo $category['name'] ?>" class="text-center py-2 text-decoration-none text-light mx-auto d-block mt-4">Afficher Plus..</a>
         </section>
     <?php
     }
     // display cards Swiper 
-    public function recipeCard($recipe, $category)
+    public function recipeCard($recipe, $category )
     {
+        $userController = new userController();
+        $isLike = $userController->userIsLikeRecipe($recipe[0]);
     ?>
 
         <div class="swiper-slide" onclick="gotoUrl('/ProjetWeb/recette?id=<?php echo $recipe[0] ?>')">
             <div class="blurEffect"></div>
             <div class="slide-con p-1">
                 <div class="cardImage">
-                    <img src="public/images/recipeImages/<?php echo $recipe['cardImage'] ?>"  />
+                    <img src="public/images/recipeImages/<?php echo $recipe['cardImage'] ?>" />
                     <div class="position-relative d-flex justify-content-between p-1">
 
                         <div class="categoryCard"><?php echo $category ?></div>
-                        <div class="likeCard "> <img src="public/icons/heart.png" width="65%" class="mx-auto d-block mt-2" /></div>
+                        <div id="heartContainer" class="likeCard " onclick="window.event.cancelBubble = true; likeRecipe(this , <?php echo $recipe[0] ?>)"> <img src="public/icons/<?php if (!$isLike) {
+                                                                                                                                                            echo 'heart.png';
+                                                                                                                                                        } else {
+                                                                                                                                                            echo 'fullheart.png';
+                                                                                                                                                        } ?>" width="65%" class="mx-auto d-block mt-2" id="likeimage" /></div>
                     </div>
                 </div>
                 <div class="cardContent">
@@ -97,10 +102,11 @@ class HomePage
                     <p class="h6 cardDescription"><?php echo $recipe["description"] ?></p>
                     <div class="d-flex justify-content-between">
                         <div class="recipeCardStats">
-                        <div class=""><?php if($recipe["note"]!=null) echo number_format($recipe["note"], 2, '.', ','); else echo "-" ?> <img src="public/icons/Yellow_Star.png" width="18px" class="mx-1" /></div>
-                        <span><?php echo $recipe["preparationTime"] ?> min</span>
+                            <div class=""><?php if ($recipe["note"] != null) echo number_format($recipe["note"], 2, '.', ',');
+                                            else echo "-" ?> <img src="public/icons/Yellow_Star.png" width="18px" class="mx-1" /></div>
+                            <span><?php echo $recipe["preparationTime"] ?> min</span>
                         </div>
-                        <button class="btn btn-red card-btn ">See more</button>
+                        <button class="btn btn-red card-btn" >See more</button>
                     </div>
 
                 </div>

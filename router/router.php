@@ -4,6 +4,10 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/views/userViews/HomePage.ph
 require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/views/userViews/recipePage.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/views/userViews/sharedViews.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/views/userViews/singleRecipePage.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/views/userViews/profilePage.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/views/userViews/addRecipePage.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/views/userViews/categoryPage.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/views/userViews/healthyPage.php");
 // Get the Current URL
 $request = $_SERVER['REQUEST_URI'];
 
@@ -22,6 +26,10 @@ $sharedView = new SharedViews();
 $homeview = new HomePage();
 $recipeview = new recipePage();
 $singleRecipePage = new singleRecipePage();
+$profilePage = new profilePage();
+$addrecipe = new addRecipePage();
+$categorypPage = new categoryPage();
+$healthyPage = new healthyPage();
 switch ($request) {
     case '/ProjetWeb/':
         $homeview->displayHome();
@@ -36,7 +44,19 @@ switch ($request) {
         $singleRecipePage->displaySignleRecipe();
         break;
     case '/ProjetWeb/signUp':
-        $sharedView->signUpForm() ; 
+        $sharedView->signUpForm();
+        break;
+    case '/ProjetWeb/profile':
+        $profilePage->displayProfile();
+        break;
+    case '/ProjetWeb/addrecipe':
+        $addrecipe->displayRecipePage();
+        break;
+    case '/ProjetWeb/categories':
+        $categorypPage->displayCategoryPage();
+        break;
+    case '/ProjetWeb/healthy':
+        $healthyPage->displayHealthyPage();
         break;
     case '/about':
         require __DIR__ . '/views/about.php';

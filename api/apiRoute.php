@@ -10,7 +10,12 @@ header('Content-type: application/json');
 if (isset($_POST['recipeRating'])) {
     error_log(print_r($_POST["note"], TRUE));
     $userController = new userController();
-    $userController->rateRecipe($_POST["userID"], $_POST["recetteID"], $_POST["note"]);
+    $userController->rateRecipe($_POST["recetteID"], $_POST["note"]);
+}
+if (isset($_POST['likerecipe'])) {
+    error_log(print_r($_POST["likerecipe"], TRUE));
+    $userController = new userController();
+    $userController->likeRecette($_POST["recetteId"]);
 }
 
 if (isset($_POST['signUp'])) {

@@ -19,6 +19,11 @@
     require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/router/router.php");
     ?>
 
+
+
+
+
+
     <script src="./js/scripts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
     <script>

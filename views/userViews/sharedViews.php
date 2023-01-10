@@ -33,19 +33,22 @@ class SharedViews
                         <ul class="d-flex ">
                             <?php
                             foreach ($data['links'] as $link) {
-                                $cookie_name = "logedIn_user" ; 
-                             
-                                if ($link["type"] == "button") {
-                                    if(!isset($_COOKIE[$cookie_name])) {
-    
-                            ?>
-                                    <a href="/ProjetWeb<?php echo $link["href"] ?>" class="text-decoration-none text-light">
-                                        <button class="btn btn-yellow my-auto"><?php echo $link['name'] ?></button>
-                                    </a>
+                                $cookie_name = "logedIn_user";
 
+                                if ($link["type"] == "button") {
+                                    if (!isset($_COOKIE[$cookie_name])) {
+
+                            ?>
+                                        <a href="/ProjetWeb<?php echo $link["href"] ?>" class="text-decoration-none text-light">
+                                            <button class="btn btn-yellow my-auto"><?php echo $link['name'] ?></button>
+                                        </a>
+
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <a class="text-warning" href="/ProjetWeb/profile?id=<?php echo $_COOKIE[$cookie_name]; ?>"> <?php echo "logedin as " . $_COOKIE[$cookie_name]; ?></a>
                             <?php
-                                    } else{
-                                        echo "logedin as ".$_COOKIE[$cookie_name] ; 
+
                                     }
                                 }
                             }
@@ -64,13 +67,18 @@ class SharedViews
             $homeMenu = $menu->getMenu("Home");
             foreach ($homeMenu as $data) {
     ?>
-        <ul class="d-flex gap-4 justify-content-around nav-links mx-auto  mb-5">
+        <ul class="d-flex gap-4 justify-content-around nav-links mx-auto  mb-5" id="stickyNav">
+            <img src="public/logos/<?php echo $data["logo"] ?>" width="100px" alt="" class="hiddenToNav" />
             <?php
                 foreach ($data['links'] as $link) {
             ?>
-                <li><a href="/ProjetWeb<?php echo $link["href"] ?>" class="text-decoration-none text-light">
+                <li class="py-2 <?php if ($link["type"] == "button") echo "hiddenToNav" ?>">
+                    <a href="/ProjetWeb<?php echo $link["href"] ?>" class="<?php if ($link["type"] == "button") echo "text-warning underline";
+                                                                            else echo "text-light text-decoration-none " ?>">
+
                         <?php echo $link['name'] ?>
-                    </a></li>
+                    </a>
+                </li>
             <?php
                 }
             ?>
@@ -149,7 +157,7 @@ class SharedViews
         public function filterInputs($options)
         {
 ?>
-    <div class="container mx-auto">
+    <div class="container mx-auto filterINputs">
         <div class="d-flex justify-content-between px-4">
             <div class="h1 pb-2 artFont">Filtrer les recettes</div>
             <div class="text-warning py-3" onclick="clearfilter()">Clear filter</div>
