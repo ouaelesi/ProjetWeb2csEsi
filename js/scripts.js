@@ -112,27 +112,17 @@ $(window).scroll(function () {
 let ingredientList = [
   {
     name: "Potato",
-    healthy: true,
-    season: "sif",
     quantity: "5kg",
   },
 ];
 
-let ingredient = {
-  name: "Potato",
-  healthy: true,
-  season: "sif",
-  quantity: "5kg",
-};
-
 // add ingredient to the list
 
-function addIngredient() {
+function addRecipeIngredient() {
   $("#ingredientsList").empty();
+  let ingredient = new Object();
   ingredient["name"] = $("#ingredientName").val();
-  ingredient["healthy"] = $("#healthy").val();
   ingredient["quantity"] = $("#quantity").val();
-  ingredient["season"] = $("#season").val();
   ingredientList.push(ingredient);
   renderIngredients();
 }
@@ -148,10 +138,16 @@ function renderIngredients() {
     var container = $(
       "<p class='bluredBox px-4 py-3 rounded-3 d-flex justify-content-between'></p>"
     );
-    container.append(`<div>${key + 1}. ${ingredient.name}</div>`);
-    container.append(`<div>quantity: ${ingredient.quantity}</div>`);
-    container.append(`<div>season: ${ingredient.season}</div>`);
-    container.append(`<div>healthy: ${ingredient.healthy}</div>`);
+    container.append(
+      `<div>${
+        key + 1
+      }. <input name="ingName${key}" class="bg-transparent text-light border-0 outline-none" value='${
+        ingredient.name
+      }'></input></div>`
+    );
+    container.append(
+      `<div>quantity: <input name='ingQuantity${}' class="bg-transparent text-light border-0 outline-none" value='${ingredient.quantity}'></input></div>`
+    );
     container.append(
       `<div onclick='removeIngredient(${key})' class='cursor-pointer'> X </div>`
     );
@@ -171,30 +167,35 @@ let stepsList = [
   },
 ];
 
-let step = {
-  title: "Step one",
-  description:
-    "this is the step description, this is the step description,this is the step description,this is the step description,",
-};
-
 function renderSteps() {
+  $("#stepsList").empty();
   stepsList.map((step, key) => {
     var container = $("<p class='bluredBox px-4 py-3 rounded-3'></p>");
     var header = $("<div class='d-flex justify-content-between'> </div>");
-    header.append(`<div class="h4">${key + 1}. ${step.title}</div>`);
+    header.append(
+      `<div class="h4">${
+        key + 1
+      }. <input class="bg-transparent text-light border-0 outline-none" value='${
+        step.title
+      }'/></div>`
+    );
     header.append(
       `<div onclick='removeStep(${key})' class='cursor-pointer'> X </div>`
     );
     container.append(header);
-    container.append(`<div>${step.description}</div>`);
+    container.append(
+      `<div><input class="bg-transparent text-light border-0 outline-none w-100" value='${step.description}'/></div>`
+    );
     $("#stepsList").append(container);
   });
 }
 
 function addStep() {
   $("#stepsList").empty();
+  let step = new Object();
   step["title"] = $("#stepTitle").val();
   step["description"] = $("#stepDescription").val();
+  let newStep = new Object();
   stepsList.push(step);
   renderSteps();
 }

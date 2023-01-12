@@ -122,23 +122,8 @@ class addRecipePage
                     <label>Quantité</label>
                     <input class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" name="quentity" placeholder="Quantité" type="text" required id="quantity" />
                 </div>
-                <div class="my-2 col-5  ">
-                    <label>is Healthy</label>
-                    <select class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" name="healthy" id="healthy">
-                        <option value=1>Healthy</option>
-                        <option value=0>Not healthy</option>
-                    </select>
-                </div>
-                <div class="my-2 col-5">
-                    <label>season</label>
-                    <select class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" name="season" id="season">
-                        <option value="tous">All</option>
-                        <option value="sif">Summer</option>
-                        <option value="chta">Winter</option>
-                    </select>
-                </div>
                 <div class="col-12">
-                    <div name="addIngredient" class="btn btn-yellow ms-auto d-block col-2" onclick="addIngredient()">Ajouter ingredient </div>
+                    <div name="addIngredient" class="btn btn-yellow ms-auto d-block col-2" onclick="addRecipeIngredient()">Ajouter ingredient </div>
                 </div>
                 <div class="col-12  ps-5">Liste des ingredients ajoutés
                     <hr />
