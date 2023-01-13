@@ -613,9 +613,9 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`id`, `role`, `firstName`, `lastName`, `dateOfBirth`, `sex`, `status`, `password`, `email`, `photo`) VALUES
-(1, '', 'Ouael', 'Sahbi', '0000-00-00', '', 'rejected', '[value-8]', 'jo_sahbi@esi.dz', 'profile.png'),
+(1, 'admin', 'admin', 'Sahbi', '0000-00-00', '', 'rejected', 'admin', 'jo_sahbi@esi.dz', 'profile.png'),
 (2, '', 'Nedjem eddine', 'Sahbi', '0000-00-00', '', 'pending', '[value-8]', '[value-9]', NULL),
-(3, 'utilisateur', 'xs', 'xsxs', '2023-01-13', 'male', 'valid', 'xs', 'xsxsx@xs', NULL),
+(3, 'utilisateur', 'root', 'xsxs', '2023-01-13', 'male', 'valid', '', 'xsxsx@xs', NULL),
 (4, 'utilisateur', 'xs', 'xsxs', '2023-01-13', 'male', 'valid', 'xsxs', 'xsxsx@xs', NULL),
 (5, 'utilisateur', 'xsxs', 'xsxs', '2023-01-12', 'male', 'valid', 'xsxs', 'xsxs@xsx', NULL),
 (6, 'utilisateur', 'xsxs', 'xxsxs', '2023-01-19', 'male', 'valid', 'xsxs', 'xsx@xsxs', NULL),
