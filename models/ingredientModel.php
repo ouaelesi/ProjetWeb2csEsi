@@ -37,4 +37,19 @@ class ingredientModel
         $database->disconnect($db);
         return $response;
     }
+
+    public function getNbIgredients()
+    {
+        $database = new dataBaseController();
+        $db  = $database->connect();
+
+        $query = "SELECT count(*) nbIngredients from ingredient";
+        $res = $database->request($db, $query);
+        $response = array();
+        foreach ($res as $user) {
+            array_push($response, $user);
+        }
+        $database->disconnect($db);
+        return $response;
+    }
 }

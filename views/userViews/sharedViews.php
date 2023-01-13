@@ -154,12 +154,12 @@ class SharedViews
 <?php
         }
 
-        public function filterInputs($options)
+        public function filterInputs($options , $message)
         {
 ?>
     <div class="container mx-auto filterINputs">
         <div class="d-flex justify-content-between px-4">
-            <div class="h1 pb-2 artFont">Filtrer les recettes</div>
+            <div class="h1 pb-2 artFont"><?php echo $message ?></div>
             <div class="text-warning py-3" onclick="clearfilter()">Clear filter</div>
         </div>
 

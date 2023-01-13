@@ -112,7 +112,7 @@ class recipeModel
         $db  = $database->connect();
         // add the post 
         $query = $db->prepare("INSERT INTO `post`(`title`, `description` , `type` , `coverImage` , `cardImage` , `video` , `event` , `status` , `createdBy`) VALUES (?,?,?,?,?,?,?,?,?)");
-        $query->execute(array($data["title"], $data["description"], $data["type"], $_FILES["coverImage"]['name'], $_FILES["cardImage"]["name"], $data["video"], $data["event"], 'pending', 1));
+        $query->execute(array($data["title"], $data["description"], 'recette', $_FILES["coverImage"]['name'], $_FILES["cardImage"]["name"], $data["video"], $data["event"], 'pending', 1));
 
         // add the recipe 
         $postID = $db->lastInsertId();
@@ -196,6 +196,23 @@ class recipeModel
         $db  = $database->connect();
 
         $query = "SELECT recette.* , post.* , AVG(rating.note) note from (recette join post on recette.postID=post.id) left JOIN rating on recette.id=rating.recetteID  where recette.id in (SELECT contient.recetteID FROM `ingredient` JOIN contient on ingredient.id=contient.ingredientID WHERE healthy=1 GROUP BY contient.recetteID HAVING count(contient.recetteID)>=$avg) GROUP BY recette.id";
+        $res = $database->request($db, $query);
+        $response = array();
+        foreach ($res as $recipe) {
+            array_push($response, $recipe);
+        }
+        // echo var_dump($response);
+        $database->disconnect($db);
+
+        return $response;
+    }
+
+    public function getNbRecipes()
+    {
+        $database = new dataBaseController();
+        $db  = $database->connect();
+
+        $query = "SELECT count(*) nbRecipes from recette";
         $res = $database->request($db, $query);
         $response = array();
         foreach ($res as $recipe) {

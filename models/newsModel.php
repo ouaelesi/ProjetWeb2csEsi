@@ -1,8 +1,10 @@
-<?php 
+<?php
 
-class newsModel{
+class newsModel
+{
     // recuperer les news 
-    public function getNews(){
+    public function getNews()
+    {
         $database = new dataBaseController();
         $db  = $database->connect();
         $query = "SELECT * from news join post on news.postID=post.id";
@@ -17,7 +19,8 @@ class newsModel{
     }
 
     // ajouter des news 
-    public function addNews($data){
+    public function addNews($data)
+    {
         $database = new dataBaseController();
         $db  = $database->connect();
         // add the post 
@@ -35,7 +38,8 @@ class newsModel{
     }
 
     // get news by Id 
-    public function getNewsById($idNews){
+    public function getNewsById($idNews)
+    {
         $database = new dataBaseController();
         $db  = $database->connect();
         $query = "SELECT * from news join post on news.postID=post.id where recette.id=$idNews";
@@ -49,7 +53,24 @@ class newsModel{
     }
 
     // update news 
-    public function updateNews(){
-        
+    public function updateNews()
+    {
+    }
+
+
+    // 
+    public function getNbNews()
+    {
+        $database = new dataBaseController();
+        $db  = $database->connect();
+
+        $query = "SELECT count(*) nbNews from news";
+        $res = $database->request($db, $query);
+        $response = array();
+        foreach ($res as $user) {
+            array_push($response, $user);
+        }
+        $database->disconnect($db);
+        return $response;
     }
 }

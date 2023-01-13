@@ -109,7 +109,7 @@ class userModel
     {
         $database = new dataBaseController();
         $db  = $database->connect();
-        $query = "SELECT id,firstName,lastName,email,photo from user where id=$userId";
+        $query = "SELECT id,firstName,lastName,email,photo,dateOfBirth,sex,`status` from user where id=$userId";
         $res = $database->request($db, $query);
         $response = array();
         foreach ($res as $recipe) {
@@ -160,7 +160,8 @@ class userModel
 
     // get favourite posts 
 
-    public function getVafouritePosts($userId){
+    public function getVafouritePosts($userId)
+    {
         $database = new dataBaseController();
         $db  = $database->connect();
 
@@ -176,7 +177,8 @@ class userModel
     }
 
 
-    public function getUserAddedRecipes($userId){
+    public function getUserAddedRecipes($userId)
+    {
         $database = new dataBaseController();
         $db  = $database->connect();
 
@@ -189,5 +191,58 @@ class userModel
         // echo var_dump($response);
         $database->disconnect($db);
         return $response;
+    }
+
+
+    public function getNbUsers()
+    {
+        $database = new dataBaseController();
+        $db  = $database->connect();
+
+        $query = "SELECT count(*) nbUsers from user";
+        $res = $database->request($db, $query);
+        $response = array();
+        foreach ($res as $user) {
+            array_push($response, $user);
+        }
+        $database->disconnect($db);
+        return $response;
+    }
+
+    public function getallUser()
+    {
+        $database = new dataBaseController();
+        $db  = $database->connect();
+
+        $query = "SELECT * from user";
+        $res = $database->request($db, $query);
+        $response = array();
+        foreach ($res as $user) {
+            array_push($response, $user);
+        }
+        $database->disconnect($db);
+        return $response;
+    }
+
+    public function validateAccount($userId)
+    {
+        $database = new dataBaseController();
+        $db  = $database->connect();
+
+        $query = $db->prepare('UPDATE `user` SET `status`=? WHERE id=?');
+        $query->execute(array("valid", $userId));
+
+        $database->disconnect($db);
+    }
+
+    public function rejectAccount($userId)
+    {
+        $database = new dataBaseController();
+        $db  = $database->connect();
+
+        $query = $db->prepare('UPDATE `user` SET `status`=? WHERE id=?');
+        $query->execute(array("rejected", $userId));
+
+        $database->disconnect($db);
     }
 }

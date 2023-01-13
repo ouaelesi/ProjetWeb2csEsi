@@ -146,7 +146,7 @@ function renderIngredients() {
       }'></input></div>`
     );
     container.append(
-      `<div>quantity: <input name='ingQuantity${}' class="bg-transparent text-light border-0 outline-none" value='${ingredient.quantity}'></input></div>`
+      `<div>quantity: <input name='ingQuantity${ingredient.quantity}' class="bg-transparent text-light border-0 outline-none" value='${ingredient.quantity}'></input></div>`
     );
     container.append(
       `<div onclick='removeIngredient(${key})' class='cursor-pointer'> X </div>`
@@ -267,3 +267,50 @@ function rmAddedIngre(id) {
   $("#addedIngredients").empty();
   renderAddedIngredients();
 }
+
+///
+
+function addRecipeByUser() {
+  console.log("here");
+  $.post("/ProjetWeb/api/apiRoute.php", {
+    recetteID: "",
+    addRecipe: true,
+  })
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((err) => {
+      console.log("done");
+      console.log(err);
+    });
+}
+
+function validateAccount(id) {
+  $.post("/ProjetWeb/api/apiRoute.php", {
+    userId: id,
+    validateAccount: true,
+  })
+    .then((data) => {
+      document.location.reload(true)
+    })
+    .catch((err) => {
+      document.location.reload(true)
+      console.log(err);
+    });
+}
+
+function rejectAccount(id) {
+  $.post("/ProjetWeb/api/apiRoute.php", {
+    userId: id,
+    rejectAccount: true,
+  })
+    .then((data) => {
+      document.location.reload(true)
+    })
+    .catch((err) => {
+      document.location.reload(true)
+      console.log(err);
+    });
+}
+
+

@@ -466,8 +466,12 @@ option {
 }
 ::placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.5);
   opacity: 1; /* Firefox */
+}
+input{
+  outline: none;
+  color: white ; 
 }
 
 .stepCircle {
@@ -503,4 +507,59 @@ option {
 .suggestion:hover{
   border-bottom-color: var(--yellow-color);
   color: var(--yellow-color);
+}
+
+/* admin */
+.sideBar,.adminpages{
+  height: 100vh;
+  overflow-y: auto;
+}
+
+
+.statsCard {
+  border:2px solid;
+  padding: 15px 15px 5px 15px;
+  border-radius: 15px;
+}
+.statsCard:hover {
+   transform: scale(1.02);
+}
+.nbUsersCard{
+  background-color: rgba(255, 230, 0, 0.7);
+  border-color: rgba(255, 230, 0, 0.9);
+}
+.nbRecipesCard{
+  background-color: rgba(255, 0, 0, 0.5);
+  border-color: rgba(255, 0, 0, 0.6);
+}
+.nbNewsCard{
+  background-color: rgba(98, 255, 0, 0.5);
+  border-color: rgba(85, 255, 0, 0.6);
+}
+.nbNutrutionCard{
+  background-color: rgba(255, 0, 0, 0.1);
+  border-color: rgba(85, 255, 0, 0.1);
+}
+.statsNumber{
+  font-size: 120px;
+  line-height: 100px;
+  margin: 10px 0 -10px 0;
+}
+.TableHeader{
+  border: solid 1px var(--yellow-color);
+  background-color: rgba(255, 242, 0, 0.1);
+  background: linear-gradient(
+    10deg,
+    rgba(255, 242, 0,  0.3) 0%,
+    rgba(255, 242, 0,  0.1) 20%,
+    rgba(255, 242, 0,  0.1) 80%,
+    rgba(255, 242, 0,  0.3) 100%
+  );
+  color: var(--yellow-color);
+}
+
+.TableRow:hover{
+   border-bottom-color:var(--yellow-color) ;
+   margin-left: 10px;
+   color: var(--yellow-color);
 }

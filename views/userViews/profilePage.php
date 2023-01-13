@@ -1,6 +1,5 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/views/userViews/sharedViews.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/controllers/swiperController.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/controllers/categoryController.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/controllers/recipeController.php');
 
@@ -59,22 +58,22 @@ class profilePage
         $stats = $userController->userStats($userId)
     ?>
         <div class="container my-5">
-            <div class="h1 mt-5 mb-4 pt-5">
-                mes Staistiques
+            <div class="h2 mt-5 mb-4 pt-5">
+                Staistiques
                 <hr />
             </div>
             <div class="bluredBox px-5 py-4 d-flex justify-content-between">
                 <div class="d-flex gap-2">
-                    <img src="public/icons/fullheart.png" width="25px" />Liked posts : <?php echo $stats['likes'] ?>
+                    <img src="/ProjetWeb/public/icons/fullheart.png" width="25px" />Liked posts : <?php echo $stats['likes'] ?>
                 </div>
                 <div class="d-flex gap-2">
-                    <img src="public/icons/star.png" width="25px" />Rated posts : <?php echo $stats['rating'] ?>
+                    <img src="/ProjetWeb/public/icons/star.png" width="25px" />Rated posts : <?php echo $stats['rating'] ?>
                 </div>
                 <div class="d-flex gap-2">
-                    <img src="public/icons/comment.png" width="25px" />Comments : <?php echo $stats['comments'] ?>
+                    <img src="/ProjetWeb/public/icons/comment.png" width="25px" />Comments : <?php echo $stats['comments'] ?>
                 </div>
                 <div class="d-flex gap-2">
-                    <img src="public/icons/addfile.png" width="25px" />Added posts : <?php echo $stats['posts'] ?>
+                    <img src="/ProjetWeb/public/icons/addfile.png" width="25px" />Added posts : <?php echo $stats['posts'] ?>
                 </div>
             </div>
         </div>

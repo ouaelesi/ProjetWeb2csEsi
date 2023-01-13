@@ -8,7 +8,7 @@ class userController
     {
 
         if (!isset($_COOKIE["logedIn_user"])) {
-            return ; 
+            return;
             // header("/projetWeb/login");
         };
         $userModel = new userModel();
@@ -99,5 +99,32 @@ class userController
         return $response;
     }
 
-    
+
+    public function getNbUsers()
+    {
+        $userModel = new userModel();
+        $response = $userModel->getNbUsers();
+        return $response[0];
+    }
+
+    public function getallUser()
+    {
+        $userModel = new userModel();
+        $response = $userModel->getallUser();
+        return $response;
+    }
+
+
+    public function validateAccount($userId)
+    {
+        $userModel = new userModel();
+        $userModel->validateAccount($userId);
+        return;
+    }
+    public function rejectAccount($userId)
+    {
+        $userModel = new userModel();
+        $userModel->rejectAccount($userId);
+        return;
+    }
 }

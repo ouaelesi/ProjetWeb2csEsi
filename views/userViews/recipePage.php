@@ -89,7 +89,7 @@ class recipePage
                     ["id" => "5", "name" => "4-5 starts"],
                 ]
             ]
-        ]);
+        ] , "Filtere les recettes");
     }
 
     // search input 

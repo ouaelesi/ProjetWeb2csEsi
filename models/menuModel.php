@@ -27,25 +27,27 @@ class menuModel
         return $response;
     }
 
-    
-    public function addLink($data){
+
+    public function addLink($data)
+    {
         $database = new dataBaseController();
         $db  = $database->connect();
         // add the post 
         $query = $db->prepare("INSERT INTO `link`(`name` , `type` , `href` , `icon` , `menuID`) VALUES (? , ? , ?)");
-        $query->execute(array($data["name"], $data["type"], $data["href"] , $data["icon"] ,  $data["menuID"]));
+        $query->execute(array($data["name"], $data["type"], $data["href"], $data["icon"],  $data["menuID"]));
 
         unset($_POST);
         $database->disconnect($db);
         return;
     }
 
-    public function addSocilaMedia($data){
+    public function addSocilaMedia($data)
+    {
         $database = new dataBaseController();
         $db  = $database->connect();
         // add the post 
         $query = $db->prepare("INSERT INTO `socialmedia`(`name` , `icon` ,`href` , `menuID`) VALUES (? , ? , ?)");
-        $query->execute(array($data["name"], $data["icon"] , $data["href"] , $data["menuID"]));
+        $query->execute(array($data["name"], $data["icon"], $data["href"], $data["menuID"]));
 
         unset($_POST);
         $database->disconnect($db);
@@ -53,4 +55,18 @@ class menuModel
     }
 
 
+    public function getLogo($page)
+    {
+        $database = new dataBaseController();
+        $db  = $database->connect();
+        $query = "SELECT logo from menu where `page`='" . $page . "'";
+        $res = $database->request($db, $query);
+        $response = array();
+        foreach ($res as $recipe) {
+            array_push($response, $recipe);
+        }
+        // echo var_dump($response);
+        $database->disconnect($db);
+        return $response;
+    }
 }

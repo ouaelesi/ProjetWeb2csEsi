@@ -43,7 +43,7 @@ class healthyPage
                         ]
                     ]
 
-                ]); ?>
+                ] , "Filtrer les recettes"); ?>
             </div>
         </div>
 

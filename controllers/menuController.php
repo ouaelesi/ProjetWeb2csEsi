@@ -6,18 +6,27 @@ class menuController
     {
         $menuModel = new menuModel();
         $response = $menuModel->getMenu($page);
-        return $response ; 
+        return $response;
     }
 
-    public function addLink(){
-        $menuModel = new menuModel() ; 
-        $menuModel->addLink($_POST) ; 
+    public function addLink()
+    {
+        $menuModel = new menuModel();
+        $menuModel->addLink($_POST);
         return;
     }
 
-    public function addSocilaMedia(){
-        $menuModel = new menuModel() ; 
-        $menuModel->addSocilaMedia($_POST) ; 
+    public function addSocilaMedia()
+    {
+        $menuModel = new menuModel();
+        $menuModel->addSocilaMedia($_POST);
         return;
+    }
+
+    public function getLogo($page)
+    {
+        $menuModel = new menuModel();
+        $response = $menuModel->getLogo($page);
+        return $response[0];
     }
 }
