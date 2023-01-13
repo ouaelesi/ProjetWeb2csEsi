@@ -74,4 +74,25 @@ class ingredientModel
         $database->disconnect($db);
         return $response;
     }
+
+    public function editIngredient($id)
+    {
+        $database = new dataBaseController();
+        $db  = $database->connect();
+
+        $query = $db->prepare('UPDATE `ingredient` SET `name`=?, `healthy`=?, `season`=? , `calories`=? WHERE id=?');
+        $query->execute(array($_POST['name'], $_POST['healthy'], $_POST['season'], $_POST['calories'], $id));
+
+        $database->disconnect($db);
+    }
+
+    public function deleteIngredient($id){
+        $database = new dataBaseController();
+        $db  = $database->connect();
+
+        $query = $db->prepare('DELETE FROM `ingredient` WHERE id=?');
+        $query->execute(array($id));
+
+        $database->disconnect($db);
+    }
 }

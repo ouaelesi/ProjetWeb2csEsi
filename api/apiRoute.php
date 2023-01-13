@@ -14,7 +14,17 @@ if (isset($_POST['addIngredient'])) {
     $ingredientController->addIngredient();
     header("location: /ProjetWeb/admin/ingredients");
 }
+if (isset($_POST['deleteIngredient'])) {
+    $ingredientController = new ingredientController();
+    $ingredientController->deleteIngredient($_POST['ingredientId']);
+    header("location: /ProjetWeb/admin/ingredients");
+}
 
+
+if (isset($_POST['editIngredient'])) {
+    $ingredientController = new ingredientController();
+    $ingredientController->editIngredient($_POST['ingredientId']);
+}
 
 if (isset($_POST['validateAccount'])) {
     $userController = new userController();

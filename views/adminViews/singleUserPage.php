@@ -3,7 +3,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/views/userViews/sharedViews
 require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/controllers/categoryController.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/controllers/recipeController.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/views/userViews/profilePage.php');
-
+require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/controllers/categoryController.php');
 class singleUserPage
 {
     public function generalInfos($user)
@@ -92,23 +92,37 @@ class singleUserPage
 
     public function addedRecipes($recipes)
     {
+        $categoryController = new categoryController();
     ?>
         <div class="h3 my-5 pt-5">Recettes Ajoutées
             <hr />
         </div>
-        <div class="d-flex bluredBox px-3 py-3 rounded-1 justify-content-between my-2 TableHeader" role="button">
-            <div class="col-5"> Recette</div>
-            <div class="col-3">date</div>
-            <div class="col-2">status</div>
+        <div class="d-flex bluredBox px-3 py-3 rounded-1 justify-content-between my-2 mt-5 TableHeader" role="button">
+            <div class="col-3">Titre</div>
+            <div class="col-1 text-center">Categorie</div>
+            <div class="col-1 text-center">Rating</div>
+            <div class="col-1 text-center">rest Time</div>
+            <div class="col-1 text-center">cook time</div>
+            <div class="col-1 text-center">preparation</div>
+            <div class="col-2 text-center">Status</div>
             <div class="col-1 "><img src="/ProjetWeb/public/icons/edit.png" width='20px' height="20px" class="d-block mx-auto" /></div>
         </div>
         <?php
         foreach ($recipes as $recipe) {
+            $category = $categoryController->getCategoryById($recipe['categoryID']);
         ?>
             <div class="d-flex bluredBox px-3 py-3 rounded-1 justify-content-between my-2 TableRow" role="button" onclick="gotoUrl('/ProjetWeb/admin/recette?id=<?php echo $recipe['id'] ?>')">
-                <div class="col-5 "><?php echo $recipe['title'] ?></div>
-                <div class="col-3">0-0-0-0</div>
-                <div class="col-2"><?php echo $recipe['status'] ?></div>
+                <div class="col-3 "><?php echo $recipe['title'] ?></div>
+                <div class="col-1 text-center bluredBox pt-1"><?php echo $category['name'] ?></div>
+                <div class="col-1 text-center"><?php echo $recipe['note'] ?></div>
+                <div class="col-1 text-center"><?php echo $recipe['restTime'] ?></div>
+                <div class="col-1 text-center"><?php echo $recipe['cookTime'] ?></div>
+                <div class="col-1 text-center"><?php echo $recipe['preparationTime'] ?></div>
+                <div class="col-2">
+                    <div class="w-50 mx-auto text-center text-light py-1 rounded-1 <?php if ($recipe['status'] == 'valid') echo 'bg-success';
+                                                                                    else if ($recipe['status'] == 'rejected') echo 'bg-danger';
+                                                                                    else echo 'bg-warning' ?>"><?php echo $recipe['status'] ?></div>
+                </div>
                 <div class="col-1 "><img src="/ProjetWeb/public/icons/edit.png" width='20px' height="20px" class="d-block mx-auto" /></div>
             </div>
         <?php

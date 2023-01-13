@@ -3,7 +3,7 @@ class dataBaseModel
 {
     public function connect()
     {
-        $db = new PDO("mysql:host=localhost;dbname=TDW;charset=utf8", "root", "");
+        $db = new PDO("mysql:host=localhost;dbname=ProjetWeb22;charset=utf8", "root", "");
         return $db;
     }
     public function disConnect()

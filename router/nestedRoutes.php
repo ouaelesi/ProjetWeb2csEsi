@@ -61,6 +61,9 @@ class nestedRoutes
             case '/ProjetWeb/admin/user':
                 $profileController->displayProfilePage();
                 break;
+            case '/ProjetWeb/admin/recette':
+                $recipesPage->displaySinglePage();
+                break;
             default:
                 $sharedView->notFoundPage("Soory, We didn't find your Page", "404");
                 break;

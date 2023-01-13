@@ -28,7 +28,8 @@ const setCurrenctfilter = () => {
 
 const filter = (option, value) => {
   filterOptions[option] = value;
-  let url = "/ProjetWeb/ideas?";
+  let baseUrl = document.location.href.split("?")[0];
+  let url = baseUrl + "?";
   url =
     url +
     "category=" +
@@ -291,10 +292,10 @@ function validateAccount(id) {
     validateAccount: true,
   })
     .then((data) => {
-      document.location.reload(true)
+      document.location.reload(true);
     })
     .catch((err) => {
-      document.location.reload(true)
+      document.location.reload(true);
       console.log(err);
     });
 }
@@ -305,12 +306,43 @@ function rejectAccount(id) {
     rejectAccount: true,
   })
     .then((data) => {
-      document.location.reload(true)
+      document.location.reload(true);
     })
     .catch((err) => {
-      document.location.reload(true)
+      document.location.reload(true);
       console.log(err);
     });
 }
 
+// edit ingredient
+function editIngredient(id) {
+  $.post("/ProjetWeb/api/apiRoute.php", {
+    ingredientId: id,
+    editIngredient: true,
+    name: $("#ingredientName").val(),
+    healthy: $("#isHealthy").val(),
+    season: $("#ingredientSeason").val(),
+    calories: $("#calories").val(),
+  })
+    .then((data) => {
+      document.location.reload(true);
+    })
+    .catch((err) => {
+      document.location.reload(true);
+      console.log(err);
+    });
+}
 
+function deleteIngredient(id) {
+  $.post("/ProjetWeb/api/apiRoute.php", {
+    ingredientId: id,
+    deleteIngredient: true,
+  })
+    .then((data) => {
+      document.location.reload(true);
+    })
+    .catch((err) => {
+      document.location.reload(true);
+      console.log(err);
+    });
+}

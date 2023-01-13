@@ -43,4 +43,18 @@ class ingredientController
         // echo var_dump($response) ; 
         return $response;
     }
+
+    public function editIngredient($id)
+    {
+        $ingredientModel = new ingredientModel();
+        $ingredientModel->editIngredient($id);
+        // echo var_dump($response) ; 
+        return;
+    }
+    public function deleteIngredient($id)
+    {
+        $ingredientModel = new ingredientModel();
+        $ingredientModel->deleteIngredient($id); 
+        return;
+    }
 }

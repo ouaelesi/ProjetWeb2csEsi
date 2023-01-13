@@ -59,10 +59,56 @@ class ingredientsPage
 
             </div>
         </div>
+    <?php
+    }
+    public function ingredientsList($ingredients)
+    {
+    ?>
+        <div>
+            <div class="d-flex bluredBox px-3 py-3 rounded-1 justify-content-between my-2 mt-5 TableHeader" role="button">
+                <div class="col-3"> ingredient</div>
+                <div class="col-2">Healthy</div>
+                <div class="col-3">Saison</div>
+                <div class="col-2">Calories</div>
+                <div class="col-2 text-center">Manage</div>
+            </div>
+            <?php
+            foreach ($ingredients as $ingredient) {
+            ?>
+                <div class="d-flex bluredBox px-3 py-3 rounded-1 justify-content-between my-2 TableRow" role="button">
+                    <div class="col-3 ">
+                        <input value="<?php echo $ingredient['name'] ?>" name="name" class="bg-transparent border-0" id="ingredientName" />
+                    </div>
+                    <div class="col-2">
+                        <select class="bg-transparent border-0 text-light" name="healthy" id="isHealthy">
+                            <option value="1" <?php if ($ingredient['healthy'] == 1) echo 'selected' ?>>Yes</option>
+                            <option value="0" <?php if ($ingredient['healthy'] == 0) echo 'selected' ?>>Non</option>
+                        </select>
+                    </div>
+                    <div class="col-3">
+                        <select class="bg-transparent border-0 text-light" name="season" id="ingredientSeason">
+                            <option value="tous" <?php if ($ingredient['season'] == 'tous') echo 'selected' ?>>tous les saison</option>
+                            <option value="hiver" <?php if ($ingredient['season'] == 'hiver') echo 'selected' ?>>Hiver</option>
+                            <option value="automne" <?php if ($ingredient['season'] == 'automne') echo 'selected' ?>>automne</option>
+                            <option value="printemps" <?php if ($ingredient['season'] == 'printemps') echo 'selected' ?>>printemps</option>
+                            <option value="ete" <?php if ($ingredient['season'] == 'ete') echo 'selected' ?>>été</option>
+                        </select>
+                    </div>
+                    <div class="col-2"><input value="<?php echo $ingredient['calories'] ?>" name="calories" class="bg-transparent border-0" id="calories" /> </div>
+                    <div class="col-2 "><button class="btn btn-yellow mx-2" onclick="editIngredient(<?php echo $ingredient['id'] ?>)">Edit</button> <button class="btn btn-red" onclick="deleteIngredient(<?php echo $ingredient['id'] ?>)">Supprimer</button></div>
+                </div>
+            <?php
+            }
+            ?>
+
+        </div>
 <?php
     }
     public function displayIngredientsPage()
     {
+
+        $ingredientController = new ingredientController();
+        $ingredients = $ingredientController->getIngredients();
         // imports 
         $sharedViews = new sharedadminView();
 
@@ -70,7 +116,9 @@ class ingredientsPage
         $sharedViews->pageHeader('Gestion des nutritions');
 
         // add ingredient 
-
         $this->addIngredient();
+
+        // ingredients list
+        $this->ingredientsList($ingredients);
     }
 }
