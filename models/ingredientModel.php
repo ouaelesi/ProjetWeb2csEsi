@@ -16,9 +16,16 @@ class ingredientModel
         $database = new dataBaseController();
         $db  = $database->connect();
         // add the post 
-        $query = $db->prepare("INSERT INTO `post`(`name` , `healthy` , `season`) VALUES (? , ? , ?)");
-        $query->execute(array($data["name"], $data["healthy"], $data["date"]));
+        $query = $db->prepare("INSERT INTO `ingredient`(`name` , `healthy` , `season` , `calories`) VALUES (? , ? , ? ,?)");
+        $query->execute(array($data["name"], $data["healthy"], $data["season"], $_POST['calories']));
 
+        // add the informations 
+        $ingredientID = $db->lastInsertId();
+        $informations = $this->getInformations();
+        foreach ($informations as $info) {
+            $query = $db->prepare("INSERT INTO `contientinfos`(`ingredientID` , `informationID` , `quantity` ) VALUES (? , ? , ? )");
+            $query->execute(array($ingredientID, $info['id'], $data[$info["name"]]));
+        }
         unset($_POST);
         $database->disconnect($db);
         return;
@@ -44,6 +51,21 @@ class ingredientModel
         $db  = $database->connect();
 
         $query = "SELECT count(*) nbIngredients from ingredient";
+        $res = $database->request($db, $query);
+        $response = array();
+        foreach ($res as $user) {
+            array_push($response, $user);
+        }
+        $database->disconnect($db);
+        return $response;
+    }
+
+    public function getInformations()
+    {
+        $database = new dataBaseController();
+        $db  = $database->connect();
+
+        $query = "SELECT * from information";
         $res = $database->request($db, $query);
         $response = array();
         foreach ($res as $user) {

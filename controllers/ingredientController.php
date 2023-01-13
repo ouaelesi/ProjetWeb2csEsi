@@ -35,4 +35,12 @@ class ingredientController
         // echo var_dump($response) ; 
         return $response[0];
     }
+
+    public function getInformations()
+    {
+        $ingredientModel = new ingredientModel();
+        $response = $ingredientModel->getInformations();
+        // echo var_dump($response) ; 
+        return $response;
+    }
 }

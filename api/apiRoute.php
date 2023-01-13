@@ -1,6 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/controllers/recipeController.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/controllers/userController.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/controllers/ingredientController.php');
 // Check if the admin is loged in 
 
 header('Content-type: application/json');
@@ -8,6 +9,12 @@ header('Content-type: application/json');
 if (isset($_POST['addRecipe'])) {
     echo var_dump($_POST);
 }
+if (isset($_POST['addIngredient'])) {
+    $ingredientController = new ingredientController();
+    $ingredientController->addIngredient();
+    header("location: /ProjetWeb/admin/ingredients");
+}
+
 
 if (isset($_POST['validateAccount'])) {
     $userController = new userController();
