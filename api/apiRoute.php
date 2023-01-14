@@ -6,19 +6,29 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/controllers/ingredientContr
 
 header('Content-type: application/json');
 
-if (isset($_POST['addRecipe'])) {
-    echo var_dump($_POST);
+if (isset($_POST['addRecette'])) {
+    $recipeController = new recipeController();
+    $recipeController->addRecipe();
 }
 if (isset($_POST['addIngredient'])) {
     $ingredientController = new ingredientController();
     $ingredientController->addIngredient();
-    header("location: /ProjetWeb/admin/ingredients");
 }
 if (isset($_POST['deleteIngredient'])) {
     $ingredientController = new ingredientController();
     $ingredientController->deleteIngredient($_POST['ingredientId']);
-    header("location: /ProjetWeb/admin/ingredients");
 }
+if (isset($_POST['validateRecipe'])) {
+    $recipeController = new recipeController();
+    $recipeController->validateRecipe($_POST['recipeId']);
+}
+
+if (isset($_POST['rejectRecipe'])) {
+    $recipeController = new recipeController();
+    $recipeController->rejectRecipe($_POST['recipeId']);
+}
+
+
 
 
 if (isset($_POST['editIngredient'])) {
@@ -51,16 +61,18 @@ if (isset($_POST['signUp'])) {
     $userController->createUser();
     header("location: /ProjetWeb/");
 }
-
-
-if (isset($_GET['validateRecipe'])  == 'valid') {
-    $animalcontroller = new recipeController();
-    $animalcontroller->validateRecipe();
+if (isset($_POST['addRecIngredient'])) {
+    $recipeController = new recipeController();
+    $recipeController->addIngredientToRecipe();
 }
 
-if (isset($_GET['validateRecipe'])  == 'valid') {
-    $animalcontroller = new recipeController();
-    $animalcontroller->validateRecipe();
+if (isset($_POST['addRecStep'])) {
+    $recipeController = new recipeController();
+    $recipeController->addStepToRecipe();
 }
+
+
+
+
 
 // header("location: /TP_PHP_MVC/admin/adminPage.php");

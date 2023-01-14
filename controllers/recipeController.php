@@ -19,12 +19,17 @@ class recipeController
         }
         return;
     }
-    public function validateRecipe()
+    public function validateRecipe($recipeID)
     {
-        $recipeID = $_GET["recipe_id"];
         $recipeModel = new recipeModel();
         $recipeModel->validateRecipe($recipeID);
     }
+    public function rejectRecipe($recipeID)
+    {
+        $recipeModel = new recipeModel();
+        $recipeModel->rejectRecipe($recipeID);
+    }
+
     public function getRecipe($id)
     {
         $recipeModel = new recipeModel();
@@ -54,4 +59,18 @@ class recipeController
         $response = $recipeModel->getNbRecipes();
         return $response[0];
     }
+
+    public function addIngredientToRecipe()
+    {
+        $recipeModel = new recipeModel();
+        $recipeModel->addIngredientToRecipe();
+        return;
+    }
+    public function addStepToRecipe()
+    {
+        $recipeModel = new recipeModel();
+        $recipeModel->addStepToRecipe();
+        return;
+    }
+    
 }

@@ -107,7 +107,6 @@ class recipeModel
     // ajouter une recette 
     public function addRecipe($data)
     {
-        echo var_dump($_POST);
         $database = new dataBaseController();
         $db  = $database->connect();
         // add the post 
@@ -123,7 +122,7 @@ class recipeModel
         $this->uploadImage('cardImage', '/public/images/recipeImages/');
         // upload the civer Image 
         $this->uploadImage('coverImage', '/public/images/recipeImages/');
-
+        header("location: /ProjetWeb/admin/addRecipeIngr?id=" . $db->lastInsertId());
         unset($_POST);
         $database->disconnect($db);
         return;
@@ -141,6 +140,18 @@ class recipeModel
 
         $database->disconnect($db);
     }
+    public function rejectRecipe($id)
+    {
+
+        $database = new dataBaseController();
+        $db  = $database->connect();
+
+        $query = $db->prepare('UPDATE `post` SET `status`=? WHERE id=?');
+        $query->execute(array("rejected", $id));
+
+        $database->disconnect($db);
+    }
+
 
     // Modifier la recette 
     public function updateRecipe($id)
@@ -223,4 +234,32 @@ class recipeModel
 
         return $response;
     }
+
+    public function addIngredientToRecipe()
+    {
+        $database = new dataBaseController();
+        $db  = $database->connect();
+
+        $query = $db->prepare("INSERT INTO `contient`(`recetteID`, `ingredientID` , `quantity` ) VALUES (?,?,?)");
+        $query->execute(array($_POST["recetteID"], $_POST["ingredientID"], $_POST["quantity"]));
+
+        header("location: /ProjetWeb/admin/addRecipeIngr?id=" . $_POST['recetteID']);
+        unset($_POST);
+        $database->disconnect($db);
+        return;
+    }
+    public function addStepToRecipe()
+    {
+        $database = new dataBaseController();
+        $db  = $database->connect();
+
+        $query = $db->prepare("INSERT INTO `step`(`title`, `description` , `recetteID` ) VALUES (?,?,?)");
+        $query->execute(array($_POST["title"], $_POST["description"], $_POST["recetteID"]));
+
+        header("location: /ProjetWeb/admin/addrecStep?id=" . $_POST['recetteID']);
+        unset($_POST);
+        $database->disconnect($db);
+        return;
+    }
+    
 }

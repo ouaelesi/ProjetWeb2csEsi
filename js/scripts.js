@@ -346,3 +346,34 @@ function deleteIngredient(id) {
       console.log(err);
     });
 }
+
+function validateRecipe(id) {
+  $.post("/ProjetWeb/api/apiRoute.php", {
+    recipeId: id,
+    validateRecipe: true,
+  })
+    .then((data) => {
+      document.location.reload(true);
+    })
+    .catch((err) => {
+      document.location.reload(true);
+      console.log(err);
+    });
+}
+function rejectRecipe(id) {
+  $.post("/ProjetWeb/api/apiRoute.php", {
+    recipeId: id,
+    rejectRecipe: true,
+  })
+    .then((data) => {
+      document.location.reload(true);
+    })
+    .catch((err) => {
+      document.location.reload(true);
+      console.log(err);
+    });
+}
+
+
+
+

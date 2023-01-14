@@ -38,7 +38,7 @@ class singleRecipePage
                     </p>
                 </div>
                 <div class="col-6">
-                    <img src="public/images/recipeImages/<?php echo $recipe['coverImage'] ?>" class="rounded-3 d-block ml-auto mt-3" width="85%" />
+                    <img src="/ProjetWeb/public/images/recipeImages/<?php echo $recipe['coverImage'] ?>" class="rounded-3 d-block ml-auto mt-3" width="85%" />
                 </div>
             </div>
         </div>
@@ -62,12 +62,12 @@ class singleRecipePage
                         echo "-";
                     } else {
                         echo number_format($recipe["note"], 2, '.', ',');
-                    } ?> <img src="public/icons/yellow_Star.png" width='20px' class="mx-1" />
+                    } ?> <img src="/ProjetWeb/public/icons/yellow_Star.png" width='20px' class="mx-1" />
                 </div>
-                <div><img src="public/icons/timer.png" width="20px" class="mx-1" /> Préparation: <?php echo $recipe["preparationTime"] ?> min</div>
-                <div><img src="public/icons/timer.png" width="20px" class="mx-1" /> Cuisson: <?php echo $recipe["cookTime"] ?>
+                <div><img src="/ProjetWeb/public/icons/timer.png" width="20px" class="mx-1" /> Préparation: <?php echo $recipe["preparationTime"] ?> min</div>
+                <div><img src="/ProjetWeb/public/icons/timer.png" width="20px" class="mx-1" /> Cuisson: <?php echo $recipe["cookTime"] ?>
                     min</div>
-                <div><img src="public/icons/timer.png" width="20px" class="mx-1" /> Repos: <?php echo $recipe["restTime"] ?> min
+                <div><img src="/ProjetWeb/public/icons/timer.png" width="20px" class="mx-1" /> Repos: <?php echo $recipe["restTime"] ?> min
                 </div>
             </div>
         </div>
@@ -87,7 +87,7 @@ class singleRecipePage
                 ?>
                     <div class="bluredBox px-3 py-3 rounded-4 me-3 my-2 position-relative"><?php echo $ingredient["quantity"] ?>
 
-                        <?php echo $ingredient["name"] ?> <img src="public/icons/<?php if ($ingredient["healthy"]) {
+                        <?php echo $ingredient["name"] ?> <img src="/ProjetWeb/public/icons/<?php if ($ingredient["healthy"]) {
                                                                                         echo "healthy.png";
                                                                                     } else {
                                                                                         echo "nothealthy.png";
@@ -112,7 +112,7 @@ class singleRecipePage
                     <?php foreach ($steps as $step) {
                     ?>
                         <div>
-                            <p class="h3"><img src="public/icons/step.png" width="20px" class="me-2" /> <?php echo $step['title'] ?></p>
+                            <p class="h3"><img src="/ProjetWeb/public/icons/step.png" width="20px" class="me-2" /> <?php echo $step['title'] ?></p>
                             <p class="ps-5">- <?php echo $step['description'] ?></p>
                         </div>
                     <?php
@@ -157,12 +157,12 @@ class singleRecipePage
                 <div class="ratingBox" id="starsBox">
                     <?php for ($i = 0; $i < $rating['note']; $i++) {
                     ?>
-                        <img id="starRating" src="public/icons/Yellow_Star.png" width="40px" class="starRating " onclick="rateRecipe(3 , <?php echo $recipeId ?> ,  <?php echo $i + 1 ?>)" />
+                        <img id="starRating" src="/ProjetWeb/public/icons/Yellow_Star.png" width="40px" class="starRating " onclick="rateRecipe(3 , <?php echo $recipeId ?> ,  <?php echo $i + 1 ?>)" />
                     <?php
                     } ?>
                     <?php for ($i = $rating['note']; $i < $topNote; $i++) {
                     ?>
-                        <img id="starRating" src="public/icons/emptyStar.png" width="40px" class="starRating " onclick="rateRecipe(<?php echo $recipeId ?> ,  <?php echo $i + 1 ?>)" />
+                        <img id="starRating" src="/ProjetWeb/public/icons/emptyStar.png" width="40px" class="starRating " onclick="rateRecipe(<?php echo $recipeId ?> ,  <?php echo $i + 1 ?>)" />
                     <?php
                     } ?>
                 </div>

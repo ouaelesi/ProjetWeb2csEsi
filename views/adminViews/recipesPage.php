@@ -16,7 +16,7 @@ class recipesPage
                 <?php $sharedViews->pageHeader('Gestion des recettes'); ?>
             </div>
             <div>
-                <button class="btn btn-red"> Ajouter une recette </button>
+                <button class="btn btn-red" onclick="gotoUrl('/ProjetWeb/admin/addrecipe')"> Ajouter une recette </button>
             </div>
         </div>
     <?php
@@ -44,7 +44,7 @@ class recipesPage
         foreach ($recipes as $recipe) {
             $category = $categoryController->getCategoryById($recipe['categoryID']);
         ?>
-            <div class="d-flex bluredBox px-3 py-3 rounded-1 justify-content-between my-2 TableRow" role="button" onclick="gotoUrl('/ProjetWeb/admin/recette?id=<?php echo $recipe['id'] ?>')">
+            <div class="d-flex bluredBox px-3 py-3 rounded-1 justify-content-between my-2 TableRow" role="button" onclick="gotoUrl('/ProjetWeb/admin/recette?id=<?php echo $recipe[0] ?>')">
                 <div class="col-3 "><?php echo $recipe['title'] ?></div>
                 <div class="col-1 text-center bluredBox pt-1"><?php echo $category['name'] ?></div>
                 <div class="col-1 text-center"><?php echo $recipe['note'] ?></div>
@@ -61,7 +61,7 @@ class recipesPage
         <?php
         }
         ?>
-<?php
+    <?php
     }
     public function displayRecipesPage()
     {
@@ -133,7 +133,388 @@ class recipesPage
     }
 
 
-    public function displaySinglePage(){
-        echo "single page" ; 
+    public function singlerecipeHeader($recipe)
+    {
+        $sharedViews = new sharedadminView();
+    ?>
+        <div class="d-flex justify-content-between">
+            <div>
+                <?php $sharedViews->pageHeader($recipe['title']); ?>
+            </div>
+            <div>
+                <?php if ($recipe['status'] == "pending") {
+                ?>
+                    <button id="validateAccountBtn" class="btn btn-yellow mx-2" onclick="validateRecipe(<?php echo $recipe['id'] ?>)">Valider la recette</button>
+                    <button id="validateAccountBtn" class="btn btn-red" onclick="rejectRecipe(<?php echo $recipe['id'] ?>)">rejecter la recette</button>
+                <?php
+                } ?>
+            </div>
+        </div>
+    <?php
+    }
+
+    public function recipeVideo()
+    {
+    ?>
+        <div class="container my-5">
+            <div class="h3 mb-4">Video</div>
+
+            <iframe class="rounded-4 mx-auto d-block " width="100%" height="500" src="https://www.youtube.com/embed/fcD94e93cCk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+
+        </div>
+    <?php
+    }
+
+    public function displaySinglePage()
+    {
+        $singleRecipePage = new singleRecipePage();
+        $recipeController = new recipeController();
+        $recipe = $recipeController->getRecipe($_GET['id']);
+        // header 
+        $this->singlerecipeHeader($recipe);
+        // 
+        $singleRecipePage->recipeInfos($recipe);
+        // recipe stats 
+        $singleRecipePage->recipeStats($recipe);
+        // ingredients 
+        $singleRecipePage->ingredients($recipe[0]);
+        // recipe steps
+        $singleRecipePage->recipesteps($recipe[0]);
+        // recipe video 
+        $this->recipeVideo();
+    }
+
+    public function addRecipeForm()
+    {
+    ?>
+        <div class="d-flex justify-content-center pb-5">
+            <div>
+                <div class="rounded-circle text-center bluredBox stepCircle activeStep">
+                    1
+                </div>
+                <p class="text-center mt-2">Ajouter</p>
+            </div>
+            <div class="stepLine"></div>
+            <div>
+                <div class="rounded-circle text-center bluredBox stepCircle">
+                    2
+                </div>
+                <p class="text-center mt-2">Step details</p>
+            </div>
+            <div class="stepLine"></div>
+            <div>
+                <div class="rounded-circle text-center bluredBox stepCircle">
+                    3
+                </div>
+                <p class="text-center mt-2">Step details</p>
+            </div>
+            <div class="stepLine"></div>
+            <div>
+                <div class="rounded-circle text-center bluredBox stepCircle">
+                    4
+                </div>
+                <p class="text-center mt-2">Step details</p>
+            </div>
+        </div>
+        <div class="bluredBox px-3 pt-4 pb-2   mx-auto rounded-3 position-relative">
+            <div class="artFont text-center h1">
+                Information Génerale
+            </div>
+            <form class="row" action="/ProjetWeb/api/apiRoute.php" method="POST" enctype="multipart/form-data">
+                <div class="my-2 col-6">
+                    <label class="mb-1">Titre</label>
+                    <input class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="text" required placeholder="Nom" name="title" />
+                </div>
+                <div class="my-2 col-6">
+                    <label class="mb-1">Description</label>
+                    <input class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="text" required placeholder="Nom" name="description" />
+                </div>
+                <div class="my-2 col-6">
+                    <label class="mb-1">Category</label>
+                    <select name="category" class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light">
+                        <?php
+                        $categoryController = new categoryController();
+                        $categories = $categoryController->getCategories();
+                        foreach ($categories as $category) {
+                        ?>
+                            <option value="<?php echo $category["id"] ?>"><?php echo $category["name"] ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="my-2 col-6">
+                    <label class="mb-1">Event </label>
+
+                    <select name="event" class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light">
+                        <?php
+                        $eventsController = new eventsController();
+                        $events = $eventsController->getEvents();
+                        foreach ($events as $event) {
+                        ?>
+                            <option value="<?php echo $event["id"] ?>"><?php echo $event["name"] ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="my-2 col-6">
+                    <label class="mb-1">Image de couverture</label>
+                    <input name="coverImage" type="file" required class="bluredBox px-2 py-1 d-block rounded-1 w-100 text-light" />
+                </div>
+                <div class="my-2 col-6">
+                    <label class="mb-1">Image du carte </label>
+                    <input name="cardImage" type="file" required class="bluredBox px-2 py-1 d-block rounded-1 w-100 text-light" />
+                </div>
+                <div class="my-2 col-6">
+                    <label class="mb-1">Video </label>
+                    <input name="video" placeholder="video" type="text" required class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" />
+                </div>
+                <div class="my-2 col-6">
+                    <label class="mb-1">Temps de cuisson </label>
+                    <input name="cookTime" placeholder="Temps de cuisson" type="text" required class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" />
+                </div>
+                <div class="my-2 col-6">
+                    <label class="mb-1">Temps de préparation </label>
+                    <input name="preparationTime" placeholder="Temps de préparation" type="text" required class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" />
+                </div>
+                <div class="my-2 col-6">
+                    <label class="mb-1">Temps de repos </label>
+                    <input name="restTime" placeholder="Temps de repos" type="text" required class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" />
+                </div>
+                <div>
+                    <button class="btn btn-yellow d-block ms-auto px-4 my-3" type="submit" name="addRecette">Suivant</button>
+                </div>
+            </form>
+        </div>
+    <?php
+    }
+
+
+
+    public function displayAddRecipe()
+    {
+        $sharedViews = new sharedadminView();
+
+        // header 
+        $sharedViews->pageHeader("Ajouter une recette");
+        // add recipe form 
+        $this->addRecipeForm();
+    }
+
+    public function addRecipeIngredientForm()
+    {
+    ?>
+        <div class="d-flex justify-content-center pb-5">
+            <div>
+                <div class="rounded-circle text-center bluredBox stepCircle ">
+                    1
+                </div>
+                <p class="text-center mt-2">Ajouter</p>
+            </div>
+            <div class="stepLine"></div>
+            <div>
+                <div class="rounded-circle text-center bluredBox stepCircle activeStep">
+                    2
+                </div>
+                <p class="text-center mt-2">Step details</p>
+            </div>
+            <div class="stepLine"></div>
+            <div>
+                <div class="rounded-circle text-center bluredBox stepCircle">
+                    3
+                </div>
+                <p class="text-center mt-2">Step details</p>
+            </div>
+            <div class="stepLine"></div>
+            <div>
+                <div class="rounded-circle text-center bluredBox stepCircle">
+                    4
+                </div>
+                <p class="text-center mt-2">Step details</p>
+            </div>
+        </div>
+        <div class="bluredBox px-3 pt-4 pb-2   mx-auto rounded-3 position-relative">
+            <div class="artFont text-center h1">
+                Ajouter les ingredients
+            </div>
+            <form class="row" action="/ProjetWeb/api/apiRoute.php" method="POST" enctype="multipart/form-data">
+                <div class="my-2 col-6">
+                    <label class="mb-1">Ingredient</label>
+                    <select name="ingredientID" class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light">
+                        <?php
+                        $ingredientController = new ingredientController();
+                        $ingredients = $ingredientController->getIngredients();
+                        foreach ($ingredients as $ingredient) {
+                        ?>
+                            <option value="<?php echo $ingredient["id"] ?>"><?php echo $ingredient["name"] ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="my-2 col-6">
+                    <label class="mb-1">Quantité</label>
+                    <input class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="text" required placeholder="Quantité" name="quantity" />
+                </div>
+                <input hidden value="<?php echo $_GET['id'] ?>" name="recetteID" />
+                <div>
+                    <button class="btn btn-yellow d-block ms-auto px-4 my-3" type="submit" name="addRecIngredient">Ajouter ingredient</button>
+                </div>
+            </form>
+        </div>
+    <?php
+    }
+
+    public function confirmButton($url)
+    {
+
+    ?>
+        <div class=""><button class="d-block ms-auto btn btn-yellow px-3" onclick="gotoUrl('<?php echo $url ?>')">Suivant</button></div>
+    <?php
+    }
+
+    // La page pour ajouter des ingredient a une recette 
+    public function displayAddIngRec()
+    {
+        $sharedViews = new sharedadminView();
+        $recipepage = new singleRecipePage();
+
+        // header 
+        $sharedViews->pageHeader("Les ingredients de la recette");
+        // add recipe form 
+        $this->addRecipeIngredientForm();
+        // added ingredients
+        $recipepage->ingredients($_GET['id']);
+        // confirm
+        $this->confirmButton('/ProjetWeb/admin/addrecStep?id=' . $_GET['id']);
+    }
+
+    public function addStepForm()
+    {
+    ?>
+        <div class="d-flex justify-content-center pb-5">
+            <div>
+                <div class="rounded-circle text-center bluredBox stepCircle ">
+                    1
+                </div>
+                <p class="text-center mt-2">Ajouter</p>
+            </div>
+            <div class="stepLine"></div>
+            <div>
+                <div class="rounded-circle text-center bluredBox stepCircle ">
+                    2
+                </div>
+                <p class="text-center mt-2">Step details</p>
+            </div>
+            <div class="stepLine"></div>
+            <div>
+                <div class="rounded-circle text-center bluredBox stepCircle activeStep">
+                    3
+                </div>
+                <p class="text-center mt-2">Step details</p>
+            </div>
+            <div class="stepLine"></div>
+            <div>
+                <div class="rounded-circle text-center bluredBox stepCircle">
+                    4
+                </div>
+                <p class="text-center mt-2">Step details</p>
+            </div>
+        </div>
+        <div class="bluredBox px-3 pt-4 pb-2   mx-auto rounded-3 position-relative">
+            <div class="artFont text-center h1">
+                Ajouter les étapes
+            </div>
+            <form class="row" action="/ProjetWeb/api/apiRoute.php" method="POST" enctype="multipart/form-data">
+                <div class="my-2 col-6">
+                    <label class="mb-1">Titre de l'étape</label>
+                    <input class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="text" required placeholder="titre de l étape" name="title" />
+                </div>
+                <div class="my-2 col-6">
+                    <label class="mb-1">Déscription</label>
+                    <textarea class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="text" required placeholder="Quantité" name="description" rows="4"></textarea>
+                </div>
+                <input hidden value="<?php echo $_GET['id'] ?>" name="recetteID" />
+                <div>
+                    <button class="btn btn-yellow d-block ms-auto px-4 my-3" type="submit" name="addRecStep">Ajouter Etape</button>
+                </div>
+            </form>
+        </div>
+    <?php
+    }
+    public function displayAddIngStep()
+    {
+        $sharedViews = new sharedadminView();
+        $recipepage = new singleRecipePage();
+
+        // header 
+        $sharedViews->pageHeader("Les étapes de la recette");
+        // add recipe form 
+        $this->addStepForm();
+        // added ingredients
+        $recipepage->recipeSteps($_GET['id']);
+        // confirm
+        $this->confirmButton("/ProjetWeb/admin/confirmRecipe?id=" . $_GET['id']);
+    }
+
+    public function recipePreview($recipe, $category)
+    {
+        $sharedViews = new HomePage();
+    ?>
+        <div class="d-flex justify-content-center pb-5">
+            <div>
+                <div class="rounded-circle text-center bluredBox stepCircle ">
+                    1
+                </div>
+                <p class="text-center mt-2">Ajouter</p>
+            </div>
+            <div class="stepLine"></div>
+            <div>
+                <div class="rounded-circle text-center bluredBox stepCircle ">
+                    2
+                </div>
+                <p class="text-center mt-2">Step details</p>
+            </div>
+            <div class="stepLine"></div>
+            <div>
+                <div class="rounded-circle text-center bluredBox stepCircle ">
+                    3
+                </div>
+                <p class="text-center mt-2">Step details</p>
+            </div>
+            <div class="stepLine"></div>
+            <div>
+                <div class="rounded-circle text-center bluredBox stepCircle activeStep">
+                    4
+                </div>
+                <p class="text-center mt-2">Step details</p>
+            </div>
+        </div>
+        <div class="w-25  mx-auto d-flex justify-content-center">
+            <?php $sharedViews->recipeCard($recipe, $category['name']) ?>
+        </div>
+
+<?php
+    }
+
+    public function confirmRecipeCreation()
+    {
+        $sharedViews = new sharedadminView();
+        $recipepage = new singleRecipePage();
+
+        $recipeController = new recipeController();
+        $recipe = $recipeController->getRecipe($_GET['id']);
+
+        $categoryController = new categoryController();
+        $category = $categoryController->getCategoryById($recipe['categoryID']);
+        // header 
+        $sharedViews->pageHeader("Confirmer la creation de la recette");
+        // add recipe form 
+        $this->recipePreview($recipe, $category);
+
+        // confirm
+        $this->confirmButton("/ProjetWeb/admin/recettes");
     }
 }

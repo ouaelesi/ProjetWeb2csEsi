@@ -19,7 +19,7 @@ class HomePage
                 foreach ($data as $slide) {
                 ?>
                     <div class="carousel-item position-relative swiperItem <?php if ($slide["id"] == "1") echo "active" ?>">
-                        <img src="public/images/swiperHeader/<?php echo $slide['image'] ?>" class="d-block w-100 position-absolute" alt="...">
+                        <img src="/ProjetWeb/public/images/swiperHeader/<?php echo $slide['image'] ?>" class="d-block w-100 position-absolute" alt="...">
                         <div class="flex">
                             <div class="poition-relative swiperContent ">
                                 <p class="swiperTitle">GET YOUR RECIPE <br /><span>Now!</span></p>
@@ -86,11 +86,11 @@ class HomePage
             <div class="blurEffect"></div>
             <div class="slide-con p-1">
                 <div class="cardImage">
-                    <img src="public/images/recipeImages/<?php echo $recipe['cardImage'] ?>" />
+                    <img src="/ProjetWeb/public/images/recipeImages/<?php echo $recipe['cardImage'] ?>" />
                     <div class="position-relative d-flex justify-content-between p-1">
 
                         <div class="categoryCard"><?php echo $category ?></div>
-                        <div id="heartContainer" class="likeCard " onclick="window.event.cancelBubble = true; likeRecipe(this , <?php echo $recipe[0] ?>)"> <img src="public/icons/<?php if (!$isLike) {
+                        <div id="heartContainer" class="likeCard " onclick="window.event.cancelBubble = true; likeRecipe(this , <?php echo $recipe[0] ?>)"> <img src="/ProjetWeb/public/icons/<?php if (!$isLike) {
                                                                                                                                                             echo 'heart.png';
                                                                                                                                                         } else {
                                                                                                                                                             echo 'fullheart.png';
@@ -103,7 +103,7 @@ class HomePage
                     <div class="d-flex justify-content-between">
                         <div class="recipeCardStats">
                             <div class=""><?php if ($recipe["note"] != null) echo number_format($recipe["note"], 2, '.', ',');
-                                            else echo "-" ?> <img src="public/icons/Yellow_Star.png" width="18px" class="mx-1" /></div>
+                                            else echo "-" ?> <img src="/ProjetWeb/public/icons/Yellow_Star.png" width="18px" class="mx-1" /></div>
                             <span><?php echo $recipe["preparationTime"] ?> min</span>
                         </div>
                         <button class="btn btn-red card-btn" >See more</button>

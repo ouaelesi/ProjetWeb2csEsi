@@ -64,6 +64,20 @@ class nestedRoutes
             case '/ProjetWeb/admin/recette':
                 $recipesPage->displaySinglePage();
                 break;
+            case '/ProjetWeb/admin/addrecipe':
+                $recipesPage->displayAddRecipe();
+                break;
+            case '/ProjetWeb/admin/addRecipeIngr':
+                $recipesPage->displayAddIngRec();
+                break;
+            case '/ProjetWeb/admin/addrecStep':
+                $recipesPage->displayAddIngStep();
+                break;
+            case '/ProjetWeb/admin/confirmRecipe':
+                    $recipesPage->confirmRecipeCreation();
+                    break;
+                
+
             default:
                 $sharedView->notFoundPage("Soory, We didn't find your Page", "404");
                 break;
