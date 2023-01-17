@@ -312,8 +312,11 @@ body {
   padding: 2px;
   cursor: pointer;
 }
+.slide-con img {
+  transition: all 1s;
+}
 .slide-con:hover img {
-  transform: scale(1.05);
+  transform: scale(1.2);
   transform-origin: center;
 }
 .slide-con:hover {
@@ -322,6 +325,9 @@ body {
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(80px);
+}
+.cardTitle{
+  height: 48px;
 }
 
 .cardContent {
@@ -334,10 +340,10 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
-  height: 43px;
+  height: 30px;
   margin-bottom: 15px;
 }
 .card-btn {
@@ -474,6 +480,7 @@ input{
   color: white ; 
 }
 
+
 .stepCircle {
   width: 100px;
   height: 100px;
@@ -562,4 +569,11 @@ input{
    border-bottom-color:var(--yellow-color) ;
    margin-left: 10px;
    color: var(--yellow-color);
+}
+.ingredientBox:hover{
+ transform: scale(1.1);
+ backdrop-filter: blur(25px);
+}
+.likeCard , .categoryCard{
+  background-color: rgba(0, 0, 0, 0.5);
 }

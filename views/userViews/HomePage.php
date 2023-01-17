@@ -97,8 +97,8 @@ class HomePage
                                                                                                                                                         } ?>" width="65%" class="mx-auto d-block mt-2" id="likeimage" /></div>
                     </div>
                 </div>
-                <div class="cardContent">
-                    <p class="h4"><?php echo $recipe["title"] ?></p>
+                <div class="cardContent ">
+                    <p class="h5 cardTitle"><?php echo $recipe["title"] ?></p>
                     <p class="h6 cardDescription"><?php echo $recipe["description"] ?></p>
                     <div class="d-flex justify-content-between">
                         <div class="recipeCardStats">
@@ -108,7 +108,6 @@ class HomePage
                         </div>
                         <button class="btn btn-red card-btn" >See more</button>
                     </div>
-
                 </div>
             </div>
         </div>

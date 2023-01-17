@@ -128,7 +128,7 @@ class recipePage
         // NavBar 
         $sharedComponents->NavBar(null);
         // header 
-        $sharedComponents->pageHeader("Tous les recettes");
+        $sharedComponents->pageHeader("Tous les recettes" , "footerBg.png");
         // navLinks 
         $sharedComponents->navLinks();
         // add recipe section 

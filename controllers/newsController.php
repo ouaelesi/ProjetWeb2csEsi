@@ -20,11 +20,18 @@ class newsController
     }
 
     // get news by Id 
-    public function getNewsById()
+    public function getNewsById($id)
     {
         $newsModel = new newsModel();
-        $newsModel->getNewsById($_POST);
-        return;
+        $response = $newsModel->getNewsById($id);
+        return $response[0];
+    }
+
+    public function getNewsByPost($id)
+    {
+        $newsModel = new newsModel();
+        $response = $newsModel->getNewsByPost($id);
+        return $response[0];
     }
 
     // update news 
@@ -37,5 +44,12 @@ class newsController
         $newsModel = new newsModel();
         $response = $newsModel->getNbNews();
         return $response[0];
+    }
+
+    public function getPosts()
+    {
+        $newsModel = new newsModel();
+        $response = $newsModel->getPosts();
+        return $response;
     }
 }

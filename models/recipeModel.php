@@ -85,7 +85,7 @@ class recipeModel
         // Allow certain file formats
         if (
             $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-            && $imageFileType != "gif"
+            && $imageFileType != "gif" && $imageFileType != "webp"
         ) {
             echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
             $uploadOk = 0;
@@ -262,4 +262,40 @@ class recipeModel
         return;
     }
     
+    public function getEventsRecipes($params){
+        $database = new dataBaseController();
+        $db  = $database->connect();
+
+        $whereConditions = 'WHERE `event`!="null"';
+
+        // les conditions de la category
+        if (sizeof($params) > 0 and $params["fete"] != "null" and $params["fete"] != "all") {
+            $whereConditions = $whereConditions . ' AND `event`=' . $params["fete"];
+        }
+
+        $query = "SELECT recette.* , post.* , AVG(rating.note) note,cookTime+preparationTime+restTime totalTime from (recette join post on recette.postID=post.id) left JOIN rating on recette.id=rating.recetteID $whereConditions GROUP BY recette.id ORDER BY note DESC";
+        $res = $database->request($db, $query);
+        $response = array();
+        foreach ($res as $recipe) {
+            array_push($response, $recipe);
+        }
+        // echo var_dump($response);
+        $database->disconnect($db);
+        return $response;
+    }
+
+    public function getRecipeByPost($postId){
+        $database = new dataBaseController();
+        $db  = $database->connect();
+
+        $query = "SELECT recette.* , post.* , AVG(rating.note) note,cookTime+preparationTime+restTime totalTime from (recette join post on recette.postID=post.id) left JOIN rating on recette.id=rating.recetteID where postID=$postId GROUP BY recette.id ORDER BY note DESC";
+        $res = $database->request($db, $query);
+        $response = array();
+        foreach ($res as $recipe) {
+            array_push($response, $recipe);
+        }
+        // echo var_dump($response);
+        $database->disconnect($db);
+        return $response;
+    }
 }

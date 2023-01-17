@@ -10,36 +10,50 @@ class userPage
         $allUser = $userController->getallUser();
 
 ?>
-        <div class="d-flex bluredBox px-3 py-3 rounded-1 justify-content-between my-2 mt-5 TableHeader" role="button">
-            <div class="col-4"> User</div>
-            <div class="col-3">Email</div>
-            <div class="col-2">Role</div>
-            <div class="col-2">Status</div>
-            <div class="col-1 "><img src="/ProjetWeb/public/icons/edit.png" width='20px' height="20px" class="d-block mx-auto" /></div>
-        </div>
-        <?php
-        foreach ($allUser as $user) {
-        ?>
-            <div class="d-flex bluredBox px-3 py-3 rounded-1 justify-content-between my-2 TableRow" role="button" onclick="gotoUrl('/ProjetWeb/admin/user?id=<?php echo $user['id'] ?>')">
-                <div class="col-4 "> <img src="/ProjetWeb/public/images/profile/<?php if ($user["photo"] != null and $user["photo"] != "") {
-                                                                                    echo $user["photo"];
-                                                                                } else {
-                                                                                    echo "avatarprofile.webp";
-                                                                                } ?>" width="30px" class=" me-2 rounded-circle" /> <span class="pt-2"><?php echo $user['firstName'];
-                                                                                                                                                        echo " ";
-                                                                                                                                                        echo $user['lastName'] ?></span> </div>
-                <div class="col-3"><?php echo $user['email'] ?></div>
-                <div class="col-2"><?php echo $user['role'] ?></div>
-                <div class="col-2">
-                    <div class="w-50 mx-auto text-center text-light py-1 rounded-1 <?php if ($user['status'] == 'valid') echo 'bg-success';
-                                                                                    else if ($user['status'] == 'rejected') echo 'bg-danger';
-                                                                                    else echo 'bg-warning' ?>"><?php echo $user['status'] ?></div>
-                </div>
-                <div class="col-1 "><img src="/ProjetWeb/public/icons/edit.png" width='20px' height="20px" class="d-block mx-auto" /></div>
-            </div>
-        <?php
-        }
-        ?>
+        <table data-search="true" data-toggle="table" class="table-style">
+            <thead>
+                <tr class="d-flex bluredBox rounded-1 justify-content-between my-2 mt-3 TableHeader" role="button">
+
+                    <th data-sortable="true" class="col-4"> User</th>
+                    <th data-sortable="true" class="col-3">Email</th>
+                    <th data-sortable="true" class="col-2">Role</th>
+                    <th data-sortable="true" class="col-2">Status</th>
+                    <th data-sortable="true" class="col-1 "><img src="/ProjetWeb/public/icons/edit.png" width='20px' height="20px" class="d-block mx-auto" /></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+
+                foreach ($allUser as $user) {
+                ?>
+                    <a href='/ProjetWeb/admin/user?id=<?php echo $user['id'] ?>'>
+                        <tr class="d-flex bluredBox   rounded-1 justify-content-between my-2 TableRow">
+
+                            <th class="col-4  text-light "> <img src="/ProjetWeb/public/images/profile/<?php if ($user["photo"] != null and $user["photo"] != "") {
+                                                                                                            echo $user["photo"];
+                                                                                                        } else {
+                                                                                                            echo "avatarprofile.webp";
+                                                                                                        } ?>" width="30px" class=" me-2 rounded-circle" /> <a href='/ProjetWeb/admin/user?id=<?php echo $user['id'] ?>' class="text-light pt-2"><?php echo $user['firstName'];
+                                                                                                                                                                                                                                                echo " ";
+                                                                                                                                                                                                                                                echo $user['lastName'] ?></a> </th>
+                            <th class="col-3 text-light "> <?php echo $user['email'] ?></th>
+                            <th class="col-2 text-light "><?php echo $user['role'] ?></th>
+                            <th class="col-2 text-light ">
+                                <div class="w-50 mx-auto text-center text-light py-1 rounded-1 <?php if ($user['status'] == 'valid') echo 'bg-success';
+                                                                                                else if ($user['status'] == 'rejected') echo 'bg-danger';
+                                                                                                else echo 'bg-warning' ?>"><?php echo $user['status'] ?></div>
+                            </th>
+                            <th class="col-1  text-light "><a href='/ProjetWeb/admin/user?id=<?php echo $user['id'] ?>'><img src="/ProjetWeb/public/icons/edit.png" width='20px' height="20px" class="d-block mx-auto" /></a></th>
+
+                        </tr>
+                    </a>
+                <?php
+                }
+                ?>
+            </tbody>
+        </table>
+
+
     <?php
     }
 
@@ -54,9 +68,9 @@ class userPage
                 <div class="flex gap-2 position-relative filterBox w-100">
                     <p class="h6">chercher un utilisateur</p>
                     <div class="selectInput postion-relative d-flex w-100 justify-content-between">
-                    <input class="bg-transparent border-0" placeholder="Nom de l'utilsateur ..."/> <img src="/ProjetWeb/public/icons/search.png" width="30px" class="mx-2" />
+                        <input class="bg-transparent border-0" placeholder="Nom de l'utilsateur ..." /> <img src="/ProjetWeb/public/icons/search.png" width="30px" class="mx-2" />
                     </div>
-                  
+
                     <div class="p-1 bg-light position-absolute  filterBlur"></div>
                 </div>
 
@@ -103,7 +117,7 @@ class userPage
         // page title
         $sharedViews->pageHeader('Liste des utilisateurs');
         // filter section 
-        $this->filterSection();
+        // $this->filterSection();
         // Users tabe
         $this->usersList();
     }

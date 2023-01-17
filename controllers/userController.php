@@ -47,17 +47,28 @@ class userController
         return;
     }
 
+    // save news 
+
     public function userIsLikeRecipe($recipeId)
     {
         $userModel = new userModel();
         return $userModel->userIsLikeRecipe($recipeId);
     }
 
-    // save news 
-    public function saveNews()
-    {
+    public function userIsSaveNews($newsId){
         $userModel = new userModel();
-        $userModel->saveNews($_POST["userID"], $_POST["recetteID"]);
+        return $userModel->userIsSaveNews($newsId);
+    }
+
+    // save news 
+    public function saveNews($idNews)
+    {
+        if (!isset($_COOKIE["logedIn_user"])) {
+            header("location: /ProjetWeb/login");
+            return;
+        }
+        $userModel = new userModel();
+        $userModel->saveNews($_COOKIE["logedIn_user"], $idNews);
         return;
     }
 

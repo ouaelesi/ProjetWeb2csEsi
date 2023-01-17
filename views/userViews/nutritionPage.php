@@ -3,28 +3,29 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/controllers/eventsControlle
 require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/controllers/recipeController.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/controllers/categoryController.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/views/userViews/recipePage.php');
-class categoryPage
+class nutritionPage
 {
 
-    public function displayCategoryPage()
+    public function displayNutritionPage()
     {
         $sharedComponents = new sharedViews();
-        $recipePage = new recipePage();
-        $recipeController = new recipeController();
-        $recipes  = $recipeController->getrecipesByCateg(1);
+        $recipepage = new singleRecipePage();
+
+        $ingredientController = new ingredientController();
+        $ingredients = $ingredientController->getIngredients();
+
         // NavBar 
         $sharedComponents->NavBar(null);
         // header 
-        $sharedComponents->pageHeader('Catégorie: ' . $_GET["id"] , "footerBg.png");
+        $sharedComponents->pageHeader('Les Nutritions' , 'ingredients.jpg');
         // navLinks 
         $sharedComponents->navLinks();
-        // search input 
-        $recipePage->searchInput();
 
-        // filters 
-        $recipePage->filterSection();
+        // ingredient list
+        $recipepage->ingredients($ingredients);
+    }
 
-        // recipes
-        $recipePage->recipesList($recipes);
+    public function displaySingleNutrition(){
+
     }
 }

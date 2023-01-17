@@ -74,9 +74,13 @@ class nestedRoutes
                 $recipesPage->displayAddIngStep();
                 break;
             case '/ProjetWeb/admin/confirmRecipe':
-                    $recipesPage->confirmRecipeCreation();
-                    break;
-                
+                $recipesPage->confirmRecipeCreation();
+                break;
+            case '/ProjetWeb/admin/addnews':
+                $newspage->displayaddNewsPage();
+                break;
+
+
 
             default:
                 $sharedView->notFoundPage("Soory, We didn't find your Page", "404");

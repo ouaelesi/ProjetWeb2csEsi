@@ -64,13 +64,44 @@ class ingredientsPage
     public function ingredientsList($ingredients)
     {
     ?>
+      <table data-search="true" data-toggle="table" class="table-style">
+            <thead>
+                <tr class="d-flex bluredBox rounded-1 justify-content-between my-2 mt-3 TableHeader" role="button">
+                    <th data-sortable="true" class="col-4">nom</th>
+                    <th data-sortable="true" class="col-2">Event</th>
+                    <th data-sortable="true" class="col-3">Status</th>
+                    <th data-sortable="true" class="col-3">management</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                foreach ($news as $new) {
+                    $eventController = new eventsController();
+                    $event = $eventController->getEventByID($new['event']);
+
+                ?>
+                    <tr class="d-flex bluredBox  rounded-1 justify-content-between my-2 TableRow" role="button" onclick="gotoUrl('/ProjetWeb/admin/recette?id=<?php echo $new[0] ?>')">
+                        <td class="col-4 text-light "><a href="/ProjetWeb/article?id=<?php echo $new[0] ?>" class="text-light"><?php echo $new['title'] ?></a></td>
+                        <td class="col-2 text-center text-light "><?php echo $event['name'] ?></td>
+                        <td class="col-3 text-light ">
+                            <div class="w-50 mx-auto text-center text-light py-1 rounded-1 <?php if ($new['status'] == 'valid') echo 'bg-success';
+                                                                                            else if ($new['status'] == 'rejected') echo 'bg-danger';
+                                                                                            else echo 'bg-warning' ?>"><?php echo $new['status'] ?></div>
+                        </td>
+                        <td class=" text-light col-3 d-flex justify-content-center gap-3 "><button class="btn btn-yellow">Edit</button> <button class="btn btn-red">Supprimer</button></td>
+                    </tr>
+                <?php
+                }
+                ?>
+            </tbody>
+        </table>
         <div>
             <div class="d-flex bluredBox px-3 py-3 rounded-1 justify-content-between my-2 mt-5 TableHeader" role="button">
-                <div class="col-3"> ingredient</div>
-                <div class="col-2">Healthy</div>
-                <div class="col-3">Saison</div>
-                <div class="col-2">Calories</div>
-                <div class="col-2 text-center">Manage</div>
+                <th  class="col-3"> ingredient</th>
+                <th class="col-2">Healthy</th>
+                <th class="col-3">Saison</th>
+                <th class="col-2">Calories</th>
+                <th class="col-2 text-center">Manage</th>
             </div>
             <?php
             foreach ($ingredients as $ingredient) {

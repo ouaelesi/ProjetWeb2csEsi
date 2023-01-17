@@ -2,6 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/controllers/recipeController.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/controllers/userController.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/controllers/ingredientController.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/controllers/newsController.php');
 // Check if the admin is loged in 
 
 header('Content-type: application/json');
@@ -13,6 +14,7 @@ if (isset($_POST['addRecette'])) {
 if (isset($_POST['addIngredient'])) {
     $ingredientController = new ingredientController();
     $ingredientController->addIngredient();
+    header("location: /ProjetWeb/admin/ingredients");
 }
 if (isset($_POST['deleteIngredient'])) {
     $ingredientController = new ingredientController();
@@ -22,10 +24,20 @@ if (isset($_POST['validateRecipe'])) {
     $recipeController = new recipeController();
     $recipeController->validateRecipe($_POST['recipeId']);
 }
+if (isset($_POST['saveNews'])) {
+    $userController = new userController();
+    $userController->saveNews($_POST["newsID"]);
+}
+
 
 if (isset($_POST['rejectRecipe'])) {
     $recipeController = new recipeController();
     $recipeController->rejectRecipe($_POST['recipeId']);
+}
+if (isset($_POST['addNews'])) {
+    $newsController = new newsController(); 
+    $newsController->addNews() ; 
+    header("location: /ProjetWeb/admin/news");
 }
 
 
@@ -51,7 +63,6 @@ if (isset($_POST['recipeRating'])) {
     $userController->rateRecipe($_POST["recetteID"], $_POST["note"]);
 }
 if (isset($_POST['likerecipe'])) {
-    error_log(print_r($_POST["likerecipe"], TRUE));
     $userController = new userController();
     $userController->likeRecette($_POST["recetteId"]);
 }

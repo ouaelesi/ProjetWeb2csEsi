@@ -30,37 +30,57 @@ class recipesPage
         $categoryController = new categoryController();
 
     ?>
-        <div class="d-flex bluredBox px-3 py-3 rounded-1 justify-content-between my-2 mt-5 TableHeader" role="button">
-            <div class="col-3">Titre</div>
-            <div class="col-1 text-center">Categorie</div>
-            <div class="col-1 text-center">Rating</div>
-            <div class="col-1 text-center">rest Time</div>
-            <div class="col-1 text-center">cook time</div>
-            <div class="col-1 text-center">preparation</div>
-            <div class="col-2 text-center">Status</div>
-            <div class="col-1 "><img src="/ProjetWeb/public/icons/edit.png" width='20px' height="20px" class="d-block mx-auto" /></div>
-        </div>
-        <?php
-        foreach ($recipes as $recipe) {
-            $category = $categoryController->getCategoryById($recipe['categoryID']);
-        ?>
-            <div class="d-flex bluredBox px-3 py-3 rounded-1 justify-content-between my-2 TableRow" role="button" onclick="gotoUrl('/ProjetWeb/admin/recette?id=<?php echo $recipe[0] ?>')">
-                <div class="col-3 "><?php echo $recipe['title'] ?></div>
-                <div class="col-1 text-center bluredBox pt-1"><?php echo $category['name'] ?></div>
-                <div class="col-1 text-center"><?php echo $recipe['note'] ?></div>
-                <div class="col-1 text-center"><?php echo $recipe['restTime'] ?></div>
-                <div class="col-1 text-center"><?php echo $recipe['cookTime'] ?></div>
-                <div class="col-1 text-center"><?php echo $recipe['preparationTime'] ?></div>
-                <div class="col-2">
-                    <div class="w-50 mx-auto text-center text-light py-1 rounded-1 <?php if ($recipe['status'] == 'valid') echo 'bg-success';
-                                                                                    else if ($recipe['status'] == 'rejected') echo 'bg-danger';
-                                                                                    else echo 'bg-warning' ?>"><?php echo $recipe['status'] ?></div>
-                </div>
-                <div class="col-1 "><img src="/ProjetWeb/public/icons/edit.png" width='20px' height="20px" class="d-block mx-auto" /></div>
-            </div>
-        <?php
-        }
-        ?>
+        <table data-search="true" data-toggle="table" class="table-style">
+            <thead>
+                <tr class="d-flex bluredBox rounded-1 justify-content-between my-2 mt-3 TableHeader" role="button">
+                    <th data-sortable="true" class="col-4">Titre</div>
+                    <th data-sortable="true" class="col-1 text-center">Categorie</th>
+                    <th data-sortable="true" class="col-1 text-center">Rating</th>
+                    <th data-sortable="true" class="col-1 text-center">rest Time</th>
+                    <th data-sortable="true" class="col-1 text-center">cook time</th>
+                    <th data-sortable="true" class="col-1 text-center">preparation</th>
+                    <th data-sortable="true" class="col-2 text-center">Status</th>
+                    <th data-sortable="true" class="col-1 "><img src="/ProjetWeb/public/icons/edit.png" width='20px' height="20px" class="d-block mx-auto" /></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                foreach ($recipes as $recipe) {
+                    $category = $categoryController->getCategoryById($recipe['categoryID']);
+                ?>
+                    <tr class="d-flex bluredBox  rounded-1 justify-content-between my-2 TableRow" role="button" onclick="gotoUrl('/ProjetWeb/admin/recette?id=<?php echo $recipe[0] ?>')">
+                        <td class="text-light col-4 ">
+                            <div class="pt-1" role="button" onclick="gotoUrl('/ProjetWeb/admin/recette?id=<?php echo $recipe[0] ?>')"><?php echo $recipe['title'] ?></div>
+                        </td>
+                        <td class="text-light col-1 text-center  pt-1">
+                            <div class="pt-2"> <span class="bluredBox p-1 px-2"><?php echo $category['name'] ?></span></div>
+                        </td>
+                        <td class="text-light col-1 text-center">
+                            <div class="pt-1"><?php if ($recipe["note"] != null) echo number_format($recipe["note"], 1, '.', ',');
+                                                else echo "0" ?>/5 <img src="/ProjetWeb/public/icons/Yellow_Star.png" width="18px" class="mx-1" /></div>
+                        </td>
+                        <td class="text-light col-1 text-center">
+                            <div class="pt-1"><?php echo $recipe['restTime'] ?> min </div>
+                        </td>
+                        <td class="text-light col-1 text-center">
+                            <div class="pt-1"><?php echo $recipe['cookTime'] ?> min </div>
+                        </td>
+                        <td class="text-light col-1 text-center">
+                            <div class="pt-1"><?php echo $recipe['preparationTime'] ?> min </div>
+                        </td>
+                        <td class="text-light col-2">
+                            <div class="w-50 mx-auto text-center text-light py-1 rounded-1 <?php if ($recipe['status'] == 'valid') echo 'bg-success';
+                                                                                            else if ($recipe['status'] == 'rejected') echo 'bg-danger';
+                                                                                            else echo 'bg-warning' ?>"><?php echo $recipe['status'] ?></div>
+                        </td>
+                        <td class="text-light col-1 "><img src="/ProjetWeb/public/icons/edit.png" width='20px' height="20px" class="d-block mx-auto" /></td>
+                    </tr>
+                <?php
+                }
+                ?>
+            </tbody>
+        </table>
+
     <?php
     }
     public function displayRecipesPage()
@@ -153,13 +173,13 @@ class recipesPage
     <?php
     }
 
-    public function recipeVideo()
+    public function recipeVideo($recipe)
     {
     ?>
         <div class="container my-5">
             <div class="h3 mb-4">Video</div>
 
-            <iframe class="rounded-4 mx-auto d-block " width="100%" height="500" src="https://www.youtube.com/embed/fcD94e93cCk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <iframe class="rounded-4 mx-auto d-block " width="100%" height="500" src="<?php echo $recipe['video'] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 
         </div>
@@ -171,6 +191,10 @@ class recipesPage
         $singleRecipePage = new singleRecipePage();
         $recipeController = new recipeController();
         $recipe = $recipeController->getRecipe($_GET['id']);
+
+        $ingredientController = new ingredientController();
+        $ingredients = $ingredientController->getRecipeIngredients($_GET['id']);
+
         // header 
         $this->singlerecipeHeader($recipe);
         // 
@@ -178,11 +202,11 @@ class recipesPage
         // recipe stats 
         $singleRecipePage->recipeStats($recipe);
         // ingredients 
-        $singleRecipePage->ingredients($recipe[0]);
+        $singleRecipePage->ingredients($ingredients);
         // recipe steps
         $singleRecipePage->recipesteps($recipe[0]);
         // recipe video 
-        $this->recipeVideo();
+        $this->recipeVideo($recipe);
     }
 
     public function addRecipeForm()
@@ -228,7 +252,7 @@ class recipesPage
                 </div>
                 <div class="my-2 col-6">
                     <label class="mb-1">Description</label>
-                    <input class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="text" required placeholder="Nom" name="description" />
+                    <textarea class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="text" required placeholder="Nom" name="description"></textarea>
                 </div>
                 <div class="my-2 col-6">
                     <label class="mb-1">Category</label>
@@ -245,9 +269,11 @@ class recipesPage
                     </select>
                 </div>
                 <div class="my-2 col-6">
-                    <label class="mb-1">Event </label>
+                    <label class="mb-1">Fete </label>
 
                     <select name="event" class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light">
+                        <option value="null">aucune</option>
+
                         <?php
                         $eventsController = new eventsController();
                         $events = $eventsController->getEvents();
@@ -381,12 +407,15 @@ class recipesPage
         $sharedViews = new sharedadminView();
         $recipepage = new singleRecipePage();
 
+        $ingredientController = new ingredientController();
+        $ingredients = $ingredientController->getRecipeIngredients($_GET['id']);
+
         // header 
         $sharedViews->pageHeader("Les ingredients de la recette");
         // add recipe form 
         $this->addRecipeIngredientForm();
         // added ingredients
-        $recipepage->ingredients($_GET['id']);
+        $recipepage->ingredients($ingredients);
         // confirm
         $this->confirmButton('/ProjetWeb/admin/addrecStep?id=' . $_GET['id']);
     }

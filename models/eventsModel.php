@@ -25,4 +25,12 @@ class eventsModel
         $database->disconnect($db);
         return;
     }
+
+    public function getEventByID($id){
+        $database = new dataBaseController();
+        $db  = $database->connect();
+        $query = "SELECT * from `event` where id=$id";
+        $res = $database->request($db, $query);
+        return $res;
+    }
 }

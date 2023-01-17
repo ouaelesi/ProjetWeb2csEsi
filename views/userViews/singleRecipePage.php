@@ -15,19 +15,26 @@ class singleRecipePage
         $userController = new userController();
         $user = $userController->getUserById($recipe['createdBy']);
 ?>
-        <div class="container">
-            <div class="h1">
+        <div class=" w-75 container mx-auto">
+
+            <div class="h1 mt-4">
                 <?php echo $recipe['title'] ?>
             </div>
             <div class="row">
                 <div class="col-6">
-                    <div class="mt-3">
-                        <?php foreach ($tags as $tag) {
-                        ?>
-                            <span class="recetteTag"><?php echo $tag ?></span>
-                        <?php
-                        }
-                        ?>
+                    <div class="py-3  bluredBox rounded-4 px-3 gap-2 my-3 position-relative d-flex flex-wrap justify-content-between">
+                        <div class="">Rating: 
+                            <?php if ($recipe['note'] == null) {
+                                echo "0";
+                            } else {
+                                echo number_format($recipe["note"], 2, '.', ',');
+                            } ?>/5 <img src="/ProjetWeb/public/icons/yellow_Star.png" width='20px' class="mx-1" />
+                        </div>
+                        <div><img src="/ProjetWeb/public/icons/timer.png" width="20px" class="mx-1" /> Préparation: <?php echo $recipe["preparationTime"] ?> min</div>
+                        <div><img src="/ProjetWeb/public/icons/timer.png" width="20px" class="mx-1" /> Cuisson: <?php echo $recipe["cookTime"] ?>
+                            min</div>
+                        <div><img src="/ProjetWeb/public/icons/timer.png" width="20px" class="mx-1" /> Repos: <?php echo $recipe["restTime"] ?> min
+                        </div>
                     </div>
                     <p class="recipeBigDescription">
                         <?php echo $recipe['description'] ?>
@@ -38,7 +45,7 @@ class singleRecipePage
                     </p>
                 </div>
                 <div class="col-6">
-                    <img src="/ProjetWeb/public/images/recipeImages/<?php echo $recipe['coverImage'] ?>" class="rounded-3 d-block ml-auto mt-3" width="85%" />
+                    <img src="/ProjetWeb/public/images/recipeImages/<?php echo $recipe['coverImage'] ?>" class="rounded-3 d-block ml-auto mt-3" width="100%" />
                 </div>
             </div>
         </div>
@@ -54,7 +61,7 @@ class singleRecipePage
     {
 
     ?>
-        <div class="container position-relative">
+        <div class="w-75 container mx-auto  position-relative">
             <div class="bg-light px-3 py-3 position-absolute rounded-5 opacity-50"></div>
             <div class="bluredBox py-4 px-5 my-3 position-relative d-flex justify-content-between">
                 <div class="">
@@ -75,23 +82,22 @@ class singleRecipePage
     <?php
     }
 
-    public function ingredients($recipeID)
+    public function ingredients($ingredients)
     {
-        $ingredientController = new ingredientController();
-        $ingredients = $ingredientController->getRecipeIngredients($recipeID);
+
     ?>
-        <div class="container my-5">
+        <div class="w-75 container mx-auto  my-5">
             <div class="h3">Les Ingredients</div>
-            <div class="d-flex d-flex-wrap">
+            <div class="d-flex flex-wrap">
                 <?php foreach ($ingredients as $ingredient) {
                 ?>
-                    <div class="bluredBox px-3 py-3 rounded-4 me-3 my-2 position-relative"><?php echo $ingredient["quantity"] ?>
+                    <div role="button" class="bluredBox px-3 py-3 rounded-4 me-3 my-2 position-relative ingredientBox"><?php echo $ingredient["quantity"] ?>
 
                         <?php echo $ingredient["name"] ?> <img src="/ProjetWeb/public/icons/<?php if ($ingredient["healthy"]) {
-                                                                                        echo "healthy.png";
-                                                                                    } else {
-                                                                                        echo "nothealthy.png";
-                                                                                    } ?>" width="18px" class="ms-2" />
+                                                                                                echo "healthy.png";
+                                                                                            } else {
+                                                                                                echo "nothealthy.png";
+                                                                                            } ?>" width="18px" class="ms-2" />
                     </div>
                 <?php
                 } ?>
@@ -106,7 +112,7 @@ class singleRecipePage
             $stepController = new stepController();
             $steps = $stepController->getrecipeSteps($recipeId);
         ?>
-            <div class="container my-5">
+            <div class="w-75 container mx-auto  my-5">
                 <div class="h3 mb-4">Les Etapes</div>
                 <div class="bluredBox px-4 py-4">
                     <?php foreach ($steps as $step) {
@@ -124,13 +130,13 @@ class singleRecipePage
         }
     }
 
-    public function recipeVideo()
+    public function recipeVideo($recipe)
     {
         ?>
-        <div class="container my-5">
+        <div class="w-75 container mx-auto  my-5">
             <div class="h3 mb-4">Video</div>
             <div class="row">
-                <iframe class="rounded-4 mx-auto d-block col-8" width="100%" height="500" src="https://www.youtube.com/embed/fcD94e93cCk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                <iframe class="rounded-4 mx-auto d-block col-8" width="100%" height="500" src="<?php echo $recipe['video'] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                 <div class="col-4">
                     <p>Write your notes here:</p>
                     <textarea class="bluredBox notesSection"></textarea>
@@ -151,7 +157,7 @@ class singleRecipePage
         }
         $topNote = 5;
     ?>
-        <div class="container">
+        <div class="w-75 container mx-auto ">
             <div class="bluredBox px-5 py-4 h3 d-flex justify-content-between ratingSection">
                 <div class="pt-1">Did you like the recipe ?</div>
                 <div class="ratingBox" id="starsBox">
@@ -175,7 +181,7 @@ class singleRecipePage
     public function commentSection()
     {
     ?>
-        <div class="container my-5">
+        <div class="w-75 container mx-auto  my-5">
             <div class="h3 mb-4">Ajouter un Commentaire</div>
             <form class="">
                 <textarea class="bluredBox notesSection py-4" rows="10" placeholder="Ajouter votre commentaire..."></textarea>
@@ -192,23 +198,29 @@ class singleRecipePage
         $recipeController = new recipeController();
         $recipe = $recipeController->getRecipe($recipeId);
 
+        // 
+
+        $ingredientController = new ingredientController();
+        $ingredients = $ingredientController->getRecipeIngredients($recipe[0]);
+
+
         $sharedComponents = new sharedViews();
         // NavBar 
         $sharedComponents->NavBar(null);
         // header 
-        $sharedComponents->pageHeader("recipe Id " . $recipeId);
+        $sharedComponents->pageHeader("recipe Id " . $recipeId , "footerBg.png");
         // navLinks 
         $sharedComponents->navLinks();
         // recipe infos 
         $this->recipeInfos($recipe);
         // recipe stats 
-        $this->recipeStats($recipe);
+        // $this->recipeStats($recipe);
         // ingredients 
-        $this->ingredients($recipe[0]);
+        $this->ingredients($ingredients);
         // recipe steps
         $this->recipesteps($recipe[0]);
         // recipe video 
-        $this->recipeVideo();
+        $this->recipeVideo($recipe);
         // rating section 
         $this->ratingSection($recipe[0]);
         // comment section

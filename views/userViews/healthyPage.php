@@ -60,7 +60,7 @@ class healthyPage
         // NavBar 
         $sharedComponents->NavBar(null);
         // header 
-        $sharedComponents->pageHeader('Les recette healthy');
+        $sharedComponents->pageHeader('Les recette healthy', "healthy.png");
         // navLinks 
         $sharedComponents->navLinks();
         // search input 

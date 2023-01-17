@@ -8,7 +8,11 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/views/userViews/profilePage
 require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/views/userViews/addRecipePage.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/views/userViews/categoryPage.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/views/userViews/healthyPage.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/views/userViews/nutritionPage.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/views/adminViews/sharedadminView.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/views/userViews/eventsPage.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/views/userViews/newsView.php");
+
 // Get the Current URL
 $request = $_SERVER['REQUEST_URI'];
 
@@ -24,7 +28,6 @@ if (strpos($request, "?")) {
 
 if (strpos($request, "/admin")) {
     $request = "/ProjetWeb/admin";
- 
 }
 
 // Display Pages 
@@ -36,7 +39,11 @@ $profilePage = new profilePage();
 $addrecipe = new addRecipePage();
 $categorypPage = new categoryPage();
 $healthyPage = new healthyPage();
-$sharedAdminViews = new sharedadminView() ; 
+$sharedAdminViews = new sharedadminView();
+$nutritionPage = new nutritionPage();
+$eventsPage = new eventsPage();
+$newsPage = new newsView();
+
 switch ($request) {
     case '/ProjetWeb/':
         $homeview->displayHome();
@@ -65,10 +72,23 @@ switch ($request) {
     case '/ProjetWeb/healthy':
         $healthyPage->displayHealthyPage();
         break;
+    case '/ProjetWeb/nutritions':
+        $nutritionPage->displayNutritionPage();
+        break;
+    case '/ProjetWeb/fetes':
+        $eventsPage->displayEventsPage();
+        break;
+    case '/ProjetWeb/news':
+        $newsPage->displayNewsPage();
+        break;
+    case '/ProjetWeb/article':
+        $newsPage->singleNewsPage();
+        break;
+
 
         // admin dashboard 
     case '/ProjetWeb/admin':
-        $sharedAdminViews->adminDashboardTempale() ; 
+        $sharedAdminViews->adminDashboardTempale();
         break;
     case '/about':
         require __DIR__ . '/views/about.php';

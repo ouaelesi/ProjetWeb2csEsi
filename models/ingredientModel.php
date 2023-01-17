@@ -6,7 +6,7 @@ class ingredientModel
     {
         $database = new dataBaseController();
         $db  = $database->connect();
-        $query = "SELECT * from `ingredient`";
+        $query = "SELECT *,'' quantity from `ingredient`";
         $res = $database->request($db, $query);
         return $res;
     }

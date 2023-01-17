@@ -374,6 +374,21 @@ function rejectRecipe(id) {
     });
 }
 
+function saveNews(e , newsId){
+  $.post("/ProjetWeb/api/apiRoute.php", {
+    newsID: newsId,
+    saveNews: true,
+  })
+    .then((data) => {
+      console.log("done");
+    })
+    .catch((err) => {
+      $(e).children().attr("src", "public/icons/saved.png");
+      console.log("done");
+      console.log(err);
+    });
+}
+
 
 
 

@@ -65,6 +65,28 @@ class userModel
         return;
     }
 
+    public function userIsSaveNews($newsId){
+        $database = new dataBaseController();
+        $db  = $database->connect();
+        $cookie_name = "logedIn_user";
+        if (!isset($_COOKIE[$cookie_name])) {
+            return false;
+        }
+        $query = "SELECT * from `save` where userID=$_COOKIE[$cookie_name] and newsID=$newsId";
+        $res = $database->request($db, $query);
+        $response = array();
+        foreach ($res as $recipe) {
+            array_push($response, $recipe);
+        }
+        $database->disconnect($db);
+        if (sizeof($response) > 0) {
+            return  true;
+        } else {
+            return false;
+        }
+        return;
+    }
+
     // get user like 
     public function userIsLikeRecipe($recipeId)
     {
@@ -96,7 +118,7 @@ class userModel
         $database = new dataBaseController();
         $db  = $database->connect();
 
-        $query = $db->prepare("INSERT INTO `save`(`recetteID` , `userID`) VALUES (? , ? , ?)");
+        $query = $db->prepare("INSERT INTO `save`(`newsID` , `userID`) VALUES (? , ?)");
         $query->execute(array($idPost, $idUser));
 
         unset($_POST);

@@ -142,12 +142,13 @@ class SharedViews
 <?php
         }
 
-        public function pageHeader($title)
+        public function pageHeader($title , $bg )
         {
 ?>
-    <div class="footer">
-        <div class="footerBg"></div>
-        <div class="position-relative  pageHeader text-center">
+    <div class=" position-relative overflow-hidden">
+        <img  src="/ProjetWeb/public/images/<?php echo $bg ?>" class=" position-absolute bottom-0 opacity-25" width="100%"/>
+        <!-- <div class="footerBg"></div> -->
+        <div class="position-relative  pageHeader text-center ">
             <?php echo $title ?>
         </div>
     </div>

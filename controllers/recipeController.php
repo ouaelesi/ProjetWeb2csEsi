@@ -72,5 +72,19 @@ class recipeController
         $recipeModel->addStepToRecipe();
         return;
     }
-    
+
+    public function getEventsRecipes($params)
+    {
+        $recipeModel = new recipeModel();
+        $response = $recipeModel->getEventsRecipes($params);
+        return $response;
+    }
+
+
+    public function getRecipeByPost($postId)
+    {
+        $recipeModel = new recipeModel();
+        $response = $recipeModel->getRecipeByPost($postId);
+        return $response[0];
+    }
 }
