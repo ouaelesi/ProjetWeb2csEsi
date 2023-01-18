@@ -150,4 +150,10 @@ class userController
         $userModel->updateProfile($_POST['userId'] , $_POST['firstName'] , $_POST['lastName'] , $_POST['email']);
         return;   
     }
+    public function profilePic(){
+        $userModel = new userModel();
+        $userModel->profilePic($_POST['userId']);
+        return;   
+    }
+    
 }

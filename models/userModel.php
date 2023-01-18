@@ -300,4 +300,17 @@ class userModel
         
         $database->disconnect($db);
     }
+    public function profilePic($userId){
+        $database = new dataBaseController();
+        $db  = $database->connect();
+
+        $query = $db->prepare('UPDATE `user` SET `photo`=?  WHERE id=?');
+        $query->execute(array($_FILES['profilePic']['name'], $userId));
+        
+        // upload the card Image 
+        $recipeModel = new recipeModel() ; 
+        $recipeModel->uploadImage('profilePic', '/public/images/profile/');
+        
+        $database->disconnect($db);  
+    }
 }

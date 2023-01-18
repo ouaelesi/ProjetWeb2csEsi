@@ -14,7 +14,7 @@ class profilePage
                 <hr />
             </div>
             <div class="row py-4">
-                <form acion="/ProjetWeb/api/apiRoute.php" method="POST"  class="col-6 ">
+                <form action="/ProjetWeb/api/apiRoute.php" method="POST" enctype="multipart/form-data" class="col-6 ">
                     <div>
                         <img src="public/images/profile/<?php if ($user["photo"] != null and $user["photo"] != "") {
                                                             echo $user["photo"];
@@ -23,8 +23,10 @@ class profilePage
                                                         } ?>" width="200px" class="d-block mx-auto rounded-circle" />
                     </div>
                     <div>
-                        <input class=" mx-auto  d-block mt-3" type="file" name="profilePhoto" />
-                        <button class="d-block mx-auto btn btn-yellow mt-3" name="updateProfilePic">Changer la photo</button>
+                        <input hidden type="text" name="userId" value='<?php echo $user['id'] ?>' />
+
+                        <input class=" mx-auto  d-block mt-3" type="file" name="profilePic" />
+                        <button class="d-block mx-auto btn btn-yellow mt-3" type="submit" name="updateProfilePic">Changer la photo</button>
                     </div>
                 </form>
                 <div class="col-6 ">

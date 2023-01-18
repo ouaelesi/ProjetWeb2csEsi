@@ -15,6 +15,15 @@ if (isset($_POST['editprofile'])) {
 
     unset($_POST);
 }
+if (isset($_POST['updateProfilePic'])) {
+    echo var_dump($_FILES);
+    $userController = new userController();
+    $userController->profilePic();
+    header("location: /ProjetWeb/profile?id=" . $_POST['userId']);
+
+    unset($_POST);
+}
+
 
 if (isset($_POST['addRecette'])) {
     $recipeController = new recipeController();
