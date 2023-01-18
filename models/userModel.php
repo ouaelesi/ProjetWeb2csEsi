@@ -65,7 +65,8 @@ class userModel
         return;
     }
 
-    public function userIsSaveNews($newsId){
+    public function userIsSaveNews($newsId)
+    {
         $database = new dataBaseController();
         $db  = $database->connect();
         $cookie_name = "logedIn_user";
@@ -160,6 +161,27 @@ class userModel
         unset($_POST);
         $database->disconnect($db);
         return;
+    }
+
+    public function logIn($email, $password)
+    {
+
+        $database = new dataBaseController();
+        $db  = $database->connect();
+        $query = "SELECT * from `user` where email='$email' and `password`='$password'";
+        $res = $database->request($db, $query);
+        $response = array();
+        foreach ($res as $recipe) {
+            array_push($response, $recipe);
+        }
+        $database->disconnect($db);
+        if (sizeof($response) > 0) {;
+            $cookie_name = "logedIn_user";
+            // $cookie_value = ["firstName" => $_POST['firstName'], "lastName" => $_POST['lasteName'], "role" => $_POST['role'], "id" => $db->lastInsertId(), "email" => $_POST['email']];
+            $cookie_value = $response[0]['id'];
+            setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
+            return $response[0];
+        } else return [];
     }
 
 
@@ -265,6 +287,17 @@ class userModel
         $query = $db->prepare('UPDATE `user` SET `status`=? WHERE id=?');
         $query->execute(array("rejected", $userId));
 
+        $database->disconnect($db);
+    }
+
+    public function updateProfile($userId, $firstName, $lastName, $email)
+    {
+        $database = new dataBaseController();
+        $db  = $database->connect();
+
+        $query = $db->prepare('UPDATE `user` SET `firstName`=? , `lastName`=?, `email`=? WHERE id=?');
+        $query->execute(array($firstName, $lastName, $email, $userId));
+        
         $database->disconnect($db);
     }
 }

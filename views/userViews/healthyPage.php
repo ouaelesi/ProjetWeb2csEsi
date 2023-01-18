@@ -70,5 +70,8 @@ class healthyPage
 
         // recipes
         $recipePage->recipesList($recipes);
+        
+        // footer
+        $sharedComponents->Footer();
     }
 }

@@ -60,12 +60,27 @@ switch ($request) {
     case '/ProjetWeb/signUp':
         $sharedView->signUpForm();
         break;
+    case '/ProjetWeb/login':
+        $sharedView->loginForm();
+        break;
     case '/ProjetWeb/profile':
         $profilePage->displayProfile();
         break;
     case '/ProjetWeb/addrecipe':
         $addrecipe->displayRecipePage();
         break;
+    case '/ProjetWeb/addRecipeIngr':
+        $addrecipe->addIngredientsPage();
+        break;
+    case '/ProjetWeb/addrecStep':
+        $addrecipe->addStepspage();
+        break;
+    case '/ProjetWeb/confirmRecipe':
+        $addrecipe->confirmRecipePage();
+        break;
+
+
+
     case '/ProjetWeb/categories':
         $categorypPage->displayCategoryPage();
         break;

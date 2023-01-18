@@ -28,7 +28,7 @@ class newsModel
 
         // add the post 
         $query = $db->prepare("INSERT INTO `post`(`title`, `description` , `type` , `coverImage` , `cardImage` , `video` , `event` , `status` , `createdBy`) VALUES (?,?,?,?,?,?,?,?,?)");
-        $query->execute(array($data["title"], $data["description"], 'news', $_FILES["coverImage"]['name'], $_FILES["cardImage"]["name"], $data["video"], $data["event"], 'pending', 1));
+        $query->execute(array($data["title"], $data["description"], 'news', $_FILES["coverImage"]['name'], $_FILES["cardImage"]["name"], $data["video"], $data["event"], 'pending', $_COOKIE["logedIn_user"]));
 
         // add the recipe 
         $postID = $db->lastInsertId();

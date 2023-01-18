@@ -74,5 +74,8 @@ class eventsPage
 
         // recipes list 
         $recipePage->recipesList($recipes);
+
+        // footer
+        $sharedComponents->Footer();
     }
 }

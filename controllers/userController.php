@@ -86,6 +86,12 @@ class userController
         return;
     }
 
+    public function logIn(){
+        $userModel = new userModel();
+        $response = $userModel->logIn($_POST['email'] , $_POST['password']);
+        return $response;
+    }
+
     // user stats
     public function userStats($userId)
     {
@@ -137,5 +143,11 @@ class userController
         $userModel = new userModel();
         $userModel->rejectAccount($userId);
         return;
+    }
+
+    public function updateProfile(){
+        $userModel = new userModel();
+        $userModel->updateProfile($_POST['userId'] , $_POST['firstName'] , $_POST['lastName'] , $_POST['email']);
+        return;   
     }
 }

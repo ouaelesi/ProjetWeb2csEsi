@@ -113,7 +113,17 @@ class addRecipePage
 
         </div>
 
-<?php
+    <?php
+    }
+    public function generalInfosPage()
+    {
+        $recipePage = new recipesPage();
+
+    ?>
+        <div class="container px-5 mb-5">
+            <?php $recipePage->addRecipeForm('addRecipeUser');  ?>
+        </div>
+    <?php
     }
     public function displayRecipePage()
     {
@@ -121,12 +131,117 @@ class addRecipePage
         // NavBar 
         $sharedComponents->NavBar(null);
         // header 
-        $sharedComponents->pageHeader("Ajouter une recette");
+        $sharedComponents->pageHeader("Ajouter une recette", "footerBG.png");
         // navLinks 
         $sharedComponents->navLinks();
         // add recipe form
-        $this->addRecipeForm();
+        // $this->addRecipeForm();
 
+        $this->generalInfosPage();
+
+        // footer
+        $sharedComponents->Footer();
+    }
+
+    public function addIngredientsForm()
+    {
+        $formPage = new recipesPage();
+        $recipePage = new singleRecipePage();
+        $ingredientController = new ingredientController();
+        $ingredients = $ingredientController->getRecipeIngredients($_GET['id']);
+    ?>
+        <div class="container  px-5">
+            <?php        // add recipe form 
+            $formPage->addRecipeIngredientForm("addIngredientUser");
+            // added ingredients
+            $recipePage->ingredients($ingredients);
+            // confirm
+            $formPage->confirmButton('/ProjetWeb/addrecStep?id=' . $_GET['id']); ?>
+        </div>
+    <?php
+    }
+
+    public function addIngredientsPage()
+    {
+        $sharedComponents = new sharedViews();
+
+        // NavBar 
+        $sharedComponents->NavBar(null);
+        // header 
+        $sharedComponents->pageHeader("Ajouter les ingredients", "footerBG.png");
+        // navLinks 
+        $sharedComponents->navLinks();
+        // add recipe form
+        $this->addIngredientsForm();
+        // footer
+        $sharedComponents->Footer();
+    }
+
+    public function addStepForm()
+    {
+        $formPage = new recipesPage();
+        $recipePage = new singleRecipePage();
+    ?>
+        <div class="container  px-5">
+            <?php        // add recipe form 
+            $formPage->addStepForm("addStepUser");
+            // added ingredients
+            $recipePage->recipeSteps($_GET['id']);
+
+            // confirm
+            $formPage->confirmButton('/ProjetWeb/confirmRecipe?id=' . $_GET['id']); ?>
+        </div>
+    <?php
+    }
+    public function addStepspage()
+    {
+        $sharedComponents = new sharedViews();
+
+        // NavBar 
+        $sharedComponents->NavBar(null);
+        // header 
+        $sharedComponents->pageHeader("Ajouter les ingredients", "footerBG.png");
+        // navLinks 
+        $sharedComponents->navLinks();
+        // add recipe form
+        $this->addStepForm();
+        // footer
+        $sharedComponents->Footer();
+    }
+
+
+    public function confirmSection()
+    {
+        $formPage = new recipesPage();
+        $recipeController = new recipeController();
+        $recipe = $recipeController->getRecipe($_GET['id']);
+
+        $categoryController = new categoryController();
+        $category = $categoryController->getCategoryById($recipe['categoryID']);
+    ?>
+        <div class="container px-5 mb-5">
+            <div class="h1 text-center ">Verifier votre recette</div>
+            <div class="h6 text-center mb-5"> cette recette va etre publier apres la confirmation d'admine</div>
+            <?php
+            // add recipe form 
+            $formPage->recipePreview($recipe, $category);
+            // confirm
+            $formPage->confirmButton('/ProjetWeb/') ?>
+        </div>
+<?php
+    }
+    public function confirmRecipePage()
+    {
+        $sharedComponents = new sharedViews();
+
+        // NavBar 
+        $sharedComponents->NavBar(null);
+        // header 
+        $sharedComponents->pageHeader("Confirmer la creation de la recette", "footerBg.png");
+        // navLinks 
+        $sharedComponents->navLinks();
+        // add recipe form
+        $this->confirmSection();
         // footer
         $sharedComponents->Footer();
     }

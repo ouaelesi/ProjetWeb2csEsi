@@ -209,7 +209,7 @@ class recipesPage
         $this->recipeVideo($recipe);
     }
 
-    public function addRecipeForm()
+    public function addRecipeForm($submitButton)
     {
     ?>
         <div class="d-flex justify-content-center pb-5">
@@ -242,8 +242,9 @@ class recipesPage
             </div>
         </div>
         <div class="bluredBox px-3 pt-4 pb-2   mx-auto rounded-3 position-relative">
-            <div class="artFont text-center h1">
-                Information Génerale
+            <div class="artFont text-center h1 text-warning">
+                1. Information Génerale
+                <hr/>
             </div>
             <form class="row" action="/ProjetWeb/api/apiRoute.php" method="POST" enctype="multipart/form-data">
                 <div class="my-2 col-6">
@@ -310,7 +311,7 @@ class recipesPage
                     <input name="restTime" placeholder="Temps de repos" type="text" required class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" />
                 </div>
                 <div>
-                    <button class="btn btn-yellow d-block ms-auto px-4 my-3" type="submit" name="addRecette">Suivant</button>
+                    <button class="btn btn-yellow d-block ms-auto px-4 my-3" type="submit" name="<?php echo $submitButton ?>">Suivant</button>
                 </div>
             </form>
         </div>
@@ -326,10 +327,10 @@ class recipesPage
         // header 
         $sharedViews->pageHeader("Ajouter une recette");
         // add recipe form 
-        $this->addRecipeForm();
+        $this->addRecipeForm("addRecette");
     }
 
-    public function addRecipeIngredientForm()
+        public function addRecipeIngredientForm($submitButton)
     {
     ?>
         <div class="d-flex justify-content-center pb-5">
@@ -386,7 +387,7 @@ class recipesPage
                 </div>
                 <input hidden value="<?php echo $_GET['id'] ?>" name="recetteID" />
                 <div>
-                    <button class="btn btn-yellow d-block ms-auto px-4 my-3" type="submit" name="addRecIngredient">Ajouter ingredient</button>
+                    <button class="btn btn-yellow d-block ms-auto px-4 my-3" type="submit" name="<?php echo $submitButton ?>">Ajouter ingredient</button>
                 </div>
             </form>
         </div>
@@ -413,14 +414,14 @@ class recipesPage
         // header 
         $sharedViews->pageHeader("Les ingredients de la recette");
         // add recipe form 
-        $this->addRecipeIngredientForm();
+        $this->addRecipeIngredientForm("addRecIngredient");
         // added ingredients
         $recipepage->ingredients($ingredients);
         // confirm
         $this->confirmButton('/ProjetWeb/admin/addrecStep?id=' . $_GET['id']);
     }
 
-    public function addStepForm()
+    public function addStepForm($submitButton)
     {
     ?>
         <div class="d-flex justify-content-center pb-5">
@@ -467,7 +468,7 @@ class recipesPage
                 </div>
                 <input hidden value="<?php echo $_GET['id'] ?>" name="recetteID" />
                 <div>
-                    <button class="btn btn-yellow d-block ms-auto px-4 my-3" type="submit" name="addRecStep">Ajouter Etape</button>
+                    <button class="btn btn-yellow d-block ms-auto px-4 my-3" type="submit" name="<?php echo $submitButton ?>">Ajouter Etape</button>
                 </div>
             </form>
         </div>
@@ -481,7 +482,7 @@ class recipesPage
         // header 
         $sharedViews->pageHeader("Les étapes de la recette");
         // add recipe form 
-        $this->addStepForm();
+        $this->addStepForm("addRecStep");
         // added ingredients
         $recipepage->recipeSteps($_GET['id']);
         // confirm

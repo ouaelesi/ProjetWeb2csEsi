@@ -17,7 +17,6 @@ class recipeController
         } catch (Exception $e) {
             echo var_dump($e);
         }
-        return;
     }
     public function validateRecipe($recipeID)
     {

@@ -7,10 +7,26 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/controllers/newsController.
 
 header('Content-type: application/json');
 
+if (isset($_POST['editprofile'])) {
+    echo var_dump($_POST);
+    $userController = new userController();
+    $userController->updateProfile();
+    header("location: /ProjetWeb/profile?id=" . $_POST['userId']);
+
+    unset($_POST);
+}
+
 if (isset($_POST['addRecette'])) {
     $recipeController = new recipeController();
-    $recipeController->addRecipe();
+    $response = $recipeController->addRecipe();
+    header("location: /ProjetWeb/admin/addRecipeIngr?id=" . $response);
 }
+if (isset($_POST['addRecipeUser'])) {
+    $recipeController = new recipeController();
+    $response = $recipeController->addRecipe();
+    header("location: /ProjetWeb/addRecipeIngr?id=" . $response);
+}
+
 if (isset($_POST['addIngredient'])) {
     $ingredientController = new ingredientController();
     $ingredientController->addIngredient();
@@ -28,6 +44,11 @@ if (isset($_POST['saveNews'])) {
     $userController = new userController();
     $userController->saveNews($_POST["newsID"]);
 }
+if (isset($_GET['getIngredients'])) {
+    $ingredientController = new ingredientController();
+    $response = $ingredientController->getIngredients();
+    echo json_encode($response);
+}
 
 
 if (isset($_POST['rejectRecipe'])) {
@@ -35,8 +56,8 @@ if (isset($_POST['rejectRecipe'])) {
     $recipeController->rejectRecipe($_POST['recipeId']);
 }
 if (isset($_POST['addNews'])) {
-    $newsController = new newsController(); 
-    $newsController->addNews() ; 
+    $newsController = new newsController();
+    $newsController->addNews();
     header("location: /ProjetWeb/admin/news");
 }
 
@@ -72,14 +93,41 @@ if (isset($_POST['signUp'])) {
     $userController->createUser();
     header("location: /ProjetWeb/");
 }
+if (isset($_POST['logIn'])) {
+    $userController = new userController();
+    $response = $userController->logIn();
+    echo json_encode($response);
+}
+
+if (isset($_POST['logout'])) {
+    setcookie("logedIn_user", "", time() - 3600, "/");
+}
+
 if (isset($_POST['addRecIngredient'])) {
     $recipeController = new recipeController();
     $recipeController->addIngredientToRecipe();
+    header("location: /ProjetWeb/admin/addRecipeIngr?id=" . $_POST['recetteID']);
 }
+if (isset($_POST['addIngredientUser'])) {
+    $recipeController = new recipeController();
+    $recipeController->addIngredientToRecipe();
+    header("location: /ProjetWeb/addRecipeIngr?id=" . $_POST['recetteID']);
+    unset($_POST);
+}
+
 
 if (isset($_POST['addRecStep'])) {
     $recipeController = new recipeController();
     $recipeController->addStepToRecipe();
+    header("location: /ProjetWeb/admin/addrecStep?id=" . $_POST['recetteID']);
+    unset($_POST);
+}
+if (isset($_POST['addStepUser'])) {
+    $recipeController = new recipeController();
+    $recipeController->addStepToRecipe();
+    header("location: /ProjetWeb/addrecStep?id=" . $_POST['recetteID']);
+
+    unset($_POST);
 }
 
 

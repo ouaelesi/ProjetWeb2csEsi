@@ -11,6 +11,19 @@ class recipeModel
 
         $whereConditions = 'WHERE 1=1';
         $havingConditions = 'HAVING 1=1';
+        $searchParams = null;
+
+        // search 
+        if (sizeof($params) > 0 and $params["search"] != "null" and $params["search"] != "") {
+            $searchParams = $params['search'] ;
+            $searchParams= substr($searchParams, 0, -1); 
+            $searchParams = str_replace('-', ',', $searchParams);
+            $nbParams = sizeof(explode(',' , $searchParams))*0.7 ; 
+            // error_log($searchParams)  ; 
+         
+            $query = "(SELECT recetteID FROM `contient` WHERE ingredientID IN ($searchParams) GROUP BY recetteID HAVING COUNT(recetteID)>=$nbParams)";
+            $whereConditions = $whereConditions . ' AND recette.id IN ' . $query;
+        }
 
         // les conditions de la category
         if (sizeof($params) > 0 and $params["category"] != "null" and $params["category"] != "all") {
@@ -111,7 +124,7 @@ class recipeModel
         $db  = $database->connect();
         // add the post 
         $query = $db->prepare("INSERT INTO `post`(`title`, `description` , `type` , `coverImage` , `cardImage` , `video` , `event` , `status` , `createdBy`) VALUES (?,?,?,?,?,?,?,?,?)");
-        $query->execute(array($data["title"], $data["description"], 'recette', $_FILES["coverImage"]['name'], $_FILES["cardImage"]["name"], $data["video"], $data["event"], 'pending', 1));
+        $query->execute(array($data["title"], $data["description"], 'recette', $_FILES["coverImage"]['name'], $_FILES["cardImage"]["name"], $data["video"], $data["event"], 'pending', $_COOKIE["logedIn_user"]));
 
         // add the recipe 
         $postID = $db->lastInsertId();
@@ -122,10 +135,10 @@ class recipeModel
         $this->uploadImage('cardImage', '/public/images/recipeImages/');
         // upload the civer Image 
         $this->uploadImage('coverImage', '/public/images/recipeImages/');
-        header("location: /ProjetWeb/admin/addRecipeIngr?id=" . $db->lastInsertId());
+     
         unset($_POST);
         $database->disconnect($db);
-        return;
+        return $db->lastInsertId();
     }
 
     // valider l'ajout d'une recette 
@@ -242,9 +255,6 @@ class recipeModel
 
         $query = $db->prepare("INSERT INTO `contient`(`recetteID`, `ingredientID` , `quantity` ) VALUES (?,?,?)");
         $query->execute(array($_POST["recetteID"], $_POST["ingredientID"], $_POST["quantity"]));
-
-        header("location: /ProjetWeb/admin/addRecipeIngr?id=" . $_POST['recetteID']);
-        unset($_POST);
         $database->disconnect($db);
         return;
     }
@@ -256,13 +266,13 @@ class recipeModel
         $query = $db->prepare("INSERT INTO `step`(`title`, `description` , `recetteID` ) VALUES (?,?,?)");
         $query->execute(array($_POST["title"], $_POST["description"], $_POST["recetteID"]));
 
-        header("location: /ProjetWeb/admin/addrecStep?id=" . $_POST['recetteID']);
-        unset($_POST);
+     
         $database->disconnect($db);
         return;
     }
-    
-    public function getEventsRecipes($params){
+
+    public function getEventsRecipes($params)
+    {
         $database = new dataBaseController();
         $db  = $database->connect();
 
@@ -284,7 +294,8 @@ class recipeModel
         return $response;
     }
 
-    public function getRecipeByPost($postId){
+    public function getRecipeByPost($postId)
+    {
         $database = new dataBaseController();
         $db  = $database->connect();
 

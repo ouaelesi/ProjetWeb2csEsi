@@ -326,7 +326,7 @@ body {
   background-color: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(80px);
 }
-.cardTitle{
+.cardTitle {
   height: 48px;
 }
 
@@ -470,16 +470,19 @@ option {
   width: 60%;
   margin-top: 110px;
 }
+.loginForm {
+  width: 35%;
+  margin-top: 150px;
+}
 ::placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: rgba(255, 255, 255, 0.5);
   opacity: 1; /* Firefox */
 }
-input{
+input {
   outline: none;
-  color: white ; 
+  color: white;
 }
-
 
 .stepCircle {
   width: 100px;
@@ -508,72 +511,84 @@ input{
   left: 50%;
   transform: translate(-50%, 0);
 }
-.suggestion{
+.suggestion {
   cursor: pointer;
 }
-.suggestion:hover{
+.suggestion:hover {
   border-bottom-color: var(--yellow-color);
   color: var(--yellow-color);
 }
 
 /* admin */
-.sideBar,.adminpages{
+.sideBar,
+.adminpages {
   height: 100vh;
   overflow-y: auto;
 }
 
-
 .statsCard {
-  border:2px solid;
+  border: 2px solid;
   padding: 15px 15px 5px 15px;
   border-radius: 15px;
 }
 .statsCard:hover {
-   transform: scale(1.02);
+  transform: scale(1.02);
 }
-.nbUsersCard{
+.nbUsersCard {
   background-color: rgba(255, 230, 0, 0.7);
   border-color: rgba(255, 230, 0, 0.9);
 }
-.nbRecipesCard{
+.nbRecipesCard {
   background-color: rgba(255, 0, 0, 0.5);
   border-color: rgba(255, 0, 0, 0.6);
 }
-.nbNewsCard{
+.nbNewsCard {
   background-color: rgba(98, 255, 0, 0.5);
   border-color: rgba(85, 255, 0, 0.6);
 }
-.nbNutrutionCard{
+.nbNutrutionCard {
   background-color: rgba(255, 0, 0, 0.1);
   border-color: rgba(85, 255, 0, 0.1);
 }
-.statsNumber{
+.statsNumber {
   font-size: 120px;
   line-height: 100px;
   margin: 10px 0 -10px 0;
 }
-.TableHeader{
+.TableHeader {
   border: solid 1px var(--yellow-color);
   background-color: rgba(255, 242, 0, 0.1);
   background: linear-gradient(
     10deg,
-    rgba(255, 242, 0,  0.3) 0%,
-    rgba(255, 242, 0,  0.1) 20%,
-    rgba(255, 242, 0,  0.1) 80%,
-    rgba(255, 242, 0,  0.3) 100%
+    rgba(255, 242, 0, 0.3) 0%,
+    rgba(255, 242, 0, 0.1) 20%,
+    rgba(255, 242, 0, 0.1) 80%,
+    rgba(255, 242, 0, 0.3) 100%
   );
   color: var(--yellow-color);
 }
 
-.TableRow:hover{
-   border-bottom-color:var(--yellow-color) ;
-   margin-left: 10px;
-   color: var(--yellow-color);
+.TableRow:hover {
+  border-bottom-color: var(--yellow-color);
+  margin-left: 10px;
+  color: var(--yellow-color);
 }
-.ingredientBox:hover{
- transform: scale(1.1);
- backdrop-filter: blur(25px);
+.ingredientBox:hover {
+  transform: scale(1.1);
+  backdrop-filter: blur(25px);
 }
-.likeCard , .categoryCard{
+.likeCard,
+.categoryCard {
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.profileBox {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.profileBox:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+.largeText {
+  font-size: 120px;
+  font-weight: 900;
 }

@@ -45,8 +45,22 @@ class SharedViews
 
                                     <?php
                                     } else {
+                                        $userController = new userController();
+                                        $user = $userController->getUserById($_COOKIE[$cookie_name])
                                     ?>
-                                        <a class="text-warning" href="/ProjetWeb/profile?id=<?php echo $_COOKIE[$cookie_name]; ?>"> <?php echo "logedin as " . $_COOKIE[$cookie_name]; ?></a>
+                                        <div class="d-flex gap-2">
+                                            <a class="text-light text-decoration-none" href="/ProjetWeb/profile?id=<?php echo $_COOKIE[$cookie_name]; ?>">
+                                                <div class="bluredBox profileBox ps-3 py-1  d-flex gap-3"><span class="pt-1"><?php echo $user['firstName'] . ' ' . $user['lastName'] ?></span><img src="/ProjetWeb/public/images/profile/<?php if ($user["photo"] != null and $user["photo"] != "") {
+                                                                                                                                                                                                                                                echo $user["photo"];
+                                                                                                                                                                                                                                            } else {
+                                                                                                                                                                                                                                                echo "avatarprofile.webp";
+                                                                                                                                                                                                                                            } ?>" width="33px" class=" me-2 rounded-circle" /> </div>
+                                            </a>
+                                            <div>
+                                                <div onclick="logout()" role="button" class="bluredBox profileBox p-1 rounded-circle"> <img src="/ProjetWeb/public/icons/logout.png" width="31px" height="31px" class=" d-block my-auto rounded-circle" /></div>
+                                            </div>
+                                        </div>
+
                             <?php
 
                                     }
@@ -134,19 +148,24 @@ class SharedViews
 
         public function notFoundPage($message, $errorCode)
         {
+            $this->NavBar(null);
+            // header 
+            $this->pageHeader("Page Not foud !" , "oops.png");
+            // navLinks 
+            $this->navLinks();
     ?>
-    <div>Error <?php echo $errorCode ?> </div>
-    <div>
+    <div class="text-center text-warning  largeText"> <?php echo $errorCode ?> </div>
+    <div class="text-center  h2">
         <?php echo $message ?>
     </div>
 <?php
         }
 
-        public function pageHeader($title , $bg )
+        public function pageHeader($title, $bg)
         {
 ?>
     <div class=" position-relative overflow-hidden">
-        <img  src="/ProjetWeb/public/images/<?php echo $bg ?>" class=" position-absolute bottom-0 opacity-25" width="100%"/>
+        <img src="/ProjetWeb/public/images/<?php echo $bg ?>" class=" position-absolute bottom-0 opacity-25" width="100%" />
         <!-- <div class="footerBg"></div> -->
         <div class="position-relative  pageHeader text-center ">
             <?php echo $title ?>
@@ -155,7 +174,7 @@ class SharedViews
 <?php
         }
 
-        public function filterInputs($options , $message)
+        public function filterInputs($options, $message)
         {
 ?>
     <div class="container mx-auto filterINputs">
@@ -255,10 +274,48 @@ class SharedViews
                     </div>
                 </div>
                 <div class="row my-2  px-0 mx-0">
-                    <div class="col-6 py-1">Vous avez déja un compte ? <a class="text-warning">Se connecter</a></div>
+                    <div class="col-6 py-1">Vous avez déja un compte ? <a class="text-warning" href="/ProjetWeb/login">Se connecter</a></div>
                     <div class="col-6"><button class="btn btn-red d-block ms-auto px-3" type="submit" name="signUp">S'inscrire</button></div>
                 </div>
             </form>
+
+        </div>
+
+    </div>
+<?php
+        }
+
+
+        public function loginForm()
+        {
+?>
+    <div class=" py-5 ">
+        <img src="public/images/footerBg.png" width="100%" height="100%" class="position-absolute top-0 opacity-50" />
+        <?php $this->NavBar(""); ?>
+        <div class="bluredBox px-3 pt-4 pb-2  loginForm  mx-auto rounded-3 position-relative">
+            <div class="artFont text-center h1">
+                Se Connecter
+            </div>
+            <p class="text-center px-5">Welcome Again</p>
+            <div>
+                <div id="loginAlert">
+
+                </div>
+                <div class="my-2">
+                    <label class="mb-1">Email</label>
+                    <input id="loginEmail" class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="text" required placeholder="Email" name="email" />
+                </div>
+                <div class="my-2">
+                    <label class="mb-1">Mot de passe</label>
+                    <input id="loginPassword" class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="password" required placeholder="Mot de passe" name="password" />
+                </div>
+
+
+                <div class="row my-2 mt-5  px-0 mx-0">
+                    <div class="col-6 py-1">Vous n'avez pas un compte ? <a class="text-warning" href="/ProjetWeb/signUp">s'inscrire</a></div>
+                    <div class="col-6"><button class="btn btn-red d-block ms-auto px-3" onclick="login()" name="logIn">Se Connecter</button></div>
+                </div>
+            </div>
 
         </div>
 

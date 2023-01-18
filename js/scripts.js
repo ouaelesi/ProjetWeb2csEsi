@@ -5,6 +5,7 @@ const filterOptions = {
   preparationTime: "all",
   cookTime: "all",
   totalTime: "all",
+  search: "",
 };
 
 const setCurrenctfilter = () => {
@@ -16,6 +17,7 @@ const setCurrenctfilter = () => {
   const preparationTime = urlParams.get("preparationTime");
   const cookTime = urlParams.get("cookTime");
   const totalTime = urlParams.get("totalTime");
+  const search = urlParams.get("search");
 
   filterOptions["category"] = category == "null" ? "all" : category;
   filterOptions["note"] = note == "null" ? "all" : note;
@@ -23,9 +25,37 @@ const setCurrenctfilter = () => {
     preparationTime == "null" ? "all" : preparationTime;
   filterOptions["cookTime"] = cookTime == "null" ? "all" : cookTime;
   filterOptions["totalTime"] = totalTime == "null" ? "all" : totalTime;
+  filterOptions["search"] = search == "" ? "" : search;
+
   console.log(filterOptions);
 };
+const search = () => {
+  filterOptions["search"] = "";
+  addedIngredients.map((ingredient, key) => {
+    filterOptions["search"] += String(ingredient[0]) + "-";
+    console.log(filterOptions["search"]);
+  });
+  let baseUrl = document.location.href.split("?")[0];
+  let url = baseUrl + "?";
+  url =
+    url +
+    "category=" +
+    filterOptions["category"] +
+    "&note=" +
+    filterOptions["note"] +
+    "&preparationTime=" +
+    filterOptions["preparationTime"] +
+    "&cookTime=" +
+    filterOptions["cookTime"] +
+    "&totalTime=" +
+    filterOptions["totalTime"] +
+    "&search=" +
+    filterOptions["search"];
 
+  document.location.href = url;
+  // document.location.href = url;
+  // console.log(filterOptions);
+};
 const filter = (option, value) => {
   filterOptions[option] = value;
   let baseUrl = document.location.href.split("?")[0];
@@ -41,7 +71,9 @@ const filter = (option, value) => {
     "&cookTime=" +
     filterOptions["cookTime"] +
     "&totalTime=" +
-    filterOptions["totalTime"];
+    filterOptions["totalTime"] +
+    "&search=" +
+    filterOptions["search"];
 
   document.location.href = url;
   console.log(filterOptions);
@@ -209,38 +241,54 @@ function removeStep(id) {
 
 renderSteps();
 
+// get all ingredients
+function getIngredients() {
+  $.ajax({
+    type: "GET", //we are using GET method to get data from server side
+    url: "/ProjetWeb/api/apiRoute.php", // get the route value
+    data: {
+      getIngredients: true,
+    }, //set data
+    success: function (response) {
+      //once the request successfully process to the server side it will return result here
+      console.log(response);
+      ingredients = response;
+      initAddedIngredients();
+    },
+  });
+}
+getIngredients();
 // ideas search
-let ingredients = [
-  {
-    name: "t",
-  },
-  {
-    name: "t",
-  },
-  {
-    name: "to",
-  },
-  {
-    name: "tom",
-  },
-  {
-    name: "toma",
-  },
-  {
-    name: "ouael",
-  },
-  {
-    name: "sahbi",
-  },
-];
+let ingredients = [];
 
 let addedIngredients = [];
+function initAddedIngredients() {
+  const queryString = window.location.search;
+
+  const urlParams = new URLSearchParams(queryString);
+  let searchParams = urlParams.get("search");
+  if (searchParams != "null" && searchParams != "") {
+    searchParams = searchParams.split("-");
+    searchParams.pop();
+    console.log(searchParams);
+
+    ingredients.map((ingredient, key) => {
+      if (searchParams.includes(ingredient.id)) {
+        addedIngredients.push(ingredient);
+      }
+    });
+    renderAddedIngredients();
+  }
+}
 
 function autoComplete() {
   let inputValue = $("#ideasSearch").val();
   $("#ingredientsSuggestions").empty();
   ingredients.map((ingredient, key) => {
-    if (ingredient.name.startsWith(inputValue) && inputValue != "") {
+    if (
+      ingredient.name.toUpperCase().startsWith(inputValue.toUpperCase()) &&
+      inputValue != ""
+    ) {
       $("#ingredientsSuggestions").append(
         `<div class="py-2 bluredBox  rounded-1 my-1 mx-2 px-2 suggestion" onclick='addIngredient(${key})'>${ingredient.name}</div>`
       );
@@ -265,6 +313,7 @@ function renderAddedIngredients() {
 
 function rmAddedIngre(id) {
   addedIngredients.splice(id, 1);
+  if (addedIngredients.length == 0) search();
   $("#addedIngredients").empty();
   renderAddedIngredients();
 }
@@ -374,7 +423,7 @@ function rejectRecipe(id) {
     });
 }
 
-function saveNews(e , newsId){
+function saveNews(e, newsId) {
   $.post("/ProjetWeb/api/apiRoute.php", {
     newsID: newsId,
     saveNews: true,
@@ -388,7 +437,46 @@ function saveNews(e , newsId){
       console.log(err);
     });
 }
-
-
-
-
+function logout(){
+  $.ajax({
+    type: "POST", //we are using GET method to get data from server side
+    url: "/ProjetWeb/api/apiRoute.php", // get the route value
+    data: {
+      logout: true,
+    }, //set data
+    success: function (response) {
+       
+    },
+  });
+  document.location.href = '/ProjetWeb/login' ; 
+}
+function login() {
+  let userName = $("#loginEmail").val();
+  let password = $("#loginPassword").val();
+  console.log("sz");
+  $.ajax({
+    type: "POST", //we are using GET method to get data from server side
+    url: "/ProjetWeb/api/apiRoute.php", // get the route value
+    data: {
+      email: userName,
+      password: password,
+      logIn: true,
+    }, //set data
+    success: function (response) {
+      if (response.id) {
+        $("#loginAlert").empty();
+        $("#loginAlert").append("you are connected");
+        if (response.role == "admin") {
+          document.location.href = "/ProjetWeb/admin";
+        } else {
+          document.location.href = "/ProjetWeb";
+        }
+      } else {
+        $("#loginAlert").empty();
+        $("#loginAlert").append(
+          '<div class="px-2 py-3 rounded-3 btn-red w-100">Email or password wrong!</div>'
+        );
+      }
+    },
+  });
+}

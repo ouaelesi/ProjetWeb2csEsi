@@ -14,7 +14,7 @@ class profilePage
                 <hr />
             </div>
             <div class="row py-4">
-                <div class="col-6 ">
+                <form acion="/ProjetWeb/api/apiRoute.php" method="POST"  class="col-6 ">
                     <div>
                         <img src="public/images/profile/<?php if ($user["photo"] != null and $user["photo"] != "") {
                                                             echo $user["photo"];
@@ -23,26 +23,29 @@ class profilePage
                                                         } ?>" width="200px" class="d-block mx-auto rounded-circle" />
                     </div>
                     <div>
-                        <input class=" mx-auto  d-block mt-3" type="file" />
-                        <button class="d-block mx-auto btn btn-yellow mt-3">Changer la photo</button>
+                        <input class=" mx-auto  d-block mt-3" type="file" name="profilePhoto" />
+                        <button class="d-block mx-auto btn btn-yellow mt-3" name="updateProfilePic">Changer la photo</button>
                     </div>
-                </div>
+                </form>
                 <div class="col-6 ">
-                    <div class="w-75 mx-auto d-block ">
+                    <form action="/ProjetWeb/api/apiRoute.php" method="POST" class="w-75 mx-auto d-block ">
                         <label>Nom</label>
                         <div class="d-flex gap-2">
-                            <input class="my-2 bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="text" name="lastName" value='<?php echo $user['lastName'] ?>' /><img src="public/icons/edit.png" width='30px' height="30px" class="d-block my-auto" />
+                            <input class="my-2 bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="text" name="lastName" value='<?php echo $user['lastName'] ?>' />
 
                         </div> <label>Prénom</label>
                         <div class="d-flex gap-2">
-                            <input class="my-2 bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="text" name="firstName" value='<?php echo $user['firstName'] ?>' /><img src="public/icons/edit.png" width='30px' height="30px" class="d-block my-auto" />
+                            <input class="my-2 bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="text" name="firstName" value='<?php echo $user['firstName'] ?>' />
                         </div>
                         <label>email</label>
                         <div class="d-flex gap-2">
-                            <input class="my-2 bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="text" name="email" value='<?php echo $user['email'] ?>' /><img src="public/icons/edit.png" width='30px' height="30px" class="d-block my-auto" />
-
+                            <input class="my-2 bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="text" name="email" value='<?php echo $user['email'] ?>' />
                         </div>
-                    </div>
+                        <input hidden type="text" name="userId" value='<?php echo $user['id'] ?>' />
+
+
+                        <div><button class="btn btn-red d-block ms-auto mt-3" type="submit" name="editprofile">Save edits</button></div>
+                    </form>
 
                 </div>
             </div>
@@ -159,7 +162,7 @@ class profilePage
         // NavBar 
         $sharedComponents->NavBar(null);
         // header 
-        $sharedComponents->pageHeader("Profile Page");
+        $sharedComponents->pageHeader("Profile Page", "footerBg.png");
         // navLinks 
         $sharedComponents->navLinks();
         // general informations

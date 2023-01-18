@@ -119,7 +119,7 @@ class singleRecipePage
                     ?>
                         <div>
                             <p class="h3"><img src="/ProjetWeb/public/icons/step.png" width="20px" class="me-2" /> <?php echo $step['title'] ?></p>
-                            <p class="ps-5">- <?php echo $step['description'] ?></p>
+                            <p class="ps-5 recipeBigDescription">- <?php echo $step['description'] ?></p>
                         </div>
                     <?php
                     } ?>
