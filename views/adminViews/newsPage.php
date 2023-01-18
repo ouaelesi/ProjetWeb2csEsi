@@ -90,7 +90,7 @@ class newsPage
                                                                                             else if ($new['status'] == 'rejected') echo 'bg-danger';
                                                                                             else echo 'bg-warning' ?>"><?php echo $new['status'] ?></div>
                         </td>
-                        <td class=" text-light col-3 d-flex justify-content-center gap-3 "><button class="btn btn-yellow">Edit</button> <button class="btn btn-red">Supprimer</button></td>
+                        <td class=" text-light col-3 d-flex justify-content-center gap-3 "><button class="btn btn-yellow" onclick="gotoUrl('/ProjetWeb/admin/editnews?id=<?php echo $new[0] ?>')">Edit</button> <button class="btn btn-red">Supprimer</button></td>
                     </tr>
                 <?php
                 }
@@ -112,6 +112,65 @@ class newsPage
             <div>
                 <button class="btn btn-red" onclick="gotoUrl('/ProjetWeb/admin/addnews')"> Ajouter un News </button>
             </div>
+        </div>
+    <?php
+    }
+
+    public function editnewsForm()
+    {
+        $newscontroller = new newsController();
+        $news = $newscontroller->getNewsById($_GET['id']);
+    ?>
+        <div class="bluredBox px-3 pt-4 pb-2   mx-auto rounded-3 position-relative">
+            <div class="artFont text-center h1">
+                Information Génerale
+            </div>
+            <form class="row" action="/ProjetWeb/api/apiRoute.php" method="POST" enctype="multipart/form-data">
+                <div class="my-2 col-6">
+                    <label class="mb-1">Titre</label>
+                    <input value="<?php echo $news['title'] ?>" class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="text" required placeholder="Nom" name="title" />
+                </div>
+                <div class="my-2 col-6">
+                    <label class="mb-1">Description</label>
+                    <textarea class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="text" required placeholder="Nom" name="description"> <?php echo $news['description'] ?></textarea>
+                </div>
+
+                <div class="my-2 col-6">
+                    <label class="mb-1">Tags </label>
+                    <input value="<?php echo $news['tags'] ?>" name="tags" placeholder="tag1, tag2, tag3 ..." type="text" required class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" />
+                </div>
+                <div class="my-2 col-6">
+                    <label class="mb-1">Event </label>
+
+                    <select name="event" class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light">
+                        <?php
+                        $eventsController = new eventsController();
+                        $events = $eventsController->getEvents();
+                        foreach ($events as $event) {
+                        ?>
+                            <option <?php if ($news['title'] == $event['id']) echo 'selected' ?> value="<?php echo $event["id"] ?>"><?php echo $event["name"] ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
+                </div>
+                <!-- <div class="my-2 col-6">
+                    <label class="mb-1">Image de couverture</label>
+                    <input name="coverImage" type="file" required class="bluredBox px-2 py-1 d-block rounded-1 w-100 text-light" />
+                </div>
+                <div class="my-2 col-6">
+                    <label class="mb-1">Image du carte </label>
+                    <input name="cardImage" type="file" required class="bluredBox px-2 py-1 d-block rounded-1 w-100 text-light" />
+                </div> -->
+                <div class="my-2 col-6">
+                    <label class="mb-1">Video </label>
+                    <input value="<?php echo $news['video'] ?>" name="video" placeholder="video" type="text" required class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" />
+                </div>
+                <input hidden value="<?php echo $news[0] ?>" name="newsId" />
+                <div>
+                    <button class="btn btn-yellow d-block ms-auto px-4 my-3" type="submit" name="editNews">save changes</button>
+                </div>
+            </form>
         </div>
 <?php
     }
@@ -135,5 +194,14 @@ class newsPage
         $sharedViews->pageHeader('Ajouter un news', 'food.jpg');
 
         $this->addNewsForm();
+    }
+
+    //-------------------------------------
+    public function displayEditNewsPage()
+    {
+        $sharedViews = new sharedadminView();
+        $sharedViews->pageHeader('Modifier news');
+
+        $this->editnewsForm();
     }
 }

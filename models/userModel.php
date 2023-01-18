@@ -132,7 +132,7 @@ class userModel
     {
         $database = new dataBaseController();
         $db  = $database->connect();
-        $query = "SELECT id,firstName,lastName,email,photo,dateOfBirth,sex,`status` from user where id=$userId";
+        $query = "SELECT id,firstName,lastName,email,photo,dateOfBirth,sex,`status`,`role` from user where id=$userId";
         $res = $database->request($db, $query);
         $response = array();
         foreach ($res as $recipe) {
@@ -310,7 +310,7 @@ class userModel
         // upload the card Image 
         $recipeModel = new recipeModel() ; 
         $recipeModel->uploadImage('profilePic', '/public/images/profile/');
-        
+
         $database->disconnect($db);  
     }
 }

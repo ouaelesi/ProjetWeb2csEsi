@@ -50,8 +50,8 @@ class newsView
 
         <div class="swiper-slide" onclick="gotoUrl('/ProjetWeb/article?id=<?php echo $news[0] ?>')">
             <div class="blurEffect"></div>
-            <div class="slide-con p-1">
-                <div class="cardImage">
+            <div class="slide-con p-1 bluredBox">
+                <div class="cardImage ">
                     <img src="/ProjetWeb/public/images/newsImages/<?php echo $news['cardImage'] ?>" />
                     <div class="position-relative d-flex justify-content-between p-1">
 

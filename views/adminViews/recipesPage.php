@@ -159,7 +159,7 @@ class recipesPage
     ?>
         <div class="d-flex justify-content-between">
             <div>
-                <?php $sharedViews->pageHeader($recipe['title']); ?>
+                <?php $sharedViews->pageHeader("details de la recette"); ?>
             </div>
             <div>
                 <?php if ($recipe['status'] == "pending") {
@@ -186,6 +186,15 @@ class recipesPage
     <?php
     }
 
+    public function manageButtons()
+    {
+    ?>
+        <div class="d-flex justify-content-end gap-4">
+            <button class="btn btn-yellow" onclick="gotoUrl('/ProjetWeb/admin/editrecipe?id=<?php echo $_GET['id'] ?>')">Modifier la recette </button> <button class="btn btn-red">supprimer la recette</button>
+        </div>
+    <?php
+    }
+
     public function displaySinglePage()
     {
         $singleRecipePage = new singleRecipePage();
@@ -197,16 +206,107 @@ class recipesPage
 
         // header 
         $this->singlerecipeHeader($recipe);
+        // manage 
+        $this->manageButtons();
         // 
         $singleRecipePage->recipeInfos($recipe);
         // recipe stats 
         $singleRecipePage->recipeStats($recipe);
+    ?>
+        <div class="d-flex justify-content-end mt-5"><button onclick="gotoUrl('/ProjetWeb/admin/addRecipeIngr?id=<?php echo $_GET['id'] ?>')" class="btn btn-yellow">Modifier les ingredients</button></div>
+    <?php
         // ingredients 
         $singleRecipePage->ingredients($ingredients);
+        ?>
+        <div class="d-flex justify-content-end mt-5"><button onclick="gotoUrl('/ProjetWeb/admin/addrecStep?id=<?php echo $_GET['id'] ?>')" class="btn btn-yellow">Modifier les etapes</button></div>
+    <?php
         // recipe steps
         $singleRecipePage->recipesteps($recipe[0]);
         // recipe video 
         $this->recipeVideo($recipe);
+    }
+
+    public function editRecipeForm($submitButton)
+    {
+        $recipeController = new recipeController();
+        $recipe = $recipeController->getRecipe($_GET['id'])
+    ?>
+        <div class="bluredBox px-3 pt-4 pb-2   mx-auto rounded-3 position-relative">
+            <div class="artFont text-center h1 text-warning">
+                1. Information Génerale
+                <hr />
+            </div>
+            <form class="row" action="/ProjetWeb/api/apiRoute.php" method="POST" enctype="multipart/form-data">
+                <div class="my-2 col-6">
+                    <label class="mb-1">Titre</label>
+                    <input value="<?php echo $recipe['title'] ?>" class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="text" required placeholder="Nom" name="title" />
+                </div>
+                <div class="my-2 col-6">
+                    <label class="mb-1">Description</label>
+                    <textarea class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="text" required placeholder="Nom" name="description"><?php echo $recipe['description'] ?></textarea>
+                </div>
+                <div class="my-2 col-6">
+                    <label class="mb-1">Category</label>
+                    <select name="category" class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light">
+                        <?php
+                        $categoryController = new categoryController();
+                        $categories = $categoryController->getCategories();
+                        foreach ($categories as $category) {
+                        ?>
+                            <option <?php if ($recipe['categoryID'] == $category["id"]) echo 'selected' ?> value="<?php echo $category["id"] ?>"><?php echo $category["name"] ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="my-2 col-6">
+                    <label class="mb-1">Fete </label>
+
+                    <select name="event" class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light">
+                        <option value="null">aucune</option>
+
+                        <?php
+                        $eventsController = new eventsController();
+                        $events = $eventsController->getEvents();
+                        foreach ($events as $event) {
+                        ?>
+                            <option <?php if ($recipe['event'] == $event["id"]) echo 'selected' ?> value="<?php echo $event["id"] ?>"><?php echo $event["name"] ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
+                </div>
+                <!-- <div class="my-2 col-6">
+                    <label class="mb-1">Image de couverture</label>
+                    <input name="coverImage" type="file" required class="bluredBox px-2 py-1 d-block rounded-1 w-100 text-light" />
+                </div>
+                <div class="my-2 col-6">
+                    <label class="mb-1">Image du carte </label>
+                    <input name="cardImage" type="file" required class="bluredBox px-2 py-1 d-block rounded-1 w-100 text-light" />
+                </div> -->
+                <div class="my-2 col-6">
+                    <label class="mb-1">Video </label>
+                    <input value="<?php echo $recipe['video'] ?>" name="video" placeholder="video" type="text" required class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" />
+                </div>
+                <div class="my-2 col-6">
+                    <label class="mb-1">Temps de cuisson </label>
+                    <input value="<?php echo $recipe['cookTime'] ?>" name="cookTime" placeholder="Temps de cuisson" type="text" required class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" />
+                </div>
+                <div class="my-2 col-6">
+                    <label class="mb-1">Temps de préparation </label>
+                    <input value="<?php echo $recipe['preparationTime'] ?>" name="preparationTime" placeholder="Temps de préparation" type="text" required class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" />
+                </div>
+                <div class="my-2 col-6">
+                    <label class="mb-1">Temps de repos </label>
+                    <input value="<?php echo $recipe['restTime'] ?>" name="restTime" placeholder="Temps de repos" type="text" required class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" />
+                </div>
+                <input hidden value="<?php echo $_GET['id'] ?>" name="recetteID" />
+                <div>
+                    <button class="btn btn-yellow d-block ms-auto px-4 my-3" type="submit" name="<?php echo $submitButton ?>">Save changes</button>
+                </div>
+            </form>
+        </div>
+    <?php
     }
 
     public function addRecipeForm($submitButton)
@@ -244,7 +344,7 @@ class recipesPage
         <div class="bluredBox px-3 pt-4 pb-2   mx-auto rounded-3 position-relative">
             <div class="artFont text-center h1 text-warning">
                 1. Information Génerale
-                <hr/>
+                <hr />
             </div>
             <form class="row" action="/ProjetWeb/api/apiRoute.php" method="POST" enctype="multipart/form-data">
                 <div class="my-2 col-6">
@@ -330,7 +430,7 @@ class recipesPage
         $this->addRecipeForm("addRecette");
     }
 
-        public function addRecipeIngredientForm($submitButton)
+    public function addRecipeIngredientForm($submitButton)
     {
     ?>
         <div class="d-flex justify-content-center pb-5">
@@ -546,5 +646,13 @@ class recipesPage
 
         // confirm
         $this->confirmButton("/ProjetWeb/admin/recettes");
+    }
+
+    // -------------------------
+    public function displayEditrecipe()
+    {
+        $sharedViews = new sharedadminView() ; 
+        $sharedViews->pageHeader('Modifier la recette') ; 
+        $this->editRecipeForm('editRecipe');
     }
 }

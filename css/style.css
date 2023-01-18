@@ -15,9 +15,14 @@
   font-family: "Montserrat", sans-serif;
 }
 
-body {
+.darkTheme {
   background-color: var(--darkColor);
   color: white;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.lightTheme {
+  background-color: white;
+  color: var(--darkColor);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -432,16 +437,29 @@ option {
 
 .bluredBox {
   border: solid 1px rgba(255, 255, 255, 0.3);
-  border-radius: 20px;
+  border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.1);
   background: linear-gradient(
     10deg,
-    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.3) 0%,
     rgba(255, 255, 255, 0.1) 20%,
     rgba(255, 255, 255, 0.1) 80%,
     rgba(255, 255, 255, 0.2) 100%
   );
-  backdrop-filter: blur(15px);
+  backdrop-filter: blur(20px);
+}
+.lightBluredBox{
+  border: solid 1px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.2);
+  background: linear-gradient(
+    10deg,
+    rgba(0, 0, 0, 0.2) 0%,
+    rgba(0, 0, 0, 0.1) 20%,
+    rgba(0, 0, 0, 0.1) 80%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
+  backdrop-filter: blur(25px);
 }
 .notesSection {
   width: 100%;
@@ -474,16 +492,38 @@ option {
   width: 35%;
   margin-top: 150px;
 }
+.text-white{
+  color: whites;
+}
 ::placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(101, 101, 101, 1);
   opacity: 1; /* Firefox */
 }
 input {
   outline: none;
   color: white;
 }
+input::file-selector-button {
+  border: solid 1px rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+  color: white;
+  background-color: rgba(255, 255, 255, 0.2);
+  background: linear-gradient(
+    10deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.1) 20%,
+    rgba(255, 255, 255, 0.1) 80%,
+    rgba(255, 255, 255, 0.2) 100%
+  );
+  backdrop-filter: blur(15px);
+  margin: 0 10px 3px 0;
+}
+input::file-selector-button:hover {
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.1);
 
+}
 .stepCircle {
   width: 100px;
   height: 100px;

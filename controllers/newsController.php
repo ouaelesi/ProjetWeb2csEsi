@@ -35,8 +35,11 @@ class newsController
     }
 
     // update news 
-    public function updateNews()
+    public function editNews()
     {
+        $newsModel = new newsModel();
+        $response = $newsModel->editNews($_POST['newsId']);
+        return $response;
     }
 
     public function getNbNews()

@@ -10,12 +10,10 @@ class singleRecipePage
 
     public function recipeInfos($recipe)
     {
-
-        $tags = ["tag 1", "tag 1", "tag 1", "tag 1"];
         $userController = new userController();
         $user = $userController->getUserById($recipe['createdBy']);
 ?>
-        <div class=" w-75 container mx-auto">
+        <div class=" ">
 
             <div class="h1 mt-4">
                 <?php echo $recipe['title'] ?>
@@ -23,7 +21,7 @@ class singleRecipePage
             <div class="row">
                 <div class="col-6">
                     <div class="py-3  bluredBox rounded-4 px-3 gap-2 my-3 position-relative d-flex flex-wrap justify-content-between">
-                        <div class="">Rating: 
+                        <div class="">Rating:
                             <?php if ($recipe['note'] == null) {
                                 echo "0";
                             } else {
@@ -61,7 +59,7 @@ class singleRecipePage
     {
 
     ?>
-        <div class="w-75 container mx-auto  position-relative">
+        <div class=" position-relative">
             <div class="bg-light px-3 py-3 position-absolute rounded-5 opacity-50"></div>
             <div class="bluredBox py-4 px-5 my-3 position-relative d-flex justify-content-between">
                 <div class="">
@@ -86,12 +84,12 @@ class singleRecipePage
     {
 
     ?>
-        <div class="w-75 container mx-auto  my-5">
+        <div class=" my-5">
             <div class="h3">Les Ingredients</div>
             <div class="d-flex flex-wrap">
                 <?php foreach ($ingredients as $ingredient) {
                 ?>
-                    <div role="button" class="bluredBox px-3 py-3 rounded-4 me-3 my-2 position-relative ingredientBox"><?php echo $ingredient["quantity"] ?>
+                    <div role="button" onclick="gotoUrl('/ProjetWeb/ingredient?id=<?php echo $ingredient['id'] ?>')" class="bluredBox px-3 py-3 rounded-4 me-3 my-2 position-relative ingredientBox"><?php echo $ingredient["quantity"] ?>
 
                         <?php echo $ingredient["name"] ?> <img src="/ProjetWeb/public/icons/<?php if ($ingredient["healthy"]) {
                                                                                                 echo "healthy.png";
@@ -112,7 +110,7 @@ class singleRecipePage
             $stepController = new stepController();
             $steps = $stepController->getrecipeSteps($recipeId);
         ?>
-            <div class="w-75 container mx-auto  my-5">
+            <div class="  my-5">
                 <div class="h3 mb-4">Les Etapes</div>
                 <div class="bluredBox px-4 py-4">
                     <?php foreach ($steps as $step) {
@@ -133,7 +131,7 @@ class singleRecipePage
     public function recipeVideo($recipe)
     {
         ?>
-        <div class="w-75 container mx-auto  my-5">
+        <div class=" my-5">
             <div class="h3 mb-4">Video</div>
             <div class="row">
                 <iframe class="rounded-4 mx-auto d-block col-8" width="100%" height="500" src="<?php echo $recipe['video'] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
@@ -157,7 +155,7 @@ class singleRecipePage
         }
         $topNote = 5;
     ?>
-        <div class="w-75 container mx-auto ">
+        <div class=" ">
             <div class="bluredBox px-5 py-4 h3 d-flex justify-content-between ratingSection">
                 <div class="pt-1">Did you like the recipe ?</div>
                 <div class="ratingBox" id="starsBox">
@@ -181,14 +179,14 @@ class singleRecipePage
     public function commentSection()
     {
     ?>
-        <div class="w-75 container mx-auto  my-5">
+        <div class="my-5">
             <div class="h3 mb-4">Ajouter un Commentaire</div>
             <form class="">
                 <textarea class="bluredBox notesSection py-4" rows="10" placeholder="Ajouter votre commentaire..."></textarea>
                 <button class="btn btn-red d-block ms-auto mt-3 py-2 px-4">Ajouter commentaire</button>
             </form>
         </div>
-<?php
+    <?php
     }
 
     public function displaySignleRecipe()
@@ -208,23 +206,29 @@ class singleRecipePage
         // NavBar 
         $sharedComponents->NavBar(null);
         // header 
-        $sharedComponents->pageHeader("recipe Id " . $recipeId , "footerBg.png");
+        $sharedComponents->pageHeader("recipe Id " . $recipeId, "footerBg.png");
         // navLinks 
         $sharedComponents->navLinks();
-        // recipe infos 
-        $this->recipeInfos($recipe);
-        // recipe stats 
-        // $this->recipeStats($recipe);
-        // ingredients 
-        $this->ingredients($ingredients);
-        // recipe steps
-        $this->recipesteps($recipe[0]);
-        // recipe video 
-        $this->recipeVideo($recipe);
-        // rating section 
-        $this->ratingSection($recipe[0]);
-        // comment section
-        $this->commentSection();
+    ?>
+        <div class="w-75 container mx-auto  my-5">
+            <?php
+            // recipe infos 
+            $this->recipeInfos($recipe);
+            // recipe stats 
+            // $this->recipeStats($recipe);
+            // ingredients 
+            $this->ingredients($ingredients);
+            // recipe steps
+            $this->recipesteps($recipe[0]);
+            // recipe video 
+            $this->recipeVideo($recipe);
+            // rating section 
+            $this->ratingSection($recipe[0]);
+            // comment section
+            $this->commentSection();
+            ?>
+        </div>
+<?php
         // The footer 
         $sharedComponents->Footer();
     }

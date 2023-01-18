@@ -22,8 +22,8 @@ class HomePage
                         <img src="/ProjetWeb/public/images/swiperHeader/<?php echo $slide['image'] ?>" class="d-block w-100 position-absolute" alt="...">
                         <div class="flex">
                             <div class="poition-relative swiperContent ">
-                                <p class="swiperTitle">GET YOUR RECIPE <br /><span>Now!</span></p>
-                                <p class="swiperDescription"><?php echo $slide["description"] ?></p>
+                                <p class="swiperTitle text-white">GET YOUR RECIPE <br /><span>Now!</span></p>
+                                <p class="swiperDescription text-white"><?php echo $slide["description"] ?></p>
                                 <button class="btn btn-red px-5 py-2 font-xl mt-3"> Start Now</button>
                             </div>
                         </div>
@@ -83,13 +83,13 @@ class HomePage
     ?>
 
         <div class="swiper-slide" onclick="gotoUrl('/ProjetWeb/recette?id=<?php echo $recipe[0] ?>')">
-            <div class="blurEffect"></div>
-            <div class="slide-con p-1">
+            <div class="blurEffect opacity-50"></div>
+            <div class="slide-con p-1 bluredBox">
                 <div class="cardImage">
                     <img src="/ProjetWeb/public/images/recipeImages/<?php echo $recipe['cardImage'] ?>" />
                     <div class="position-relative d-flex justify-content-between p-1">
 
-                        <div class="categoryCard"><?php echo $category ?></div>
+                        <div class="categoryCard text-white"><?php echo $category ?></div>
                         <div id="heartContainer" class="likeCard " onclick="window.event.cancelBubble = true; likeRecipe(this , <?php echo $recipe[0] ?>)"> <img src="/ProjetWeb/public/icons/<?php if (!$isLike) {
                                                                                                                                                             echo 'heart.png';
                                                                                                                                                         } else {

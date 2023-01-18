@@ -57,4 +57,17 @@ class ingredientController
         $ingredientModel->deleteIngredient($id); 
         return;
     }
+
+    public function getIngredientByID($id){
+        $ingredientModel = new ingredientModel();
+        $response = $ingredientModel->getIngredientByID($id); 
+        return $response[0];
+    }
+
+
+    public function getIngredientInfos($id){
+        $ingredientModel = new ingredientModel();
+        $response = $ingredientModel->getIngredientInfos($id); 
+        return $response;
+    }
 }

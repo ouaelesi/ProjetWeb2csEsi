@@ -120,6 +120,7 @@ class recipePage
         </div>
 <?php
     }
+
     public function displayRecipePage()
     {
         $sharedComponents = new sharedViews();
@@ -131,6 +132,7 @@ class recipePage
         $sharedComponents->pageHeader("Tous les recettes" , "footerBg.png");
         // navLinks 
         $sharedComponents->navLinks();
+    
         // add recipe section 
         $this->addRecipeSection();
         // search input 

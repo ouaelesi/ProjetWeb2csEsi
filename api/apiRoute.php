@@ -7,6 +7,16 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/controllers/newsController.
 
 header('Content-type: application/json');
 
+if (isset($_POST['sendEmail'])) {
+    echo var_dump($_POST);
+    $msg = "First line of text\nSecond line of text";
+
+    // use wordwrap() if lines are longer than 70 characters
+    $msg = wordwrap($msg, 70);
+
+    // send email
+    mail("jo_sahbi@esi.dz", "My subject", $msg);
+}
 if (isset($_POST['editprofile'])) {
     echo var_dump($_POST);
     $userController = new userController();
@@ -15,6 +25,7 @@ if (isset($_POST['editprofile'])) {
 
     unset($_POST);
 }
+
 if (isset($_POST['updateProfilePic'])) {
     echo var_dump($_FILES);
     $userController = new userController();
@@ -30,6 +41,12 @@ if (isset($_POST['addRecette'])) {
     $response = $recipeController->addRecipe();
     header("location: /ProjetWeb/admin/addRecipeIngr?id=" . $response);
 }
+if (isset($_POST['editRecipe'])) {
+    $recipeController = new recipeController();
+    $response = $recipeController->editrecipe();
+    header("location: /ProjetWeb/admin/recette?id=" . $_POST['recetteID']);
+}
+
 if (isset($_POST['addRecipeUser'])) {
     $recipeController = new recipeController();
     $response = $recipeController->addRecipe();
@@ -69,8 +86,12 @@ if (isset($_POST['addNews'])) {
     $newsController->addNews();
     header("location: /ProjetWeb/admin/news");
 }
-
-
+if (isset($_POST['editNews'])) {
+    $newsController = new newsController();
+    $newsController->editNews();
+    header("location: /ProjetWeb/admin/editnews?id=" . $_POST['newsId']);
+    unset($_POST);
+}
 
 
 if (isset($_POST['editIngredient'])) {
@@ -138,6 +159,8 @@ if (isset($_POST['addStepUser'])) {
 
     unset($_POST);
 }
+
+
 
 
 

@@ -290,7 +290,13 @@ function autoComplete() {
       inputValue != ""
     ) {
       $("#ingredientsSuggestions").append(
-        `<div class="py-2 bluredBox  rounded-1 my-1 mx-2 px-2 suggestion" onclick='addIngredient(${key})'>${ingredient.name}</div>`
+        `<div class="py-2 ${
+          localStorage.getItem("style_mode") == "lightMode"
+            ? "lightBluredBox"
+            : "bluredBox"
+        }  rounded-1 my-1 mx-2 px-2 suggestion" onclick='addIngredient(${key})'>${
+          ingredient.name
+        }</div>`
       );
     }
   });
@@ -306,7 +312,13 @@ function renderAddedIngredients() {
   $("#addedIngredients").empty();
   addedIngredients.map((ingredient, key) => {
     $("#addedIngredients").append(
-      `<div class="bluredBox rounded-1 px-2 py-1">${ingredient.name} <span role="button" class="text-dark ms-2" onclick="rmAddedIngre(${key})">X</span></div>`
+      `<div class="${
+        localStorage.getItem("style_mode") == "lightMode"
+          ? "lightBluredBox"
+          : "bluredBox"
+      } rounded-1 px-2 py-1">${
+        ingredient.name
+      } <span role="button" class="text-dark ms-2" onclick="rmAddedIngre(${key})">X</span></div>`
     );
   });
 }
@@ -437,18 +449,16 @@ function saveNews(e, newsId) {
       console.log(err);
     });
 }
-function logout(){
+function logout() {
   $.ajax({
     type: "POST", //we are using GET method to get data from server side
     url: "/ProjetWeb/api/apiRoute.php", // get the route value
     data: {
       logout: true,
     }, //set data
-    success: function (response) {
-       
-    },
+    success: function (response) {},
   });
-  document.location.href = '/ProjetWeb/login' ; 
+  document.location.href = "/ProjetWeb/login";
 }
 function login() {
   let userName = $("#loginEmail").val();
@@ -479,4 +489,47 @@ function login() {
       }
     },
   });
+}
+
+// Dark mode
+function setMode(mode) {
+  localStorage.setItem("style_mode", mode);
+  upplyMode();
+}
+
+function upplyMode() {
+  console.log(localStorage.getItem("style_mode"));
+  if (localStorage.getItem("style_mode") == "lightMode") {
+    $("#body").addClass("lightTheme");
+    $("#body").removeClass("darkTheme");
+    let a = $(".bluredBox");
+    a.removeClass("bluredBox");
+    a.addClass("lightBluredBox");
+    let b = $(".text-light");
+    b.removeClass("text-light");
+    b.addClass("text-dark");
+    $("#themeSwitch")
+      .children()
+      .attr("src", "/ProjetWeb/public/icons/moon.png");
+    $("input , select , textarea").addClass("text-dark");
+  } else {
+    $("#body").addClass("darkTheme");
+    $("#body").removeClass("lightTheme");
+    let a = $(".lightBluredBox");
+    a.removeClass("lightBluredBox");
+    a.addClass("bluredBox");
+    let b = $(".text-dark");
+    b.removeClass("text-dark");
+    b.addClass("text-light");
+    $("#themeSwitch").children().attr("src", "/ProjetWeb/public/icons/sun.png");
+  }
+}
+upplyMode();
+
+function switchMode() {
+  if (localStorage.getItem("style_mode") == "lightMode") {
+    setMode("darkMode");
+  } else {
+    setMode("lightMode");
+  }
 }

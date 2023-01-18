@@ -86,4 +86,10 @@ class recipeController
         $response = $recipeModel->getRecipeByPost($postId);
         return $response[0];
     }
+
+    public function editrecipe(){
+        $recipeModel = new recipeModel();
+        $recipeModel->editrecipe();
+        return ;
+    }
 }

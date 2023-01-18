@@ -13,14 +13,24 @@ class recipeModel
         $havingConditions = 'HAVING 1=1';
         $searchParams = null;
 
+        if (!$_COOKIE['logedIn_user']) {
+            $whereConditions = $whereConditions . " AND `status`='valid'";
+        } else {
+            $userModel = new userController();
+            $user = $userModel->getUserById($_COOKIE['logedIn_user']);
+
+            if ($user['role'] != "admin") {
+                $whereConditions = $whereConditions . " AND `status`='valid'";
+            }
+        }
         // search 
         if (sizeof($params) > 0 and $params["search"] != "null" and $params["search"] != "") {
-            $searchParams = $params['search'] ;
-            $searchParams= substr($searchParams, 0, -1); 
+            $searchParams = $params['search'];
+            $searchParams = substr($searchParams, 0, -1);
             $searchParams = str_replace('-', ',', $searchParams);
-            $nbParams = sizeof(explode(',' , $searchParams))*0.7 ; 
+            $nbParams = sizeof(explode(',', $searchParams)) * 0.7;
             // error_log($searchParams)  ; 
-         
+
             $query = "(SELECT recetteID FROM `contient` WHERE ingredientID IN ($searchParams) GROUP BY recetteID HAVING COUNT(recetteID)>=$nbParams)";
             $whereConditions = $whereConditions . ' AND recette.id IN ' . $query;
         }
@@ -135,7 +145,7 @@ class recipeModel
         $this->uploadImage('cardImage', '/public/images/recipeImages/');
         // upload the civer Image 
         $this->uploadImage('coverImage', '/public/images/recipeImages/');
-     
+
         unset($_POST);
         $database->disconnect($db);
         return $db->lastInsertId();
@@ -266,7 +276,7 @@ class recipeModel
         $query = $db->prepare("INSERT INTO `step`(`title`, `description` , `recetteID` ) VALUES (?,?,?)");
         $query->execute(array($_POST["title"], $_POST["description"], $_POST["recetteID"]));
 
-     
+
         $database->disconnect($db);
         return;
     }
@@ -308,5 +318,33 @@ class recipeModel
         // echo var_dump($response);
         $database->disconnect($db);
         return $response;
+    }
+
+    public function deleterecipe($id)
+    {
+        $database = new dataBaseController();
+        $db  = $database->connect();
+
+        $query = $db->prepare('DELETE FROM `recipe` WHERE id=?');
+        $query->execute(array($id));
+
+        $database->disconnect($db);
+    }
+
+
+    public function editrecipe()
+    {
+        $recipeController = new recipeController();
+        $recipe = $recipeController->getRecipe($_POST['recetteID']);
+        $database = new dataBaseController();
+        $db  = $database->connect();
+
+        $query = $db->prepare('UPDATE `recette` SET `cookTime`=? , `preparationTime`=? , `restTime`=? , `categoryID`=? WHERE id=?');
+        $query->execute(array($_POST['cookTime'], $_POST['preparationTime'], $_POST['restTime'], $_POST['category'], $_POST['recetteID']));
+
+        $query = $db->prepare('UPDATE `post` SET `title`=? , `description`=? , `event`=? , `video`=? WHERE id=?');
+        $query->execute(array($_POST['title'], $_POST['description'], $_POST['event'], $_POST['video'], $recipe['postID']));
+
+        $database->disconnect($db);
     }
 }

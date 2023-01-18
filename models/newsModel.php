@@ -73,8 +73,21 @@ class newsModel
     }
 
     // update news 
-    public function updateNews()
+    public function editNews($idNews)
     {
+        $newsController = new newsController();
+        $news = $newsController->getNewsById($idNews);
+
+        $database = new dataBaseController();
+        $db  = $database->connect();
+
+        $query = $db->prepare('UPDATE `news` SET `tags`=? WHERE id=?');
+        $query->execute(array($_POST['tags'], $idNews));
+
+        $query = $db->prepare('UPDATE `post` SET `title`=? , `description`=? , `event`=? , `video`=? WHERE id=?');
+        $query->execute(array($_POST['title'], $_POST['description'], $_POST['event'], $_POST['video'], $idNews));
+
+        $database->disconnect($db);
     }
 
 

@@ -64,6 +64,10 @@ class nestedRoutes
             case '/ProjetWeb/admin/recette':
                 $recipesPage->displaySinglePage();
                 break;
+            case '/ProjetWeb/admin/editrecipe':
+                $recipesPage->displayEditrecipe();
+                break;
+
             case '/ProjetWeb/admin/addrecipe':
                 $recipesPage->displayAddRecipe();
                 break;
@@ -78,6 +82,9 @@ class nestedRoutes
                 break;
             case '/ProjetWeb/admin/addnews':
                 $newspage->displayaddNewsPage();
+                break;
+            case '/ProjetWeb/admin/editnews':
+                $newspage->displayEditNewsPage();
                 break;
 
 

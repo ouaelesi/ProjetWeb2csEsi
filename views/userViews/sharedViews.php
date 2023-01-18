@@ -22,7 +22,7 @@ class SharedViews
                             <?php
                             foreach ($data['socialmedia'] as $link) {
                             ?>
-                                <li><img class="d-block " src="public/images/socialMedia/<?php echo $link["icon"] ?>" width="20px" alt="" /></li>
+                                <li><a href="/ProjetWeb<?php echo $link['href'] ?>" class="text-decoration-none text-light"><img class="d-block " src="public/images/socialMedia/<?php echo $link["icon"] ?>" width="20px" alt="" /></a></li>
                             <?php
                             }
                             ?>
@@ -50,15 +50,19 @@ class SharedViews
                                     ?>
                                         <div class="d-flex gap-2">
                                             <a class="text-light text-decoration-none" href="/ProjetWeb/profile?id=<?php echo $_COOKIE[$cookie_name]; ?>">
-                                                <div class="bluredBox profileBox ps-3 py-1  d-flex gap-3"><span class="pt-1"><?php echo $user['firstName'] . ' ' . $user['lastName'] ?></span><img src="/ProjetWeb/public/images/profile/<?php if ($user["photo"] != null and $user["photo"] != "") {
+                                                <div class="bluredBox rounded-5 profileBox ps-3 py-1  d-flex gap-3"><span class="pt-1 text-white"><?php echo $user['firstName'] . ' ' . $user['lastName'] ?></span><img src="/ProjetWeb/public/images/profile/<?php if ($user["photo"] != null and $user["photo"] != "") {
                                                                                                                                                                                                                                                 echo $user["photo"];
                                                                                                                                                                                                                                             } else {
                                                                                                                                                                                                                                                 echo "avatarprofile.webp";
                                                                                                                                                                                                                                             } ?>" width="33px" class=" me-2 rounded-circle" /> </div>
                                             </a>
                                             <div>
+                                                <div onclick="switchMode()" role="button" class="bluredBox profileBox p-1 rounded-circle" id="themeSwitch"> <img src="/ProjetWeb/public/icons/sun.png" width="31px" height="31px" class=" d-block my-auto rounded-circle" /></div>
+                                            </div>
+                                            <div>
                                                 <div onclick="logout()" role="button" class="bluredBox profileBox p-1 rounded-circle"> <img src="/ProjetWeb/public/icons/logout.png" width="31px" height="31px" class=" d-block my-auto rounded-circle" /></div>
                                             </div>
+                                        
                                         </div>
 
                             <?php
@@ -85,6 +89,7 @@ class SharedViews
             <img src="public/logos/<?php echo $data["logo"] ?>" width="100px" alt="" class="hiddenToNav" />
             <?php
                 foreach ($data['links'] as $link) {
+                    if($link["type"] != "button"){
             ?>
                 <li class="py-2 <?php if ($link["type"] == "button") echo "hiddenToNav" ?>">
                     <a href="/ProjetWeb<?php echo $link["href"] ?>" class="<?php if ($link["type"] == "button") echo "text-warning underline";
@@ -94,6 +99,7 @@ class SharedViews
                     </a>
                 </li>
             <?php
+                }
                 }
             ?>
         </ul>
@@ -109,13 +115,13 @@ class SharedViews
             foreach ($homeMenu as $data) {
     ?>
         <div class="footer">
-            <div class="footerBg"></div>
+            <div class="footerBg bg-dark"></div>
             <div class="position-relative pt-4 pb-2"> <img class="d-block mx-auto" src="public/logos/<?php echo $data["logo"] ?>" width="150px" alt="" />
                 <ul class="d-flex gap-4 justify-content-around footer-nav-links mx-auto mt-5 mb-5">
                     <?php
                     foreach ($data['links'] as $link) {
                     ?>
-                        <li><?php echo $link['name'] ?></li>
+                        <li><a href="/ProjetWeb<?php echo $link['href'] ?>" class="text-decoration-none text-light"><?php echo $link['name'] ?></a></li>
                     <?php
                     }
                     ?>
@@ -124,7 +130,7 @@ class SharedViews
                     <?php
                     foreach ($data['socialmedia'] as $link) {
                     ?>
-                        <li><img class="d-block mx-3" src="public/images/socialMedia/<?php echo $link["icon"] ?>" width="40px" alt="" /></li>
+                        <li><a href="/ProjetWeb<?php echo $link['href'] ?>" class="text-decoration-none text-light"><img class="d-block mx-3" src="public/images/socialMedia/<?php echo $link["icon"] ?>" width="40px" alt="" /></a></li>
                     <?php
                     }
                     ?>
@@ -150,7 +156,7 @@ class SharedViews
         {
             $this->NavBar(null);
             // header 
-            $this->pageHeader("Page Not foud !" , "oops.png");
+            $this->pageHeader("Page Not foud !", "oops.png");
             // navLinks 
             $this->navLinks();
     ?>
@@ -165,7 +171,7 @@ class SharedViews
         {
 ?>
     <div class=" position-relative overflow-hidden">
-        <img src="/ProjetWeb/public/images/<?php echo $bg ?>" class=" position-absolute bottom-0 opacity-25" width="100%" />
+        <img src="/ProjetWeb/public/images/<?php echo $bg ?>" class="bg-dark position-absolute bottom-0 opacity-25" width="100%" />
         <!-- <div class="footerBg"></div> -->
         <div class="position-relative  pageHeader text-center ">
             <?php echo $title ?>
@@ -177,7 +183,7 @@ class SharedViews
         public function filterInputs($options, $message)
         {
 ?>
-    <div class="container mx-auto filterINputs">
+    <div class="container mx-auto filterINputs ">
         <div class="d-flex justify-content-between px-4">
             <div class="h1 pb-2 artFont"><?php echo $message ?></div>
             <div class="text-warning py-3" onclick="clearfilter()">Clear filter</div>
@@ -190,7 +196,7 @@ class SharedViews
 
                 <div class="flex gap-2 position-relative filterBox ">
                     <p class="h6"><?php echo $filterOption['name'] ?></p>
-                    <select name=<?php echo $filterOption['index'] ?> class="selectInput postion-relative" onchange="filter(this.name ,this.value)">
+                    <select name=<?php echo $filterOption['index'] ?> class="selectInput bluredBox postion-relative" onchange="filter(this.name ,this.value)">
                         <option value="all">Tous</option>
                         <?php foreach ($filterOption["options"] as $option) {
                         ?>
@@ -221,7 +227,7 @@ class SharedViews
         {
 ?>
     <div class=" py-5">
-        <img src="public/images/footerBg.png" width="100%" height="100%" class="position-absolute top-0 opacity-50" />
+        <img src="public/images/footerBg.png" width="100%" height="100%" class="bg-dark position-absolute top-0 opacity-50" />
         <?php $this->NavBar(""); ?>
         <div class="bluredBox px-3 pt-4 pb-2  registerForm mx-auto rounded-3 position-relative">
             <div class="artFont text-center h1">
@@ -290,7 +296,7 @@ class SharedViews
         {
 ?>
     <div class=" py-5 ">
-        <img src="public/images/footerBg.png" width="100%" height="100%" class="position-absolute top-0 opacity-50" />
+        <img src="public/images/footerBg.png" width="100%" height="100%" class="bg-dark position-absolute top-0 opacity-50" />
         <?php $this->NavBar(""); ?>
         <div class="bluredBox px-3 pt-4 pb-2  loginForm  mx-auto rounded-3 position-relative">
             <div class="artFont text-center h1">

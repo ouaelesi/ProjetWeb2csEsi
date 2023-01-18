@@ -12,6 +12,8 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/views/userViews/nutritionPa
 require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/views/adminViews/sharedadminView.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/views/userViews/eventsPage.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/views/userViews/newsView.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/views/userViews/contactPage.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/views/userViews/seasonPage.php");
 
 // Get the Current URL
 $request = $_SERVER['REQUEST_URI'];
@@ -43,6 +45,8 @@ $sharedAdminViews = new sharedadminView();
 $nutritionPage = new nutritionPage();
 $eventsPage = new eventsPage();
 $newsPage = new newsView();
+$contactPage = new contactPage();
+$seasonPage = new seasonPage();
 
 switch ($request) {
     case '/ProjetWeb/':
@@ -78,6 +82,10 @@ switch ($request) {
     case '/ProjetWeb/confirmRecipe':
         $addrecipe->confirmRecipePage();
         break;
+    case '/ProjetWeb/contact':
+        $contactPage->displaycontactPage();
+        break;
+
 
 
 
@@ -90,6 +98,10 @@ switch ($request) {
     case '/ProjetWeb/nutritions':
         $nutritionPage->displayNutritionPage();
         break;
+    case '/ProjetWeb/ingredient':
+        $nutritionPage->displaySingleNutrition();
+        break;
+
     case '/ProjetWeb/fetes':
         $eventsPage->displayEventsPage();
         break;
@@ -99,6 +111,10 @@ switch ($request) {
     case '/ProjetWeb/article':
         $newsPage->singleNewsPage();
         break;
+    case '/ProjetWeb/season':
+        $seasonPage->displaySeasonPage();
+        break;
+
 
 
         // admin dashboard 

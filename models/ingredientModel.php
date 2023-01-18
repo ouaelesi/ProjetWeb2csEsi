@@ -95,4 +95,32 @@ class ingredientModel
 
         $database->disconnect($db);
     }
+
+    public function getIngredientByID($id){
+        $database = new dataBaseController();
+        $db  = $database->connect();
+
+        $query = "SELECT *  from ingredient where id=$id";
+        $res = $database->request($db, $query);
+        $response = array();
+        foreach ($res as $user) {
+            array_push($response, $user);
+        }
+        $database->disconnect($db);
+        return $response;
+    }
+
+    public function getIngredientInfos($id){
+        $database = new dataBaseController();
+        $db  = $database->connect();
+
+        $query = "SELECT * from information join contientinfos on information.id=contientinfos.informationID where ingredientID=$id";
+        $res = $database->request($db, $query);
+        $response = array();
+        foreach ($res as $user) {
+            array_push($response, $user);
+        }
+        $database->disconnect($db);
+        return $response;
+    }
 }
