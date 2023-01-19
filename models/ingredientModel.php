@@ -86,7 +86,8 @@ class ingredientModel
         $database->disconnect($db);
     }
 
-    public function deleteIngredient($id){
+    public function deleteIngredient($id)
+    {
         $database = new dataBaseController();
         $db  = $database->connect();
 
@@ -96,7 +97,8 @@ class ingredientModel
         $database->disconnect($db);
     }
 
-    public function getIngredientByID($id){
+    public function getIngredientByID($id)
+    {
         $database = new dataBaseController();
         $db  = $database->connect();
 
@@ -110,7 +112,8 @@ class ingredientModel
         return $response;
     }
 
-    public function getIngredientInfos($id){
+    public function getIngredientInfos($id)
+    {
         $database = new dataBaseController();
         $db  = $database->connect();
 
@@ -122,5 +125,16 @@ class ingredientModel
         }
         $database->disconnect($db);
         return $response;
+    }
+
+    public function removeIngredient()
+    {
+        $database = new dataBaseController();
+        $db  = $database->connect();
+
+        $query = $db->prepare('DELETE FROM `contient` WHERE recetteID=? and ingredientID=?');
+        $query->execute(array($_POST['recetteID'], $_POST['ingredientID']));
+
+        $database->disconnect($db);
     }
 }

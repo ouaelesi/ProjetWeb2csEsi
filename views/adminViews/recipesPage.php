@@ -189,9 +189,11 @@ class recipesPage
     public function manageButtons()
     {
     ?>
+        <hr />
         <div class="d-flex justify-content-end gap-4">
             <button class="btn btn-yellow" onclick="gotoUrl('/ProjetWeb/admin/editrecipe?id=<?php echo $_GET['id'] ?>')">Modifier la recette </button> <button class="btn btn-red">supprimer la recette</button>
         </div>
+       
     <?php
     }
 
@@ -214,7 +216,7 @@ class recipesPage
         $singleRecipePage->recipeStats($recipe);
     ?>
         <div class="d-flex justify-content-end mt-5"><button onclick="gotoUrl('/ProjetWeb/admin/addRecipeIngr?id=<?php echo $_GET['id'] ?>')" class="btn btn-yellow">Modifier les ingredients</button></div>
-    <?php
+        <?php
         // ingredients 
         $singleRecipePage->ingredients($ingredients);
         ?>
@@ -284,6 +286,33 @@ class recipesPage
                     <label class="mb-1">Image du carte </label>
                     <input name="cardImage" type="file" required class="bluredBox px-2 py-1 d-block rounded-1 w-100 text-light" />
                 </div> -->
+                <div class="my-2 col-6">
+                    <label class="mb-1">Difficulté</label>
+                    <select name="difficulty" class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light">
+                        <?php
+                        $diffs = ['tres facile', 'facile', 'moyenne', 'difficile', 'tres difficile'];
+                        foreach ($diffs as $diff) {
+                        ?>
+                            <option <?php if ($diff == $recipe['difficulty']) echo 'selected' ?> value="<?php echo $diff ?>"><?php echo $diff ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="my-2 col-6">
+                    <label class="mb-1">Méthode de cuisson</label>
+                    <select name="cookMethode" class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light">
+                        <?php
+                        $methodes = ['Bouillir', 'Vapeur', 'Frire', 'Griller', 'Cuire au four', 'Rôtir', 'Glacer', 'Etuver'];
+                        foreach ($methodes as $methode) {
+                        ?>
+                            <option <?php if ($methode == $recipe['cookMethode']) echo 'selected' ?> value="<?php echo $methode ?>"><?php echo $methode ?></option>
+                        <?php
+                        }
+                        ?>
+
+                    </select>
+                </div>
                 <div class="my-2 col-6">
                     <label class="mb-1">Video </label>
                     <input value="<?php echo $recipe['video'] ?>" name="video" placeholder="video" type="text" required class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" />
@@ -393,6 +422,29 @@ class recipesPage
                 <div class="my-2 col-6">
                     <label class="mb-1">Image du carte </label>
                     <input name="cardImage" type="file" required class="bluredBox px-2 py-1 d-block rounded-1 w-100 text-light" />
+                </div>
+                <div class="my-2 col-6">
+                    <label class="mb-1">Difficulté</label>
+                    <select name="difficulty" class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light">
+                        <option value="tres facile">Tré facile</option>
+                        <option value="facile">facile</option>
+                        <option value="moyenne">moyenne</option>
+                        <option value="difficile">difficile</option>
+                        <option value="tres difficile">Tré difficile</option>
+                    </select>
+                </div>
+                <div class="my-2 col-6">
+                    <label class="mb-1">Méthode de cuisson</label>
+                    <select name="cookMethode" class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light">
+                        <option value="Bouillir">Bouillir</option>
+                        <option value="Vapeur">Vapeur</option>
+                        <option value="Frire">Frire</option>
+                        <option value="Griller">Griller</option>
+                        <option value="Cuire au four">Cuire au four</option>
+                        <option value="Rôtir">Rôtir</option>
+                        <option value="Glacer">Glacer</option>
+                        <option value="Etuver"></option>
+                    </select>
                 </div>
                 <div class="my-2 col-6">
                     <label class="mb-1">Video </label>
@@ -651,8 +703,8 @@ class recipesPage
     // -------------------------
     public function displayEditrecipe()
     {
-        $sharedViews = new sharedadminView() ; 
-        $sharedViews->pageHeader('Modifier la recette') ; 
+        $sharedViews = new sharedadminView();
+        $sharedViews->pageHeader('Modifier la recette');
         $this->editRecipeForm('editRecipe');
     }
 }

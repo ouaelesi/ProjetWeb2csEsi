@@ -533,3 +533,19 @@ function switchMode() {
     setMode("lightMode");
   }
 }
+
+function removeIngredient(recipeId, ingredientId, elem) {
+  $.ajax({
+    type: "POST", //we are using GET method to get data from server side
+    url: "/ProjetWeb/api/apiRoute.php", // get the route value
+    data: {
+      recetteID: recipeId,
+      ingredientID: ingredientId,
+      removeIngredent: true,
+    }, //set data
+    success: function (response) {
+      console.log(elem);
+    },
+  });
+  $(elem).parent().remove();
+}

@@ -3,6 +3,10 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/controllers/recipeControlle
 require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/controllers/userController.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/controllers/ingredientController.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/controllers/newsController.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/controllers/menuController.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/controllers/swiperController.php');
+
+
 // Check if the admin is loged in 
 
 header('Content-type: application/json');
@@ -27,7 +31,6 @@ if (isset($_POST['editprofile'])) {
 }
 
 if (isset($_POST['updateProfilePic'])) {
-    echo var_dump($_FILES);
     $userController = new userController();
     $userController->profilePic();
     header("location: /ProjetWeb/profile?id=" . $_POST['userId']);
@@ -65,6 +68,7 @@ if (isset($_POST['deleteIngredient'])) {
 if (isset($_POST['validateRecipe'])) {
     $recipeController = new recipeController();
     $recipeController->validateRecipe($_POST['recipeId']);
+    header("location: /ProjetWeb/admin/recettes");
 }
 if (isset($_POST['saveNews'])) {
     $userController = new userController();
@@ -102,6 +106,7 @@ if (isset($_POST['editIngredient'])) {
 if (isset($_POST['validateAccount'])) {
     $userController = new userController();
     $userController->validateAccount($_POST["userId"]);
+    header("location: /ProjetWeb/admin/users");
 }
 if (isset($_POST['rejectAccount'])) {
     $userController = new userController();
@@ -159,6 +164,31 @@ if (isset($_POST['addStepUser'])) {
 
     unset($_POST);
 }
+
+if (isset($_POST['addlink'])) {
+    $menuContoller = new menuController();
+    $menuContoller->addLink();
+    header("location: /ProjetWeb/admin/paramaitres");
+}
+
+if (isset($_POST['changeLogo'])) {
+    $menuContoller = new menuController();
+    $menuContoller->changeLogo();
+    header("location: /ProjetWeb/admin/paramaitres");
+}
+
+if (isset($_POST['addSlide'])) {
+    $swiperController = new swiperController();
+    $swiperController->addSlide();
+    header("location: /ProjetWeb/admin/paramaitres");
+}
+if (isset($_POST['removeIngredent'])) {
+    $ingredientController = new ingredientController();
+    $ingredientController->removeIngredient();
+    // header("location: /ProjetWeb/admin/addRecipeIngr?id=" . $_POST['recetteID']);
+}
+
+
 
 
 

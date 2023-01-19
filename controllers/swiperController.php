@@ -8,4 +8,10 @@ class swiperController{
        $response = $swiperModel->getSwiper() ; 
        return $response ; 
     }
+
+    public function addSlide(){
+       $swiperModel = new swiperModel() ; 
+       $swiperModel->addSlide($_POST) ; 
+       return ; 
+    }
 }

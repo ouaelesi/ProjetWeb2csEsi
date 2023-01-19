@@ -138,8 +138,8 @@ class recipeModel
 
         // add the recipe 
         $postID = $db->lastInsertId();
-        $query = $db->prepare("INSERT INTO `recette`(`preparationTime`, `cookTime`, `restTime` ,`categoryID` ,  `postID`) VALUES (?,?,?,?,?)");
-        $query->execute(array($data["preparationTime"], $data["cookTime"], $data["restTime"], $data["category"],  $postID));
+        $query = $db->prepare("INSERT INTO `recette`(`preparationTime`, `cookTime`, `restTime` ,`categoryID` ,  `postID` , `cookMethode` , `difficulty`) VALUES (?,?,?,?,?,?,?)");
+        $query->execute(array($data["preparationTime"], $data["cookTime"], $data["restTime"], $data["category"],  $postID, $data['cookMethode'], $data['difficulty']));
 
         // upload the card Image 
         $this->uploadImage('cardImage', '/public/images/recipeImages/');
@@ -304,6 +304,35 @@ class recipeModel
         return $response;
     }
 
+    public function getSeasonRecipes($params)
+    {
+        $database = new dataBaseController();
+        $db  = $database->connect();
+
+        $whereConditions = 'WHERE 1=1';
+        $limit = '';
+
+       // les conditions de la category
+        if (sizeof($params) > 0 and $params["season"] != "null" and $params["season"] != "") {
+            $whereConditions = $whereConditions . ' AND `season`="'. $params["season"].'"';
+        }
+        if (sizeof($params) > 0 and $params["limit"] != "null" and $params["limit"] != "") {
+            $limit = $limit . 'limit '. $params["limit"];
+        }
+
+
+        $query = "SELECT recette.* , post.* , AVG(rating.note) note,cookTime+preparationTime+restTime totalTime from (recette join post on recette.postID=post.id) left JOIN rating on recette.id=rating.recetteID WHERE recette.id in (SELECT * from (SELECT recetteID FROM `ingredient` join contient on contient.ingredientID = ingredient.id $whereConditions GROUP BY contient.recetteID  ORDER By count(*) DESC $limit) recipes) GROUP BY recette.id ORDER BY note DESC";
+        $res = $database->request($db, $query);
+        $response = array();
+        foreach ($res as $recipe) {
+            array_push($response, $recipe);
+        }
+        // echo var_dump($response);
+        $database->disconnect($db);
+        return $response;
+    }
+
+
     public function getRecipeByPost($postId)
     {
         $database = new dataBaseController();
@@ -339,8 +368,8 @@ class recipeModel
         $database = new dataBaseController();
         $db  = $database->connect();
 
-        $query = $db->prepare('UPDATE `recette` SET `cookTime`=? , `preparationTime`=? , `restTime`=? , `categoryID`=? WHERE id=?');
-        $query->execute(array($_POST['cookTime'], $_POST['preparationTime'], $_POST['restTime'], $_POST['category'], $_POST['recetteID']));
+        $query = $db->prepare('UPDATE `recette` SET `cookTime`=? , `preparationTime`=? , `restTime`=? , `categoryID`=? , `cookMethode`=?, `difficulty`=? WHERE id=?');
+        $query->execute(array($_POST['cookTime'], $_POST['preparationTime'], $_POST['restTime'], $_POST['category'], $_POST['cookMethode'], $_POST['difficulty'], $_POST['recetteID']));
 
         $query = $db->prepare('UPDATE `post` SET `title`=? , `description`=? , `event`=? , `video`=? WHERE id=?');
         $query->execute(array($_POST['title'], $_POST['description'], $_POST['event'], $_POST['video'], $recipe['postID']));

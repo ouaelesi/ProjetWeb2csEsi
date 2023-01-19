@@ -111,7 +111,7 @@ switch ($request) {
     case '/ProjetWeb/article':
         $newsPage->singleNewsPage();
         break;
-    case '/ProjetWeb/season':
+    case '/ProjetWeb/saisons':
         $seasonPage->displaySeasonPage();
         break;
 

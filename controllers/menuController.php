@@ -29,4 +29,11 @@ class menuController
         $response = $menuModel->getLogo($page);
         return $response[0];
     }
+
+    public function changeLogo()
+    {
+        $menuModel = new menuModel();
+        $response = $menuModel->changeLogo($_POST['menuID']);
+        return $response[0];
+    }
 }

@@ -13,7 +13,7 @@ class sharedadminView
             ["name" => "Gestion des utilisateurs", 'link' => 'users'],
             ["name" => "Gestion des Recettes", 'link' => 'recettes'],
             ["name" => "Gestions des News", 'link' => 'news'],
-            ["name" => "Gestions des nutrition", 'link' => 'ingredients'] , 
+            ["name" => "Gestions des nutrition", 'link' => 'ingredients'],
             ["name" => "Gestions des paramaitres", 'link' => 'paramaitres']
         ]
 
@@ -51,7 +51,9 @@ class sharedadminView
                 <div class="h5 pt-2">
                     Admin Dashboard
                 </div>
-                <div class="d-flex gap-3 pt-1">
+                <div class="d-flex gap-4 pt-1">
+                    <div onclick="gotoUrl('/projetWeb/admin/notifications')" role="button" class="rounded-circle"> <img src="/ProjetWeb/public/icons/notification.png" width="28px" height="28px" class=" d-block my-auto rounded-circle "  /></div>
+
                     <div onclick="switchMode()" role="button" class="rounded-circle" id="themeSwitch"> <img src="/ProjetWeb/public/icons/sun.png" width="30px" height="30px" class=" d-block my-auto rounded-circle" /></div>
                     <img src="/ProjetWeb/public/images/profile/<?php if ($user["photo"] != null and $user["photo"] != "") {
                                                                     echo $user["photo"];

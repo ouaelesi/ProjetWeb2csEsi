@@ -70,4 +70,9 @@ class ingredientController
         $response = $ingredientModel->getIngredientInfos($id); 
         return $response;
     }
+
+    public function removeIngredient(){
+        $ingredientModel = new ingredientModel();
+        $ingredientModel->removeIngredient(); 
+    }
 }

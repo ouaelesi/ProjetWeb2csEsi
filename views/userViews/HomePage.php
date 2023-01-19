@@ -6,7 +6,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/controllers/recipeControlle
 class HomePage
 {
     // display Swiper
-    public function swiper()
+    public function swiper($type)
     {
         $swiperController = new swiperController();
         $data = $swiperController->getSwiper();
@@ -20,10 +20,10 @@ class HomePage
                 ?>
                     <div class="carousel-item position-relative swiperItem <?php if ($slide["id"] == "1") echo "active" ?>">
                         <img src="/ProjetWeb/public/images/swiperHeader/<?php echo $slide['image'] ?>" class="d-block w-100 position-absolute" alt="...">
-                        <div class="flex">
-                            <div class="poition-relative swiperContent ">
-                                <p class="swiperTitle text-white">GET YOUR RECIPE <br /><span>Now!</span></p>
-                                <p class="swiperDescription text-white"><?php echo $slide["description"] ?></p>
+                        <div class="position-relative">
+                            <div class="poition-relative swiperContent " <?php if ($type == 'admin') echo 'style="transform: scale(0.6); transform-origin: top left; width:100% !important;"'  ?>>
+                                <p class="swiperTitle text-white " > <?php echo $slide["title"] ?><br /><span>Now!</span></p>
+                                <p class="swiperDescription text-white w-100"><?php echo $slide["description"] ?></p>
                                 <button class="btn btn-red px-5 py-2 font-xl mt-3"> Start Now</button>
                             </div>
                         </div>
@@ -76,7 +76,7 @@ class HomePage
     <?php
     }
     // display cards Swiper 
-    public function recipeCard($recipe, $category )
+    public function recipeCard($recipe, $category)
     {
         $userController = new userController();
         $isLike = $userController->userIsLikeRecipe($recipe[0]);
@@ -91,10 +91,10 @@ class HomePage
 
                         <div class="categoryCard text-white"><?php echo $category ?></div>
                         <div id="heartContainer" class="likeCard " onclick="window.event.cancelBubble = true; likeRecipe(this , <?php echo $recipe[0] ?>)"> <img src="/ProjetWeb/public/icons/<?php if (!$isLike) {
-                                                                                                                                                            echo 'heart.png';
-                                                                                                                                                        } else {
-                                                                                                                                                            echo 'fullheart.png';
-                                                                                                                                                        } ?>" width="65%" class="mx-auto d-block mt-2" id="likeimage" /></div>
+                                                                                                                                                                                                    echo 'heart.png';
+                                                                                                                                                                                                } else {
+                                                                                                                                                                                                    echo 'fullheart.png';
+                                                                                                                                                                                                } ?>" width="65%" class="mx-auto d-block mt-2" id="likeimage" /></div>
                     </div>
                 </div>
                 <div class="cardContent ">
@@ -106,7 +106,7 @@ class HomePage
                                             else echo "-" ?> <img src="/ProjetWeb/public/icons/Yellow_Star.png" width="18px" class="mx-1" /></div>
                             <span><?php echo $recipe["preparationTime"] ?> min</span>
                         </div>
-                        <button class="btn btn-red card-btn" >See more</button>
+                        <button class="btn btn-red card-btn">See more</button>
                     </div>
                 </div>
             </div>
@@ -120,7 +120,7 @@ class HomePage
         // NavBar 
         $sharedComponents->NavBar(null);
         // carousel
-        $this->swiper();
+        $this->swiper("");
         // navLinks 
         $sharedComponents->navLinks();
         // swipers 

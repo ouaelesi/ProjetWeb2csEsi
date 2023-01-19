@@ -1,5 +1,5 @@
 <?php
-require_once "./controllers/dataBaseController.php";
+require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/controllers/dataBaseController.php");
 class menuModel
 {
     public function getMenu($page)
@@ -33,8 +33,8 @@ class menuModel
         $database = new dataBaseController();
         $db  = $database->connect();
         // add the post 
-        $query = $db->prepare("INSERT INTO `link`(`name` , `type` , `href` , `icon` , `menuID`) VALUES (? , ? , ?)");
-        $query->execute(array($data["name"], $data["type"], $data["href"], $data["icon"],  $data["menuID"]));
+        $query = $db->prepare("INSERT INTO `link`(`name` , `type` , `href` , `icon` , `menuID`) VALUES (? , ? , ? , ?,?)");
+        $query->execute(array($data["name"], 'link', $data["href"], '',  $data["menuID"]));
 
         unset($_POST);
         $database->disconnect($db);
@@ -68,5 +68,19 @@ class menuModel
         // echo var_dump($response);
         $database->disconnect($db);
         return $response;
+    }
+
+    public function changeLogo($menuID){
+        $database = new dataBaseController();
+        $db  = $database->connect();
+
+        $query = $db->prepare('UPDATE `menu` SET `logo`=?  WHERE id=?');
+        $query->execute(array($_FILES['logoPic']['name'], $menuID));
+        
+        // upload the card Image 
+        $recipeModel = new recipeModel() ; 
+        $recipeModel->uploadImage('logoPic', '/public/logos/');
+
+        $database->disconnect($db);  
     }
 }

@@ -79,6 +79,13 @@ class recipeController
         return $response;
     }
 
+    public function getSeasonRecipes($params)
+    {
+        $recipeModel = new recipeModel();
+        $response = $recipeModel->getSeasonRecipes($params);
+        return $response;
+    }
+
 
     public function getRecipeByPost($postId)
     {

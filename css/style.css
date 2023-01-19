@@ -92,8 +92,8 @@
 }
 .swiperContent {
   position: relative;
-  padding-top: 250px;
-  padding-left: 100px;
+  padding-top: 17%;
+  padding-left: 10%;
 }
 .swiperTitle {
   font-size: 120px;
@@ -497,7 +497,7 @@ option {
 }
 ::placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: rgba(101, 101, 101, 1);
+  color: rgb(134, 134, 134);
   opacity: 1; /* Firefox */
 }
 input {

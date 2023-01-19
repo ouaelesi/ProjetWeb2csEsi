@@ -7,6 +7,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/views/adminViews/newsPage.p
 require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/views/adminViews/ingredientsPage.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/views/adminViews/recipesPage.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/views/adminViews/singleUserPage.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/views/adminViews/paramsPage.php");
 
 // Get the Current URL
 class nestedRoutes
@@ -24,7 +25,7 @@ class nestedRoutes
         $newspage = new newsPage();
         $ingredientspage = new ingredientsPage();
         $profileController = new singleUserPage();
-
+        $paramsPage = new paramsPage();
 
         $request = $_SERVER['REQUEST_URI'];
         // remove the last / from the URL 
@@ -85,6 +86,9 @@ class nestedRoutes
                 break;
             case '/ProjetWeb/admin/editnews':
                 $newspage->displayEditNewsPage();
+                break;
+            case '/ProjetWeb/admin/paramaitres':
+                $paramsPage->displyParamsPage();
                 break;
 
 
