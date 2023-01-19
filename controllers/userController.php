@@ -55,7 +55,8 @@ class userController
         return $userModel->userIsLikeRecipe($recipeId);
     }
 
-    public function userIsSaveNews($newsId){
+    public function userIsSaveNews($newsId)
+    {
         $userModel = new userModel();
         return $userModel->userIsSaveNews($newsId);
     }
@@ -86,9 +87,10 @@ class userController
         return;
     }
 
-    public function logIn(){
+    public function logIn()
+    {
         $userModel = new userModel();
-        $response = $userModel->logIn($_POST['email'] , $_POST['password']);
+        $response = $userModel->logIn($_POST['email'], $_POST['password']);
         return $response;
     }
 
@@ -145,15 +147,24 @@ class userController
         return;
     }
 
-    public function updateProfile(){
+    public function updateProfile()
+    {
         $userModel = new userModel();
-        $userModel->updateProfile($_POST['userId'] , $_POST['firstName'] , $_POST['lastName'] , $_POST['email']);
-        return;   
+        $userModel->updateProfile($_POST['userId'], $_POST['firstName'], $_POST['lastName'], $_POST['email']);
+        return;
     }
-    public function profilePic(){
+    public function profilePic()
+    {
         $userModel = new userModel();
         $userModel->profilePic($_POST['userId']);
-        return;   
+        return;
     }
-    
+
+
+    public function sendMessage()
+    {
+        $userModel = new userModel();
+        $userModel->sendMessage($_POST);
+        return;
+    }
 }

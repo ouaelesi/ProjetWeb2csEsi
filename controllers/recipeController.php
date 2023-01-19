@@ -94,9 +94,31 @@ class recipeController
         return $response[0];
     }
 
-    public function editrecipe(){
+    public function editrecipe()
+    {
         $recipeModel = new recipeModel();
         $recipeModel->editrecipe();
-        return ;
+        return;
+    }
+
+    public function addComment()
+    {
+        $recipeModel = new recipeModel();
+        $recipeModel->addComment();
+        return;
+    }
+
+    public function getRecipeComments($id)
+    {
+        $recipeModel = new recipeModel();
+        $response = $recipeModel->getRecipeComments($id);
+        return $response;
+    }
+
+
+    public function updateSeuil(){
+        $recipeModel = new recipeModel();
+        $response = $recipeModel->updateSeuil();
+        return $response;
     }
 }

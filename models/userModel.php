@@ -313,4 +313,16 @@ class userModel
 
         $database->disconnect($db);  
     }
+
+    public function sendMessage($data){
+        $database = new dataBaseController();
+        $db  = $database->connect();
+        // add the post 
+        $query = $db->prepare("INSERT INTO `message`(`userID`, `subject`, `body`) VALUES (? , ? , ?)");
+        $query->execute(array($_COOKIE['logedIn_user'], $data["subject"], $data["body"]));
+
+        unset($_POST);
+        $database->disconnect($db);
+        return;
+    }
 }

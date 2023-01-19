@@ -127,6 +127,24 @@ class paramsPage
             </div>
         </div>
         <hr />
+    <?php
+    }
+
+    public function ideaSeuil()
+    {
+        // imports 
+        $sharedViews = new sharedadminView();
+        $sharedViews->pageHeader('Modifier le seuil');
+        $recipeModel = new recipeModel();
+        $style = $recipeModel->getStyle();
+    ?>
+        <div class="d-flex justify-content-center gap-5 py-5">
+            <form class="bluredBox p-2" method="POST" action="/ProjetWeb/api/apiRoute.php">
+                <input value="<?php echo $style['seuil'] ?>" class="bluredBox px-2 py-2 d-block" name="seuil" />
+                <button class="d-block ms-auto btn btn-yellow mt-2" name="changeSeuil">Changer le seuil</button>
+            </form>
+        </div>
+        <hr />
 <?php
     }
 
@@ -135,6 +153,7 @@ class paramsPage
     {
         $this->manageNavBar();
         $this->styleThemes();
+        $this->ideaSeuil();
         $this->manageSwiper();
     }
 }

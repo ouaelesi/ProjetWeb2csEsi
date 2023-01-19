@@ -3,15 +3,33 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/controllers/dataBaseControl
 
 class recipeModel
 {
+    public function getStyle()
+    {
+        $database = new dataBaseController();
+        $db  = $database->connect();
+
+        $query = "SELECT * from `style` where id=1";
+        $res = $database->request($db, $query);
+        $response = array();
+        foreach ($res as $recipe) {
+            array_push($response, $recipe);
+        }
+        $database->disconnect($db);
+        return $response[0];
+    }
     // recuperer tous les recette 
     public function getRecipes($params)
     {
         $database = new dataBaseController();
         $db  = $database->connect();
 
+        $style = $this->getStyle();
+
         $whereConditions = 'WHERE 1=1';
         $havingConditions = 'HAVING 1=1';
         $searchParams = null;
+
+
 
         if (!$_COOKIE['logedIn_user']) {
             $whereConditions = $whereConditions . " AND `status`='valid'";
@@ -28,7 +46,7 @@ class recipeModel
             $searchParams = $params['search'];
             $searchParams = substr($searchParams, 0, -1);
             $searchParams = str_replace('-', ',', $searchParams);
-            $nbParams = sizeof(explode(',', $searchParams)) * 0.7;
+            $nbParams = sizeof(explode(',', $searchParams)) * $style['seuil'];
             // error_log($searchParams)  ; 
 
             $query = "(SELECT recetteID FROM `contient` WHERE ingredientID IN ($searchParams) GROUP BY recetteID HAVING COUNT(recetteID)>=$nbParams)";
@@ -312,12 +330,12 @@ class recipeModel
         $whereConditions = 'WHERE 1=1';
         $limit = '';
 
-       // les conditions de la category
+        // les conditions de la category
         if (sizeof($params) > 0 and $params["season"] != "null" and $params["season"] != "") {
-            $whereConditions = $whereConditions . ' AND `season`="'. $params["season"].'"';
+            $whereConditions = $whereConditions . ' AND `season`="' . $params["season"] . '"';
         }
         if (sizeof($params) > 0 and $params["limit"] != "null" and $params["limit"] != "") {
-            $limit = $limit . 'limit '. $params["limit"];
+            $limit = $limit . 'limit ' . $params["limit"];
         }
 
 
@@ -373,6 +391,47 @@ class recipeModel
 
         $query = $db->prepare('UPDATE `post` SET `title`=? , `description`=? , `event`=? , `video`=? WHERE id=?');
         $query->execute(array($_POST['title'], $_POST['description'], $_POST['event'], $_POST['video'], $recipe['postID']));
+
+        $database->disconnect($db);
+    }
+
+    public function addComment()
+    {
+        $database = new dataBaseController();
+        $db  = $database->connect();
+
+        $query = $db->prepare("INSERT INTO `comment`(`postID`, `userID`, `commentText`) VALUES (?,?,?)");
+        $query->execute(array($_POST["recetteID"], $_COOKIE["logedIn_user"], $_POST["comment"]));
+
+
+        $database->disconnect($db);
+        return;
+    }
+
+    public function getRecipeComments($id)
+    {
+        $database = new dataBaseController();
+        $db  = $database->connect();
+
+        $query = "SELECT * from comment where postID=$id";
+        $res = $database->request($db, $query);
+        $response = array();
+        foreach ($res as $recipe) {
+            array_push($response, $recipe);
+        }
+        // echo var_dump($response);
+        $database->disconnect($db);
+
+        return $response;
+    }
+
+    public function updateSeuil()
+    {
+        $database = new dataBaseController();
+        $db  = $database->connect();
+
+        $query = $db->prepare('UPDATE `style` SET `seuil`=? WHERE id=?');
+        $query->execute(array($_POST['seuil'], 1));
 
         $database->disconnect($db);
     }

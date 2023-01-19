@@ -100,7 +100,13 @@ class singleRecipePage
                                                                                                     echo "healthy.png";
                                                                                                 } else {
                                                                                                     echo "nothealthy.png";
-                                                                                                } ?>" width="18px" class="ms-2" /> <span onclick="window.event.cancelBubble = true; removeIngredient(<?php echo $_GET['id'] ?> , <?php echo $ingredient['ingredientID'] ?> , this)" class="mx-2 bluredBox px-2 py-1">x</span>
+                                                                                                } ?>" width="18px" class="mx-2" />
+                            <?php if (sizeof($_GET)) {
+                            ?>
+                                <span onclick="window.event.cancelBubble = true; removeIngredient(<?php echo $_GET['id'] ?> , <?php echo $ingredient['ingredientID'] ?> , this)" class="mx-2 bluredBox px-2 py-1">x</span>
+                            <?php
+                            } ?>
+
                         </div>
                     <?php
                     } ?>
@@ -184,13 +190,51 @@ class singleRecipePage
         public function commentSection()
         {
         ?>
-            <div class="my-5">
-                <div class="h3 mb-4">Ajouter un Commentaire</div>
-                <form class="">
-                    <textarea class="bluredBox notesSection py-4" rows="10" placeholder="Ajouter votre commentaire..."></textarea>
-                    <button class="btn btn-red d-block ms-auto mt-3 py-2 px-4">Ajouter commentaire</button>
-                </form>
+
+            <div class="h3 mt-5 ">Les Commentaires</div>
+            <hr />
+            <div class="my-5 d-flex gap-5">
+
+                <div class="col-7">
+                    <div class="h5 mb-4">Ajouter un Commentaire</div>
+                    <form action="/ProjetWeb/api/apiRoute.php" method="POST">
+                        <textarea class="bluredBox notesSection py-4" rows="10" placeholder="Ajouter votre commentaire..." name="comment"></textarea>
+                        <input hidden value="<?php echo $_GET['id'] ?>" name="recetteID" />
+                        <button class="btn btn-red d-block ms-auto mt-3 py-2 px-4" name="addComment">Ajouter commentaire</button>
+                    </form>
+                </div>
+                <div class="col-4">
+                    <?php $this->displayComments($_GET['id']); ?>
+                </div>
+
             </div>
+        <?php
+        }
+
+        public function displayComments($recipeID)
+        {
+            $recipeController = new recipeController();
+            $comments = $recipeController->getRecipeComments($recipeID);
+            $userController = new userController();
+        ?>
+            <div class="h5 mb-4">La liste des Commentaire</div>
+
+            <div class="commentList bluredBox p-2">
+                <?php foreach ($comments as $comment) {
+                    $user = $userController->getUserById($comment['userID']);
+                ?>
+                    <div class="bluredBox px-3 py-2 mb-2">
+                        <div class="mb-2 d-flex gap-2"><img src="/ProjetWeb/public/images/profile/<?php echo $user['photo'] ?>" class="rounded-circle" width="25px" /><span><?php echo $user['firstName'] . ' ' . $user['lastName'] ?></span></div>
+
+                        <div>
+                            <?php echo $comment['commentText'] ?>
+                        </div>
+                    </div>
+                <?php
+                } ?>
+            </div>
+
+
         <?php
         }
 

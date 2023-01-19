@@ -188,6 +188,26 @@ if (isset($_POST['removeIngredent'])) {
     // header("location: /ProjetWeb/admin/addRecipeIngr?id=" . $_POST['recetteID']);
 }
 
+if (isset($_POST['addComment'])) {
+    $recipeController = new recipeController();
+    $recipeController->addComment();
+    header("location: /ProjetWeb/recette?id=" . $_POST['recetteID']);
+}
+
+if (isset($_POST['sendMessage'])) {
+    $userController = new userController();
+    $userController->sendMessage();
+}
+
+if (isset($_POST['changeSeuil'])) {
+    $recipeController = new recipeController() ; 
+    $recipeController->updateSeuil() ; 
+    header("location: /ProjetWeb/admin/paramaitres");
+}
+
+
+
+
 
 
 

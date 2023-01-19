@@ -46,14 +46,14 @@ class contactPage
                     <div class=" my-auto   ">Laissez votre numéro, nos experts vous rappelerons</div>
                 </div>
                 <div class="col-6 pb-4 px-4">
-                    <form action="/ProjetWeb/api/apiRoute.php" method="POST">
-                        <input name="name" class="mb-2 bluredBox w-100 rounded-2 px-3 py-2" placeholder="Nom et prenom " />
-                        <input name="email" class="mb-2 bluredBox w-100 rounded-2 px-3 py-2" placeholder="adress email" />
-                        <input name="subject" class="mb-2 bluredBox w-100 rounded-2 px-3 py-2" placeholder="subject" />
+                    <div>
+                        <label class="mb-2">Subjet</label>
+                        <input id="mailSubject" name="subject" class="mb-2 bluredBox w-100 rounded-2 px-3 py-2" placeholder="subject" />
+                        <label class="mb-2">body</label>
+                        <textarea id="mailBody" name="body" class="mb-2 bluredBox w-100 rounded-2 px-3 py-2" placeholder="Body" rows="3"></textarea>
 
-                        <textarea name="body" class="mb-2 bluredBox w-100 rounded-2 px-3 py-2" placeholder="Body" rows="3"></textarea>
-                        <button class="btn btn-yellow px-3 d-block ms-auto" name="sendEmail" type="submit">Send email</button>
-                    </form>
+                        <button class="btn btn-yellow px-3 d-block ms-auto" name="sendEmail" type="submit" onclick="sendMail()">Send email</button>
+                    </div>
                 </div>
 
             </div>

@@ -141,5 +141,7 @@ class recipePage
         $this->filterSection();
         // recipes list 
         $this->recipesList($recipes);
+        // footer 
+        $sharedComponents->Footer(); 
     }
 }

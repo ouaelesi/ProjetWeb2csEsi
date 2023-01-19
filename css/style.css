@@ -101,6 +101,11 @@
   line-height: 80px;
   font-family: Goliend;
 }
+.commentList{
+  height: 300px;
+  overflow-y: auto;
+  width: 100%;
+}
 .swiperTitle > span {
   color: var(--yellow-color);
   font-family: Goliend;
