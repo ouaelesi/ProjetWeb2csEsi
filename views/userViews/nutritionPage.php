@@ -22,7 +22,7 @@ class nutritionPage
         $sharedComponents->navLinks();
 
 ?>
-        <div class="container px-5">
+        <div class="container-xl px-5">
             <?php
             // ingredient list
             $recipepage->ingredients($ingredients);
@@ -77,7 +77,7 @@ class nutritionPage
         $sharedComponents->navLinks();
 
     ?>
-        <div class="container px-5">
+        <div class="container-xl px-5">
 
             <?php
             // ingredient infos

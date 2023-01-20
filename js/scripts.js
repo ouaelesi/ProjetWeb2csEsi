@@ -475,7 +475,7 @@ function login() {
     success: function (response) {
       if (response.id) {
         $("#loginAlert").empty();
-        $("#loginAlert").append("you are connected");
+        $("#loginAlert").append("<div class='bg-success px-3 py-3 border-1 rounded-3' >you are connected  </div>");
         if (response.role == "admin") {
           document.location.href = "/ProjetWeb/admin";
         } else {
@@ -484,7 +484,7 @@ function login() {
       } else {
         $("#loginAlert").empty();
         $("#loginAlert").append(
-          '<div class="px-2 py-3 rounded-3 btn-red w-100">Email or password wrong!</div>'
+          '<div class="px-3 py-3 rounded-3 btn-red w-100 border-1">Email or password wrong!</div>'
         );
       }
     },
@@ -548,4 +548,21 @@ function removeIngredient(recipeId, ingredientId, elem) {
     },
   });
   $(elem).parent().remove();
+}
+
+function sendMail(){
+  let subject = $('#mailSubject').val() ; 
+  let body = $('#mailBody').val() ; 
+  $.ajax({
+    type: "POST", //we are using GET method to get data from server side
+    url: "/ProjetWeb/api/apiRoute.php", // get the route value
+    data: {
+      subject: subject,
+      body: body,
+      sendEmail: true,
+    }, //set data
+    success: function (response) {
+      console.log(elem);
+    },
+  });
 }

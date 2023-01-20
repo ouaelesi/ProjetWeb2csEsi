@@ -7,7 +7,7 @@ class addRecipePage
     public function addRecipeForm()
     {
 ?>
-        <div class="container w-75">
+        <div class="container-xl w-75">
             <div class="d-flex justify-content-center pb-5">
                 <div>
                     <div class="rounded-circle text-center bluredBox stepCircle activeStep">

@@ -9,7 +9,7 @@ class singleUserPage
     public function generalInfos($user)
     {
 ?>
-        <div class="container mb-5">
+        <div class="container-xl mb-5">
             <div class="h3 my-5">Informations générales
                 <hr />
             </div>
@@ -81,10 +81,22 @@ class singleUserPage
             <div>
                 <?php if ($user['status'] == "pending") {
                 ?>
-                    <button id="validateAccountBtn" class="btn btn-yellow mx-2" onclick="validateAccount(<?php echo $user['id'] ?>)">Valider le compte</button>
-                    <button id="validateAccountBtn" class="btn btn-red" onclick="rejectAccount(<?php echo $user['id'] ?>)">rejecter le compte</button>
+                    <button id="validateAccountBtn" class="btn btn-success mx-2" onclick="validateAccount(<?php echo $user['id'] ?>)">Valider le compte</button>
+                    <button id="validateAccountBtn" class="btn btn-danger" onclick="rejectAccount(<?php echo $user['id'] ?>)">Blocker le compte</button>
                 <?php
                 } ?>
+                <?php if ($user['status'] == "rejected") {
+                ?>
+                    <span class="text-danger me-5">ce compte est bloqué</span> <button id="validateAccountBtn" class="btn btn-success mx-2" onclick="validateAccount(<?php echo $user['id'] ?>)">Valider le compte</button>
+                <?php
+                } ?>
+                <?php if ($user['status'] == "valid") {
+                ?>
+                    <span class="text-success me-5">ce compte est valide</span> <button id="validateAccountBtn" class="btn btn-red" onclick="rejectAccount(<?php echo $user['id'] ?>)">blocker le compte</button>
+
+                <?php
+                } ?>
+
             </div>
         </div>
     <?php

@@ -7,7 +7,7 @@ class addRecipePage
     public function addRecipeForm()
     {
 ?>
-        <div class="container w-75">
+        <div class="container-xl w-75">
             <div class="d-flex justify-content-center pb-5">
                 <div>
                     <div class="rounded-circle text-center bluredBox stepCircle activeStep">
@@ -120,7 +120,7 @@ class addRecipePage
         $recipePage = new recipesPage();
 
     ?>
-        <div class="container px-5 mb-5">
+        <div class="container-xl px-5 mb-5">
             <?php $recipePage->addRecipeForm('addRecipeUser');  ?>
         </div>
     <?php
@@ -150,7 +150,7 @@ class addRecipePage
         $ingredientController = new ingredientController();
         $ingredients = $ingredientController->getRecipeIngredients($_GET['id']);
     ?>
-        <div class="container  px-5">
+        <div class="container-xl  px-5">
             <?php        // add recipe form 
             $formPage->addRecipeIngredientForm("addIngredientUser");
             // added ingredients
@@ -182,7 +182,7 @@ class addRecipePage
         $formPage = new recipesPage();
         $recipePage = new singleRecipePage();
     ?>
-        <div class="container  px-5">
+        <div class="container-xl  px-5">
             <?php        // add recipe form 
             $formPage->addStepForm("addStepUser");
             // added ingredients
@@ -219,7 +219,7 @@ class addRecipePage
         $categoryController = new categoryController();
         $category = $categoryController->getCategoryById($recipe['categoryID']);
     ?>
-        <div class="container px-5 mb-5">
+        <div class="container-xl px-5 mb-5">
             <div class="h1 text-center ">Verifier votre recette</div>
             <div class="h6 text-center mb-5"> cette recette va etre publier apres la confirmation d'admine</div>
             <?php

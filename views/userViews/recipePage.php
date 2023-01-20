@@ -11,13 +11,13 @@ class recipePage
         $homeViews = new HomePage();
         $categoryController = new categoryController();
 ?>
-        <div class="row justify-content-md-center container  mx-auto ">
+        <div class="row justify-content-md-center container-xl  mx-auto ">
             <div class="px-4 mt-4">Results: <?php echo sizeof($recipes) ?> recettes</div>
             <?php
             foreach ($recipes as $recipe) {
                 $category = $categoryController->getCategoryById($recipe["categoryID"]);
             ?>
-                <div class="col-3 mt-3 mb-5">
+                <div class="col-xl-3 col-lg-4 col-md-6  mt-3 mb-5">
                     <?php
                     $homeViews->recipeCard($recipe, $category['name']);
                     ?>
@@ -89,14 +89,14 @@ class recipePage
                     ["id" => "5", "name" => "4-5 starts"],
                 ]
             ]
-        ] , "Filtere les recettes");
+        ], "Filtere les recettes");
     }
 
     // search input 
     public function searchInput()
     {
     ?>
-        <div class="container inputSection position-relative ">
+        <div class="container-xl inputSection position-relative ">
             <div class="bluredBox w-50 mx-auto row my-5 rounded-4 py-1 pe-3 position-relative z-50">
                 <input class="px-4 py-3 bg-transparent searchInput col-11 " placeholder="Trouver votre recette.." oninput="autoComplete()" id="ideasSearch" />
                 <div class="col-1 pt-1">
@@ -114,7 +114,12 @@ class recipePage
     public function addRecipeSection()
     {
     ?>
+        <div class="container">
+            <hr />
+        </div>
         <div class="d-flex justify-content-between container">
+
+
             <div class="artFont h1">Vous pouvez proposer des recettes</div>
             <div><button onclick="gotoUrl('/ProjetWeb/addrecipe')" class="btn btn-red">Ajouter une recette</button></div>
         </div>
@@ -129,12 +134,11 @@ class recipePage
         // NavBar 
         $sharedComponents->NavBar(null);
         // header 
-        $sharedComponents->pageHeader("Tous les recettes" , "footerBg.png");
+        $sharedComponents->pageHeader("Tous les recettes", "footerBg.png");
         // navLinks 
         $sharedComponents->navLinks();
-    
-        // add recipe section 
-        $this->addRecipeSection();
+
+
         // search input 
         $this->searchInput();
         // filters 
@@ -142,6 +146,6 @@ class recipePage
         // recipes list 
         $this->recipesList($recipes);
         // footer 
-        $sharedComponents->Footer(); 
+        $sharedComponents->Footer();
     }
 }

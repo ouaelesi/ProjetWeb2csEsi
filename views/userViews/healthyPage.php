@@ -6,44 +6,70 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/views/userViews/recipePage.
 
 class healthyPage
 {
-    public function filterSection()
+    public function filterInputs($options, $message)
     {
 ?>
+        <div class="container-xl mx-auto filterINputs ">
+            <div class="d-flex justify-content-between px-4">
+                <div class="h1 pb-2 artFont"><?php echo $message ?></div>
+                <div class="text-warning py-3" onclick="clearfilter()">Clear filter</div>
+            </div>
+
+            <div class="d-flex justify-content-between px-4 mb-3">
+                <?php
+                foreach ($options as $filterOption) {
+                ?>
+
+                    <div class="flex gap-2 position-relative filterBox ">
+                        <p class="h6"><?php echo $filterOption['name'] ?></p>
+                        <select name=<?php echo $filterOption['index'] ?> class="selectInput bluredBox postion-relative" onchange="gotoUrl(`/ProjetWeb/healthy?seuil=${this.value}`)">
+                            <option value="null">Tous les recettes</option>
+                            <?php foreach ($filterOption["options"] as $option) {
+                            ?>
+                                <option value="<?php echo $option['id'] ?>" <?php if (sizeof($_GET) > 0 and $_GET[$filterOption['index']] == $option['id']) {
+                                                                                echo "selected";
+                                                                            } ?>>
+                                    <?php echo $option['name'] ?>
+                                </option>
+                            <?php
+                            } ?>
+
+                        </select>
+                        <div class="p-1 bg-light position-absolute  filterBlur"></div>
+                    </div>
+                <?php } ?>
+                <!-- <div class="flex gap-2 position-relative filterBox  pt-4">
+                    <button class="btn btn-yellow " onclick="upplyFilter()">Filtrer</button>
+                </div> -->
+            </div>
+        </div>
+
+    <?php
+
+    }
+    public function filterSection()
+    {
+    ?>
         <div class="container">
             <div class="h1 artFont d-flex gap-3 w-50 mx-auto mb-5">
-                definir vos critére d'une recette healthy <img src="public/icons/healthy.png"  width='40px' height="40px"/>
+                definir vos critére d'une recette healthy <img src="public/icons/healthy.png" width='40px' height="40px" />
             </div>
             <div>
                 <?php
-                $sharedComponents = new sharedViews();
-                $sharedComponents->filterInputs([
+                $this->filterInputs([
                     [
-                        "name" => "Seuil",
+                        "name" => "Seuil des ingredients non healthy",
                         "index" => "seuil",
-                        "options" =>     ["id" => "2", "name" => "plus de 2 ingredient"],
-                        ["id" => "5", "name" => "plus de 5 ingredient"],
-                        ["id" => "10", "name" => "plus de 10 ingredient"],
-                    ],
-                    [
-                        "name" => "Methode de cuisson",
-                        "index" => "preparationTime",
-                        "options" => [
-                            ["id" => "0-15", "name" => "moins que 15min"],
-                            ["id" => "15-60", "name" => "entre 15min et 1h"],
-                            ["id" => "60-10000", "name" => "plus que 1h"],
-                        ]
-                    ],
-                    [
-                        "name" => "Nombre de calories",
-                        "index" => "cookTime",
-                        "options" => [
-                            ["id" => "0-15", "name" => "moins que 15min"],
-                            ["id" => "15-60", "name" => "entre 15min et 1h"],
-                            ["id" => "60-10000", "name" => "plus que 1h"],
+                        "options" =>  [
+                            ["id" => "0.2", "name" => "0.2 %"],
+                            ["id" => "0.4", "name" => "0.4 %"],
+                            ["id" => "0.6", "name" => "0.6 %"],
+                            ["id" => "0.7", "name" => "0.7 %"],
+                            ["id" => "0.8", "name" => "0.8 %"],
                         ]
                     ]
 
-                ] , "Filtrer les recettes"); ?>
+                ], "Filtrer les recettes"); ?>
             </div>
         </div>
 
@@ -55,7 +81,11 @@ class healthyPage
         $sharedComponents = new sharedViews();
         $recipePage = new recipePage();
         $recipeController = new recipeController();
-        $recipes  = $recipeController->getHealthyRecipes(1);
+        $avg = 1;
+        if (sizeof($_GET) > 0 and $_GET['seuil'] != '' and $_GET['seuil'] != 'null') {
+            $avg = $_GET['seuil'];
+        }
+        $recipes  = $recipeController->getHealthyRecipes($avg);
 
         // NavBar 
         $sharedComponents->NavBar(null);
@@ -70,7 +100,7 @@ class healthyPage
 
         // recipes
         $recipePage->recipesList($recipes);
-        
+
         // footer
         $sharedComponents->Footer();
     }

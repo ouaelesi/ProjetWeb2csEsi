@@ -176,7 +176,7 @@ class recipesPage
     public function recipeVideo($recipe)
     {
     ?>
-        <div class="container my-5">
+        <div class="container-xl my-5">
             <div class="h3 mb-4">Video</div>
 
             <iframe class="rounded-4 mx-auto d-block " width="100%" height="500" src="<?php echo $recipe['video'] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>

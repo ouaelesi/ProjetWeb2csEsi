@@ -297,24 +297,26 @@ class userModel
 
         $query = $db->prepare('UPDATE `user` SET `firstName`=? , `lastName`=?, `email`=? WHERE id=?');
         $query->execute(array($firstName, $lastName, $email, $userId));
-        
+
         $database->disconnect($db);
     }
-    public function profilePic($userId){
+    public function profilePic($userId)
+    {
         $database = new dataBaseController();
         $db  = $database->connect();
 
         $query = $db->prepare('UPDATE `user` SET `photo`=?  WHERE id=?');
         $query->execute(array($_FILES['profilePic']['name'], $userId));
-        
+
         // upload the card Image 
-        $recipeModel = new recipeModel() ; 
+        $recipeModel = new recipeModel();
         $recipeModel->uploadImage('profilePic', '/public/images/profile/');
 
-        $database->disconnect($db);  
+        $database->disconnect($db);
     }
 
-    public function sendMessage($data){
+    public function sendMessage($data)
+    {
         $database = new dataBaseController();
         $db  = $database->connect();
         // add the post 
@@ -324,5 +326,20 @@ class userModel
         unset($_POST);
         $database->disconnect($db);
         return;
+    }
+
+    public function getAllMessages()
+    {
+        $database = new dataBaseController();
+        $db  = $database->connect();
+
+        $query = "SELECT * from `message`";
+        $res = $database->request($db, $query);
+        $response = array();
+        foreach ($res as $user) {
+            array_push($response, $user);
+        }
+        $database->disconnect($db);
+        return $response;
     }
 }

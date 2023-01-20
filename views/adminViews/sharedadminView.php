@@ -14,6 +14,7 @@ class sharedadminView
             ["name" => "Gestion des Recettes", 'link' => 'recettes'],
             ["name" => "Gestions des News", 'link' => 'news'],
             ["name" => "Gestions des nutrition", 'link' => 'ingredients'],
+            ["name" => "Les Notifications", 'link' => 'notifications'],
             ["name" => "Gestions des paramaitres", 'link' => 'paramaitres']
         ]
 
@@ -28,7 +29,7 @@ class sharedadminView
 
                 <?php foreach ($links as $link) {
                 ?>
-                    <div class="py-4 text-center">
+                    <div class="py-3 my-1 text-center">
                         <a href="/ProjetWeb/admin/<?php echo $link['link'] ?>" class="text-light text-decoration-none"><?php echo $link['name'] ?></a>
                     </div>
                 <?php
@@ -51,15 +52,18 @@ class sharedadminView
                 <div class="h5 pt-2">
                     Admin Dashboard
                 </div>
-                <div class="d-flex gap-4 pt-1">
-                    <div onclick="gotoUrl('/projetWeb/admin/notifications')" role="button" class="rounded-circle"> <img src="/ProjetWeb/public/icons/notification.png" width="28px" height="28px" class=" d-block my-auto rounded-circle "  /></div>
+                <div class="d-flex gap-2 pt-1">
+                    <div onclick="gotoUrl('/ProjetWeb/admin/notifications')" role="button" class="bluredBox profileBox p-1 rounded-circle"> <img src="/ProjetWeb/public/icons/notification.png" width="28px" height="26px" class=" d-block my-auto rounded-circle " /></div>
 
-                    <div onclick="switchMode()" role="button" class="rounded-circle" id="themeSwitch"> <img src="/ProjetWeb/public/icons/sun.png" width="30px" height="30px" class=" d-block my-auto rounded-circle" /></div>
-                    <img src="/ProjetWeb/public/images/profile/<?php if ($user["photo"] != null and $user["photo"] != "") {
-                                                                    echo $user["photo"];
-                                                                } else {
-                                                                    echo "avatarprofile.webp";
-                                                                } ?>" width="31px" height="31px" class=" me-2 rounded-circle" />
+                    <div onclick="switchMode()" role="button" class="bluredBox profileBox p-1 rounded-circle" id="themeSwitch"> <img src="/ProjetWeb/public/icons/sun.png" width="30px" height="30px" class=" d-block my-auto rounded-circle" /></div>
+                    <div role="button" class="bluredBox profileBox p-1 rounded-circle"> <img src="/ProjetWeb/public/images/profile/<?php if ($user["photo"] != null and $user["photo"] != "") {
+                                                                                                                                        echo $user["photo"];
+                                                                                                                                    } else {
+                                                                                                                                        echo "avatarprofile.webp";
+                                                                                                                                    } ?>" width="31px" height="31px" class="  rounded-circle" onclick="gotoUrl('/ProjetWeb/profile?id=<?php echo $_COOKIE['logedIn_user'] ?>')" role="button" /></div>
+                    <div>
+                        <div onclick="logout()" role="button" class="bluredBox profileBox p-1 rounded-circle"> <img src="/ProjetWeb/public/icons/logout.png" width="28px" height="28px" class=" d-block my-auto rounded-circle" /></div>
+                    </div>
                 </div>
             </div>
             <img src="/ProjetWeb/public/images/footerBg.png" width="100%" height="70px" class=" rounded-circle position-absolute bottom-0" />

@@ -12,14 +12,9 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/controllers/swiperControlle
 header('Content-type: application/json');
 
 if (isset($_POST['sendEmail'])) {
-    echo var_dump($_POST);
-    $msg = "First line of text\nSecond line of text";
-
-    // use wordwrap() if lines are longer than 70 characters
-    $msg = wordwrap($msg, 70);
-
-    // send email
-    mail("jo_sahbi@esi.dz", "My subject", $msg);
+    $userController = new userController() ; 
+    $userController->sendMessage();
+  
 }
 if (isset($_POST['editprofile'])) {
     echo var_dump($_POST);

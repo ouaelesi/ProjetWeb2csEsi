@@ -29,7 +29,7 @@ class SharedViews
                         </ul>
                     </div>
                     <div class="d-flex justify-content-between">
-                        <img src="public/logos/<?php echo $data["logo"] ?>" width="150px" alt="" />
+                        <img src="public/logos/<?php echo $data["logo"] ?>" width="150px" alt="" role="button" onclick="gotoUrl('/ProjetWeb/')"/>
                         <ul class="d-flex ">
                             <?php
                             foreach ($data['links'] as $link) {
@@ -156,7 +156,7 @@ class SharedViews
         {
             $this->NavBar(null);
             // header 
-            $this->pageHeader("Page Not foud !", "oops.png");
+            $this->pageHeader("OOPS !", "oops.png");
             // navLinks 
             $this->navLinks();
     ?>
@@ -166,6 +166,7 @@ class SharedViews
     </div>
 <?php
         }
+
 
         public function pageHeader($title, $bg)
         {
@@ -183,18 +184,18 @@ class SharedViews
         public function filterInputs($options, $message)
         {
 ?>
-    <div class="container mx-auto filterINputs ">
+    <div class="container-xl mx-auto filterINputs ">
         <div class="d-flex justify-content-between px-4">
             <div class="h1 pb-2 artFont"><?php echo $message ?></div>
             <div class="text-warning py-3" onclick="clearfilter()">Clear filter</div>
         </div>
 
-        <div class="d-flex justify-content-between px-4 mb-3">
+        <div class="d-flex justify-content-between px-4 mb-3 flex-wrap">
             <?php
             foreach ($options as $filterOption) {
             ?>
 
-                <div class="flex gap-2 position-relative filterBox ">
+                <div class="flex gap-2 my-2 position-relative filterBox ">
                     <p class="h6"><?php echo $filterOption['name'] ?></p>
                     <select name=<?php echo $filterOption['index'] ?> class="selectInput bluredBox postion-relative" onchange="filter(this.name ,this.value)">
                         <option value="all">Tous</option>
@@ -271,7 +272,7 @@ class SharedViews
                         <input class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="text" required placeholder="Prénom" name="firstName" />
                     </div>
                     <div class="my-2">
-                        <label class="mb-1">modifier le mot de passe</label>
+                        <label class="mb-1">confirmer le mot de passe</label>
                         <input class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" type="password" required placeholder="Mot de passe" name="confirmPsw" />
                     </div>
                     <div class="my-2">

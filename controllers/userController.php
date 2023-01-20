@@ -167,4 +167,11 @@ class userController
         $userModel->sendMessage($_POST);
         return;
     }
+
+    public function getAllMessages()
+    {
+        $userModel = new userModel();
+        $response = $userModel->getAllMessages();
+        return $response;
+    }
 }

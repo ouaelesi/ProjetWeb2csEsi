@@ -47,8 +47,15 @@ $eventsPage = new eventsPage();
 $newsPage = new newsView();
 $contactPage = new contactPage();
 $seasonPage = new seasonPage();
+if (isset($_COOKIE['logedIn_user'])) {
+    $userController = new userController();
+    $user = $userController->getUserById($_COOKIE['logedIn_user']);
+}
 
 switch ($request) {
+
+
+
     case '/ProjetWeb/':
         $homeview->displayHome();
         break;
@@ -68,6 +75,10 @@ switch ($request) {
         $sharedView->loginForm();
         break;
     case '/ProjetWeb/profile':
+        if (!isset($_COOKIE['logedIn_user'])) {
+            $sharedView->notFoundPage("Soory, You are not authorised to access this page", "403");
+            break;
+        }
         $profilePage->displayProfile();
         break;
     case '/ProjetWeb/addrecipe':
@@ -119,6 +130,20 @@ switch ($request) {
 
         // admin dashboard 
     case '/ProjetWeb/admin':
+        // verify if its an admin 
+
+        if (!isset($_COOKIE['logedIn_user'])) {
+            $sharedView->notFoundPage("Soory, You are not authorised to access this page", "403");
+            break;
+        } else {
+            if ($user['role'] != "admin") {
+                $sharedView->notFoundPage("Soory, You are not authorised to access this page", "403");
+                break;
+            }
+        }
+
+
+
         $sharedAdminViews->adminDashboardTempale();
         break;
     case '/about':

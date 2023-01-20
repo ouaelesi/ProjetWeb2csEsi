@@ -247,7 +247,7 @@ class recipeModel
         $database = new dataBaseController();
         $db  = $database->connect();
 
-        $query = "SELECT recette.* , post.* , AVG(rating.note) note from (recette join post on recette.postID=post.id) left JOIN rating on recette.id=rating.recetteID  where recette.id in (SELECT contient.recetteID FROM `ingredient` JOIN contient on ingredient.id=contient.ingredientID WHERE healthy=1 GROUP BY contient.recetteID HAVING count(contient.recetteID)>=$avg) GROUP BY recette.id";
+        $query = "SELECT recette.* , post.* , AVG(rating.note) note from (recette join post on recette.postID=post.id) left JOIN rating on recette.id=rating.recetteID where recette.id in (select a.recetteID from (SELECT contient.recetteID,count(contient.recetteID) nbhealthy FROM `ingredient` JOIN contient on ingredient.id=contient.ingredientID WHERE healthy=1 GROUP BY contient.recetteID) a join (SELECT contient.recetteID,count(contient.recetteID) nbnot FROM `ingredient` JOIN contient on ingredient.id=contient.ingredientID WHERE healthy=0 GROUP BY contient.recetteID) b on a.recetteID=b.recetteID where nbnot/nbhealthy<$avg) GROUP BY recette.id";
         $res = $database->request($db, $query);
         $response = array();
         foreach ($res as $recipe) {

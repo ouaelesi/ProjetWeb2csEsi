@@ -9,7 +9,7 @@ class profilePage
     public function generalInfos($user)
     {
 ?>
-        <div class="container mb-5">
+        <div class="container-xl mb-5">
             <div class="h1 mb-5">Informations générales
                 <hr />
             </div>
@@ -62,7 +62,7 @@ class profilePage
         $userController = new userController();
         $stats = $userController->userStats($userId)
     ?>
-        <div class="container my-5">
+        <div class="container-xl my-5">
             <div class="h2 mt-5 mb-4 pt-5">
                 Staistiques
                 <hr />
@@ -159,7 +159,7 @@ class profilePage
         $userId = $_GET["id"];
         $userController = new userController();
         $user = $userController->getUserById($userId);
-
+        $recipePage = new recipePage();
         $sharedComponents = new sharedViews();
         // NavBar 
         $sharedComponents->NavBar(null);
@@ -173,6 +173,9 @@ class profilePage
         $this->statistics($user["id"]);
         // favourite posts 
         $this->favouritePosts($user['id']);
+
+        // add recipe section 
+        $recipePage->addRecipeSection();
         // added recipes 
         $this->addedRecipes($user['id']);
 
