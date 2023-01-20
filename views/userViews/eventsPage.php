@@ -7,7 +7,7 @@ class eventsPage
             <div class="container-xl mx-auto filterINputs">
                 <div class="d-flex justify-content-between px-4">
                     <div class="h1 pb-2 artFont"><?php echo $message ?></div>
-                    <div class="text-warning py-3" onclick="clearfilter()">Clear filter</div>
+                    <div class="text-warning py-3" role="button" onclick="clearfilter()">Clear filter</div>
                 </div>
         
                 <div class="d-flex justify-content-between px-4 mb-3">

@@ -29,8 +29,8 @@ class sharedadminView
 
                 <?php foreach ($links as $link) {
                 ?>
-                    <div class="py-3 my-1 text-center">
-                        <a href="/ProjetWeb/admin/<?php echo $link['link'] ?>" class="text-light text-decoration-none"><?php echo $link['name'] ?></a>
+                    <div class="py-3 my-1 text-center ">
+                        <a href="/ProjetWeb/admin/<?php echo $link['link'] ?>" class="hover-text-warning text-decoration-none text-light "><?php echo $link['name'] ?></a>
                     </div>
                 <?php
                 } ?>

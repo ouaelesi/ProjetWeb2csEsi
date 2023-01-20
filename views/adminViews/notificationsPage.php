@@ -32,7 +32,7 @@ class notificationsPage
                         <td class="col-3 text-center text-light  pt-3"><?php echo $message['subject'] ?></td>
                         <td class="col-5 text-center text-light  pt-3"><?php echo $message['body'] ?></td>
 
-                        <td class=" text-light col-1 d-flex justify-content-center gap-3 "><button class="btn btn-yellow" onclick="gotoUrl('/ProjetWeb/admin/editnews?id=<?php echo $message[0] ?>')">details</button> </td>
+                        <td class=" text-light col-1 d-flex justify-content-center gap-3 "><button class="btn btn-yellow" onclick="alert('not implemeted yet')">details</button> </td>
                     </tr>
                 <?php
                 }

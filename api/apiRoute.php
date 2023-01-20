@@ -12,9 +12,8 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/controllers/swiperControlle
 header('Content-type: application/json');
 
 if (isset($_POST['sendEmail'])) {
-    $userController = new userController() ; 
+    $userController = new userController();
     $userController->sendMessage();
-  
 }
 if (isset($_POST['editprofile'])) {
     echo var_dump($_POST);
@@ -86,6 +85,7 @@ if (isset($_POST['addNews'])) {
     header("location: /ProjetWeb/admin/news");
 }
 if (isset($_POST['editNews'])) {
+    
     $newsController = new newsController();
     $newsController->editNews();
     header("location: /ProjetWeb/admin/editnews?id=" . $_POST['newsId']);
@@ -195,8 +195,8 @@ if (isset($_POST['sendMessage'])) {
 }
 
 if (isset($_POST['changeSeuil'])) {
-    $recipeController = new recipeController() ; 
-    $recipeController->updateSeuil() ; 
+    $recipeController = new recipeController();
+    $recipeController->updateSeuil();
     header("location: /ProjetWeb/admin/paramaitres");
 }
 

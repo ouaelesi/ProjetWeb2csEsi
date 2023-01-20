@@ -24,7 +24,7 @@ class newsModel
         $db  = $database->connect();
 
         // we need the upload method here 
-        $recipeController = new recipeModel() ; 
+        $recipeController = new recipeModel();
 
         // add the post 
         $query = $db->prepare("INSERT INTO `post`(`title`, `description` , `type` , `coverImage` , `cardImage` , `video` , `event` , `status` , `createdBy`) VALUES (?,?,?,?,?,?,?,?,?)");
@@ -85,7 +85,7 @@ class newsModel
         $query->execute(array($_POST['tags'], $idNews));
 
         $query = $db->prepare('UPDATE `post` SET `title`=? , `description`=? , `event`=? , `video`=? WHERE id=?');
-        $query->execute(array($_POST['title'], $_POST['description'], $_POST['event'], $_POST['video'], $idNews));
+        $query->execute(array($_POST['title'], $_POST['description'], $_POST['event'], $_POST['video'], $news['postID']));
 
         $database->disconnect($db);
     }
@@ -107,7 +107,8 @@ class newsModel
         return $response;
     }
 
-    public function getPosts(){
+    public function getPosts()
+    {
         $database = new dataBaseController();
         $db  = $database->connect();
 

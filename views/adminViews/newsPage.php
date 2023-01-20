@@ -25,9 +25,10 @@ class newsPage
                     <input name="tags" placeholder="tag1, tag2, tag3 ..." type="text" required class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" />
                 </div>
                 <div class="my-2 col-6">
-                    <label class="mb-1">Event </label>
+                    <label class="mb-1">Fete </label>
 
                     <select name="event" class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light">
+                        <option value="0">aucune</option>
                         <?php
                         $eventsController = new eventsController();
                         $events = $eventsController->getEvents();
@@ -140,9 +141,10 @@ class newsPage
                     <input value="<?php echo $news['tags'] ?>" name="tags" placeholder="tag1, tag2, tag3 ..." type="text" required class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light" />
                 </div>
                 <div class="my-2 col-6">
-                    <label class="mb-1">Event </label>
+                    <label class="mb-1">fete </label>
 
                     <select name="event" class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light">
+                    <option value="0">aucune</option>
                         <?php
                         $eventsController = new eventsController();
                         $events = $eventsController->getEvents();

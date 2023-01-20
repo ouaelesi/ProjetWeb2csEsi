@@ -24,7 +24,7 @@ class HomePage
                             <div class="poition-relative swiperContent " <?php if ($type == 'admin') echo 'style="transform: scale(0.6); transform-origin: top left; width:100% !important;"'  ?>>
                                 <p class="swiperTitle text-white " > <?php echo $slide["title"] ?><br /><span>Now!</span></p>
                                 <p class="swiperDescription text-white w-100"><?php echo $slide["description"] ?></p>
-                                <button class="btn btn-red px-5 py-2 font-xl mt-3"> Start Now</button>
+                                <button class="btn btn-red px-5 py-2 font-xl mt-3" onclick="gotoUrl('/ProjetWeb/ideas')"> Start Now</button>
                             </div>
                         </div>
                     </div>
@@ -103,7 +103,7 @@ class HomePage
                     <div class="d-flex justify-content-between">
                         <div class="recipeCardStats">
                             <div class=""><?php if ($recipe["note"] != null) echo number_format($recipe["note"], 2, '.', ',');
-                                            else echo "-" ?> <img src="/ProjetWeb/public/icons/Yellow_Star.png" width="18px" class="mx-1" /></div>
+                                            else echo "0" ?>/5 <img src="/ProjetWeb/public/icons/Yellow_Star.png" width="18px" class="mx-1" /></div>
                             <span><?php echo $recipe["preparationTime"] ?> min</span>
                         </div>
                         <button class="btn btn-red card-btn">See more</button>

@@ -100,7 +100,7 @@ class recipePage
             <div class="bluredBox w-50 mx-auto row my-5 rounded-4 py-1 pe-3 position-relative z-50">
                 <input class="px-4 py-3 bg-transparent searchInput col-11 " placeholder="Trouver votre recette.." oninput="autoComplete()" id="ideasSearch" />
                 <div class="col-1 pt-1">
-                    <img src="public/icons/search.png" width="30px" height="30px" class="d-block mx-auto mt-2" onclick="search()" />
+                    <img src="public/icons/search.png" role="button" width="30px" height="30px" class="d-block mx-auto mt-2" onclick="search()" />
                 </div>
                 <div class="d-flex gap-2" id="addedIngredients"></div>
             </div>

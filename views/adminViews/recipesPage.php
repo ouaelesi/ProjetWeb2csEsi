@@ -265,7 +265,7 @@ class recipesPage
                     <label class="mb-1">Fete </label>
 
                     <select name="event" class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light">
-                        <option value="null">aucune</option>
+                        <option value="0">aucune</option>
 
                         <?php
                         $eventsController = new eventsController();
@@ -402,7 +402,7 @@ class recipesPage
                     <label class="mb-1">Fete </label>
 
                     <select name="event" class="bluredBox px-2 py-2 d-block rounded-1 w-100 text-light">
-                        <option value="null">aucune</option>
+                        <option value="0">aucune</option>
 
                         <?php
                         $eventsController = new eventsController();

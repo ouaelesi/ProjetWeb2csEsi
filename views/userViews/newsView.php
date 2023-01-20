@@ -31,7 +31,10 @@ class newsView
             $homeViews = new HomePage();
             $recipeController = new recipeController();
             $recipe = $recipeController->getRecipeByPost($post['id']);
-            $homeViews->recipeCard($recipe, "");
+            $categoryController = new categoryController();
+            $category = $categoryController->getCategoryById($recipe['categoryID']);
+
+            $homeViews->recipeCard($recipe, $category['name']);
         } else {
             $newsController = new newsController();
             $news = $newsController->getNewsByPost($post['id']);
@@ -83,7 +86,7 @@ class newsView
         // NavBar 
         $sharedComponents->NavBar(null);
         // header 
-        $sharedComponents->pageHeader('Page des News' , "food.jpg");
+        $sharedComponents->pageHeader('Page des News', "food.jpg");
         // navLinks 
         $sharedComponents->navLinks();
         // 
@@ -135,7 +138,7 @@ class newsView
         // NavBar 
         $sharedComponents->NavBar(null);
         // header 
-        $sharedComponents->pageHeader($news['title'],'food.jpg');
+        $sharedComponents->pageHeader($news['title'], 'food.jpg');
         // navLinks 
         $sharedComponents->navLinks();
         // news article 

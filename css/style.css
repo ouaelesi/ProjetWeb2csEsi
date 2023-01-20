@@ -76,9 +76,17 @@
 .btn-yellow {
   background-color: var(--yellow-color);
 }
+.btn-yellow:hover {
+  background-color: var(--yellow-color) !important;
+  opacity: 0.8;
+}
 .btn-red {
   background-color: var(--red-color);
   color: white;
+}
+.btn-red:hover {
+  background-color: var(--red-color) !important;
+  opacity: 0.8;
 }
 .NavContainer {
   padding-inline: 50px;
@@ -101,7 +109,7 @@
   line-height: 80px;
   font-family: Goliend;
 }
-.commentList{
+.commentList {
   height: 300px;
   overflow-y: auto;
   width: 100%;
@@ -453,7 +461,7 @@ option {
   );
   backdrop-filter: blur(20px);
 }
-.lightBluredBox{
+.lightBluredBox {
   border: solid 1px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0.2);
@@ -497,7 +505,7 @@ option {
   width: 35%;
   margin-top: 150px;
 }
-.text-white{
+.text-white {
   color: whites;
 }
 ::placeholder {
@@ -527,7 +535,6 @@ input::file-selector-button {
 input::file-selector-button:hover {
   cursor: pointer;
   background-color: rgba(255, 255, 255, 0.1);
-
 }
 .stepCircle {
   width: 100px;

@@ -18,6 +18,7 @@ class singleRecipePage
             <div class="h1 mt-4">
                 <?php echo $recipe['title'] ?>
             </div>
+
             <div class="row">
                 <div class="col-6">
                     <div class="py-3  bluredBox rounded-4 px-3 gap-2 my-3 position-relative d-flex flex-wrap gap-3">
@@ -44,9 +45,11 @@ class singleRecipePage
                         <?php echo $recipe['description'] ?>
                     </p>
                     <p>
-                        by <?php echo $user['firstName'] ?>
-                        <?php echo $user['lastName'] ?>
+                        Auteur: 
+                        <img src="/ProjetWeb/public/images/profile/<?php echo $user['photo'] ?>" class="rounded-circle mx-2" width="20px" /><small class="text-warning"><?php echo $user['firstName'] ?>
+                            <?php echo $user['lastName'] ?></small>
                     </p>
+
                 </div>
                 <div class="col-6">
                     <img src="/ProjetWeb/public/images/recipeImages/<?php echo $recipe['coverImage'] ?>" class="rounded-3 d-block ml-auto mt-3" width="100%" />
@@ -255,7 +258,7 @@ class singleRecipePage
             // NavBar 
             $sharedComponents->NavBar(null);
             // header 
-            $sharedComponents->pageHeader("recipe Id " . $recipeId, "footerBg.png");
+            $sharedComponents->pageHeader($recipe['title'], "footerBg.png");
             // navLinks 
             $sharedComponents->navLinks();
         ?>
