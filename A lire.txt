@@ -1,0 +1,13 @@
+1. La racine du projet doit être 'localhost\ProjetWeb\'
+2. pour lancer le projet il faut extraire le code dans un dossier 'WebProject' et le mettre dans /www (cas du wampserver)
+3. vous devez être connecté à Internet pour que les liens bootstrap fonctionnent
+3. Toutes les fonctionnalités présentées dans les spécifications sans mise en œuvre
+4. J'ai ajouté des fonctionnalités optionnelles telles que :
+        - mode clair et mode sombre
+        - changer le logo du site
+        - ajouter des liens dans la barre de navigation
+        - ajouter un commentaire a une recette
+        - enregistrer les news ( save news )
+        - ajouter des notes pour une vidéo 
+        - envoyer des messages à l'administrateur
+5. le reste et déployer ce site web

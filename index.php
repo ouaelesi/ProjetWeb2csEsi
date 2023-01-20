@@ -16,12 +16,18 @@
 </head>
 
 <body id="body" class="darkTheme">
-
-
     <?php
     require_once($_SERVER['DOCUMENT_ROOT'] . "/ProjetWeb/router/router.php");
     ?>
-      
+
+
+
+
+
+
+
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -38,7 +44,6 @@
             pagination: {
                 el: '.swiper-pagination',
                 clickable: true,
-
             },
 
             breakpoints: {
@@ -51,9 +56,6 @@
                         rotate: 0,
 
                         stretch: -10,
-
-
-
                     }
                 }
             },
@@ -64,7 +66,6 @@
                 depth: 80,
                 rotate: 50,
                 stretch: 20,
-
             }
         })
     </script>
