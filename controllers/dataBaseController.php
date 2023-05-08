@@ -1,16 +1,16 @@
 <?php 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/models/dataBaseModel.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/models/dbModel.php');
 class dataBaseController{
     public function connect(){
-        $dataBaseModel = new dataBaseModel() ; 
-        return $dataBaseModel->connect(); 
+        $dbModel = new dbModel() ; 
+        return $dbModel->connect(); 
     }
     public function disConnect($db){
 
     }
 
     public function request($db , $query){
-        $dataBaseModel = new dataBaseModel() ; 
-        return $dataBaseModel->request($db , $query); 
+        $dbModel = new dbModel() ; 
+        return $dbModel->request($db , $query); 
     }
 }

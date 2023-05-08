@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/models/databaseModel.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/models/dbModel.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/ProjetWeb/controllers/menuController.php');
 // cette class contient les methode qui affiche les composants partagé entre plusiers page 
 class SharedViews
